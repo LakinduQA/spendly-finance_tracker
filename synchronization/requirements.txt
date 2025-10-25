@@ -1,0 +1,20 @@
+# Python Requirements for Personal Finance Management System
+# Synchronization and Database Operations
+
+# Oracle Database Connectivity
+cx_Oracle==8.3.0
+
+# SQLite (included in Python standard library, but adding for completeness)
+# No additional installation needed for SQLite3
+
+# Database utilities
+python-dotenv==1.0.0
+
+# Logging and utilities
+colorama==0.4.6
+
+# CSV handling (included in standard library)
+# No additional installation needed
+
+# Date/Time utilities (included in standard library)
+# No additional installation needed
