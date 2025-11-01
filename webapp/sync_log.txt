@@ -1,0 +1,47 @@
+2025-11-01 19:32:46,017 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:32:46,026 - INFO - ============================================================
+2025-11-01 19:32:46,027 - INFO - Starting synchronization process...
+2025-11-01 19:32:46,027 - INFO - ============================================================
+2025-11-01 19:32:46,027 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:32:46,027 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:33:01,435 - ERROR - Oracle connection failed: ORA-12170: TNS:Connect timeout occurred
+2025-11-01 20:44:04,094 - INFO - ============================================================
+2025-11-01 20:44:04,095 - INFO - Starting synchronization process...
+2025-11-01 20:44:04,095 - INFO - ============================================================
+2025-11-01 20:44:04,096 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 20:44:04,096 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 20:44:04,480 - INFO - Oracle connection successful
+2025-11-01 20:44:04,480 - INFO - Step 1: Syncing users...
+2025-11-01 20:44:04,486 - INFO - Synced user: kavithi
+2025-11-01 20:44:04,487 - INFO - Users synced: 1
+2025-11-01 20:44:04,489 - INFO - Created sync log: 4
+2025-11-01 20:44:04,489 - INFO - Step 2: Syncing expenses...
+2025-11-01 20:44:04,490 - INFO - Expenses synced: 0
+2025-11-01 20:44:04,490 - INFO - Step 3: Syncing income...
+2025-11-01 20:44:04,491 - INFO - Income records synced: 0
+2025-11-01 20:44:04,491 - INFO - Step 4: Syncing budgets...
+2025-11-01 20:44:04,491 - INFO - Budgets synced: 0
+2025-11-01 20:44:04,492 - INFO - Step 5: Syncing savings goals...
+2025-11-01 20:44:04,492 - INFO - Savings goals synced: 0
+2025-11-01 20:44:04,494 - INFO - Completed sync log: Success, Records: 1
+2025-11-01 20:44:04,494 - INFO - ============================================================
+2025-11-01 20:44:04,494 - INFO - Synchronization completed successfully!
+2025-11-01 20:44:04,495 - INFO - Total records synced: 1
+2025-11-01 20:44:04,495 - INFO - Duration: 0.40 seconds
+2025-11-01 20:44:04,495 - INFO - ============================================================
+2025-11-01 20:44:04,496 - INFO - SQLite connection closed
+2025-11-01 20:44:04,498 - INFO - Oracle connection closed
+2025-11-01 20:44:04,499 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:04] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-01 20:44:04,510 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:04] "GET /reports HTTP/1.1" 200 -
+2025-11-01 20:44:04,545 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-01 20:44:04,552 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:04] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-01 20:44:04,611 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:04] "GET /api/monthly_trend HTTP/1.1" 200 -
+2025-11-01 20:44:04,612 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:04] "GET /api/expense_by_category HTTP/1.1" 200 -
+2025-11-01 20:44:38,362 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:38] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-11-01 20:44:38,368 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:38] "GET /login HTTP/1.1" 200 -
+2025-11-01 20:44:38,396 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:38] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-01 20:44:38,401 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:38] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-01 20:44:43,906 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-11-01 20:44:43,914 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:43] "GET /dashboard HTTP/1.1" 200 -
+2025-11-01 20:44:43,949 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:43] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-01 20:44:43,950 - INFO - 127.0.0.1 - - [01/Nov/2025 20:44:43] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -

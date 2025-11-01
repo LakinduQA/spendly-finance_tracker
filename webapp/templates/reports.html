@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Personal Finance Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-graph-up"></i> Financial Reports</h2>
+            <p class="text-muted">Analytics and insights from your Oracle database</p>
+        </div>
+        <div class="col-auto">
+            <form method="POST" action="{{ url_for('sync_to_oracle') }}" class="d-inline">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-repeat"></i> Sync to Oracle
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sync Info Alert -->
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> 
+        <strong>Database Architecture:</strong> Local data is stored in SQLite for fast access. 
+        Click "Sync to Oracle" to transfer your data to the centralized Oracle database for advanced analytics and reporting.
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-pie-chart-fill"></i> Expenses by Category</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-graph-up-arrow"></i> Monthly Expense Trend</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Oracle Reports Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-database"></i> Oracle PL/SQL Reports</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i> 
+                        <strong>Note:</strong> These reports are generated from PL/SQL stored procedures in the Oracle database. 
+                        Ensure you have synced your data before running these reports.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-primary">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-calendar-month text-primary"></i>
+                                    <h6 class="mt-2">Monthly Expenditure</h6>
+                                    <p class="text-muted small">Detailed breakdown of monthly spending patterns</p>
+                                    <button class="btn btn-sm btn-outline-primary" disabled>
+                                        <i class="bi bi-file-earmark-text"></i> View Report
+                                    </button>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-success">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-pie-chart text-success"></i>
+                                    <h6 class="mt-2">Budget Adherence</h6>
+                                    <p class="text-muted small">How well you're sticking to your budgets</p>
+                                    <button class="btn btn-sm btn-outline-success" disabled>
+                                        <i class="bi bi-file-earmark-text"></i> View Report
+                                    </button>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-info">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-trophy text-info"></i>
+                                    <h6 class="mt-2">Savings Progress</h6>
+                                    <p class="text-muted small">Track your progress towards financial goals</p>
+                                    <button class="btn btn-sm btn-outline-info" disabled>
+                                        <i class="bi bi-file-earmark-text"></i> View Report
+                                    </button>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-warning">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-diagram-3 text-warning"></i>
+                                    <h6 class="mt-2">Category Distribution</h6>
+                                    <p class="text-muted small">Where your money is going by category</p>
+                                    <button class="btn btn-sm btn-outline-warning" disabled>
+                                        <i class="bi bi-file-earmark-text"></i> View Report
+                                    </button>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-danger">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-graph-up-arrow text-danger"></i>
+                                    <h6 class="mt-2">Expense Forecast</h6>
+                                    <p class="text-muted small">Predicted spending trends for next 3 months</p>
+                                    <button class="btn btn-sm btn-outline-danger" disabled>
+                                        <i class="bi bi-file-earmark-text"></i> View Report
+                                    </button>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100 border-secondary">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-download text-secondary"></i>
+                                    <h6 class="mt-2">Export to CSV</h6>
+                                    <p class="text-muted small">Download reports in CSV format</p>
+                                    <button class="btn btn-sm btn-outline-secondary" disabled>
+                                        <i class="bi bi-file-earmark-arrow-down"></i> Export
+                                    </button>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> Use Oracle procedures
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-secondary mt-3">
+                        <h6><i class="bi bi-terminal"></i> Running Oracle Reports</h6>
+                        <p class="mb-2">To execute PL/SQL reports, use SQL Developer and run:</p>
+                        <code class="d-block bg-dark text-light p-2 rounded">
+                            BEGIN<br>
+                            &nbsp;&nbsp;finance_reports_pkg.display_monthly_expenditure(p_user_id => 1);<br>
+                            END;<br>
+                            /
+                        </code>
+                        <small class="text-muted mt-2 d-block">
+                            Refer to <code>oracle/03_reports_package.sql</code> for all available procedures.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Fetch data and create charts
+    document.addEventListener('DOMContentLoaded', function() {
+        // Category Pie Chart
+        fetch('/api/expense_by_category')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('categoryChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            data: data.values,
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            },
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading category chart:', error));
+
+        // Monthly Trend Line Chart
+        fetch('/api/monthly_trend')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('trendChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Monthly Expenses',
+                            data: data.values,
+                            borderColor: '#0d6efd',
+                            backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toFixed(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading trend chart:', error));
+    });
+</script>
+{% endblock %}

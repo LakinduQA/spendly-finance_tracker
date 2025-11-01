@@ -597,28 +597,28 @@ CREATE OR REPLACE PACKAGE BODY pkg_finance_reports AS
         INTO v_avg_monthly_income, v_avg_monthly_expenses
         FROM (
             SELECT 
-                fiscal_year,
-                fiscal_month,
+                months.fiscal_year,
+                months.fiscal_month,
                 (SELECT NVL(SUM(amount), 0) 
                  FROM finance_income i2 
                  WHERE i2.user_id = p_user_id 
-                   AND i2.fiscal_year = i.fiscal_year 
-                   AND i2.fiscal_month = i.fiscal_month) AS monthly_income,
+                   AND i2.fiscal_year = months.fiscal_year 
+                   AND i2.fiscal_month = months.fiscal_month) AS monthly_income,
                 (SELECT NVL(SUM(amount), 0) 
                  FROM finance_expense e2 
                  WHERE e2.user_id = p_user_id 
-                   AND e2.fiscal_year = e.fiscal_year 
-                   AND e2.fiscal_month = e.fiscal_month) AS monthly_expenses
+                   AND e2.fiscal_year = months.fiscal_year 
+                   AND e2.fiscal_month = months.fiscal_month) AS monthly_expenses
             FROM (
                 SELECT DISTINCT fiscal_year, fiscal_month 
-                FROM finance_income i
+                FROM finance_income
                 WHERE user_id = p_user_id
                 UNION
                 SELECT DISTINCT fiscal_year, fiscal_month 
-                FROM finance_expense e
+                FROM finance_expense
                 WHERE user_id = p_user_id
-            )
-            WHERE TO_DATE(fiscal_year || '-' || LPAD(fiscal_month, 2, '0') || '-01', 'YYYY-MM-DD') >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -6)
+            ) months
+            WHERE TO_DATE(months.fiscal_year || '-' || LPAD(months.fiscal_month, 2, '0') || '-01', 'YYYY-MM-DD') >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -6)
         );
         
         v_avg_monthly_savings := v_avg_monthly_income - v_avg_monthly_expenses;
@@ -715,3 +715,6 @@ SELECT 'Financial Reports Package Created Successfully!' AS status FROM DUAL;
 
 -- Enable DBMS_OUTPUT for report display
 SET SERVEROUTPUT ON SIZE UNLIMITED;
+
+
+SELECT * FROM FINANCE_USER;

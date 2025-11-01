@@ -1,0 +1,59 @@
+2025-11-01 19:34:47,717 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:34:47,717 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:34:48,011 - ERROR - Oracle connection failed: ORA-12505: TNS:listener does not currently know of SID given in connect descriptor
+2025-11-01 19:45:32,161 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:45:32,162 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:45:32,314 - INFO - Oracle connection successful
+2025-11-01 19:45:32,316 - INFO - ============================================================
+2025-11-01 19:45:32,316 - INFO - Starting synchronization process...
+2025-11-01 19:45:32,317 - INFO - ============================================================
+2025-11-01 19:45:32,317 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:45:32,317 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:45:32,345 - INFO - Oracle connection successful
+2025-11-01 19:45:32,356 - ERROR - Failed to create sync log: ORA-02291: integrity constraint (SYSTEM.FK_SYNC_USER) violated - parent key not found
+ORA-06512: at "SYSTEM.PKG_FINANCE_CRUD", line 543
+ORA-06512: at "SYSTEM.PKG_FINANCE_CRUD", line 533
+ORA-06512: at line 1
+2025-11-01 19:45:59,983 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:45:59,983 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:46:00,118 - INFO - Oracle connection successful
+2025-11-01 19:46:00,120 - INFO - ============================================================
+2025-11-01 19:46:00,120 - INFO - Starting synchronization process...
+2025-11-01 19:46:00,121 - INFO - ============================================================
+2025-11-01 19:46:00,121 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:46:00,121 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:46:00,147 - INFO - Oracle connection successful
+2025-11-01 19:46:00,150 - ERROR - Failed to create sync log: ORA-02291: integrity constraint (SYSTEM.FK_SYNC_USER) violated - parent key not found
+ORA-06512: at "SYSTEM.PKG_FINANCE_CRUD", line 543
+ORA-06512: at "SYSTEM.PKG_FINANCE_CRUD", line 533
+ORA-06512: at line 1
+2025-11-01 19:46:31,130 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:46:31,131 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:46:31,255 - INFO - Oracle connection successful
+2025-11-01 19:46:31,257 - INFO - ============================================================
+2025-11-01 19:46:31,257 - INFO - Starting synchronization process...
+2025-11-01 19:46:31,257 - INFO - ============================================================
+2025-11-01 19:46:31,257 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-01 19:46:31,258 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-01 19:46:31,299 - INFO - Oracle connection successful
+2025-11-01 19:46:31,299 - INFO - Step 1: Syncing users...
+2025-11-01 19:46:31,307 - INFO - Synced user: john_doe
+2025-11-01 19:46:31,309 - INFO - Synced user: jane_smith
+2025-11-01 19:46:31,310 - INFO - Users synced: 2
+2025-11-01 19:46:31,311 - INFO - Created sync log: 3
+2025-11-01 19:46:31,311 - INFO - Step 2: Syncing expenses...
+2025-11-01 19:46:31,437 - INFO - Expenses synced: 367
+2025-11-01 19:46:31,438 - INFO - Step 3: Syncing income...
+2025-11-01 19:46:31,447 - INFO - Income records synced: 8
+2025-11-01 19:46:31,447 - INFO - Step 4: Syncing budgets...
+2025-11-01 19:46:31,455 - INFO - Budgets synced: 8
+2025-11-01 19:46:31,456 - INFO - Step 5: Syncing savings goals...
+2025-11-01 19:46:31,466 - INFO - Savings goals synced: 5
+2025-11-01 19:46:31,473 - INFO - Completed sync log: Success, Records: 390
+2025-11-01 19:46:31,473 - INFO - ============================================================
+2025-11-01 19:46:31,473 - INFO - Synchronization completed successfully!
+2025-11-01 19:46:31,474 - INFO - Total records synced: 390
+2025-11-01 19:46:31,474 - INFO - Duration: 0.22 seconds
+2025-11-01 19:46:31,474 - INFO - ============================================================
+2025-11-01 19:46:31,474 - INFO - SQLite connection closed
+2025-11-01 19:46:31,476 - INFO - Oracle connection closed

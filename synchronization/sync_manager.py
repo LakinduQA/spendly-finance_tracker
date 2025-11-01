@@ -57,11 +57,19 @@ class DatabaseSync:
             password = self.config['oracle']['password']
             host = self.config['oracle']['host']
             port = self.config['oracle']['port']
-            service_name = self.config['oracle']['service_name']
             
-            dsn = cx_Oracle.makedsn(host, port, service_name=service_name)
+            # Check if using SID or service_name
+            if 'sid' in self.config['oracle']:
+                sid = self.config['oracle']['sid']
+                dsn = cx_Oracle.makedsn(host, port, sid=sid)
+                logger.info(f"Connecting to Oracle database: {host}:{port}/{sid}")
+            else:
+                service_name = self.config['oracle']['service_name']
+                dsn = cx_Oracle.makedsn(host, port, service_name=service_name)
+                logger.info(f"Connecting to Oracle database: {host}:{port}/{service_name}")
+            
             self.oracle_conn = cx_Oracle.connect(username, password, dsn)
-            logger.info(f"Connected to Oracle database: {host}:{port}/{service_name}")
+            logger.info("Oracle connection successful")
             return True
         except Exception as e:
             logger.error(f"Oracle connection failed: {str(e)}")
@@ -522,16 +530,24 @@ class DatabaseSync:
         if not self.connect_oracle():
             return False
         
-        # Create sync log
-        if not self.create_sync_log(user_id, sync_type):
-            return False
-        
         try:
-            # Sync all entities
+            # IMPORTANT: Sync users FIRST (before creating sync log)
+            # because sync_log has FK to user table
+            logger.info("Step 1: Syncing users...")
             self.sync_users()
+            
+            # Now create sync log (user exists in Oracle)
+            if not self.create_sync_log(user_id, sync_type):
+                logger.warning("Failed to create sync log, but continuing...")
+            
+            # Sync all other entities
+            logger.info("Step 2: Syncing expenses...")
             self.sync_expenses()
+            logger.info("Step 3: Syncing income...")
             self.sync_income()
+            logger.info("Step 4: Syncing budgets...")
             self.sync_budgets()
+            logger.info("Step 5: Syncing savings goals...")
             self.sync_savings_goals()
             
             # Complete sync log with success

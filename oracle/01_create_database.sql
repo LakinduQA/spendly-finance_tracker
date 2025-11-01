@@ -584,8 +584,15 @@ COMMIT;
 
 -- Display creation summary
 SELECT 'Oracle Database Created Successfully!' AS status FROM DUAL;
+
 SELECT table_name FROM user_tables WHERE table_name LIKE 'FINANCE_%' ORDER BY table_name;
+
 SELECT sequence_name FROM user_sequences WHERE sequence_name LIKE 'SEQ_%' ORDER BY sequence_name;
 
 -- Gather statistics for optimizer
-EXEC DBMS_STATS.GATHER_SCHEMA_STATS('FINANCE_ADMIN');
+BEGIN
+    DBMS_STATS.GATHER_SCHEMA_STATS('FINANCE_ADMIN');
+END;
+/
+
+

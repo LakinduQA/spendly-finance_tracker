@@ -1,0 +1,18 @@
+# Personal Finance Manager - Web Application Requirements
+
+# Core Framework
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# Template Engine (included with Flask)
+Jinja2==3.1.2
+
+# Database Drivers
+cx-Oracle==8.3.0
+
+# Configuration
+python-dotenv==1.0.0
+configparser
+
+# Utilities
+colorama==0.4.6
