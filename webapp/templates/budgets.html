@@ -33,18 +33,18 @@
                     
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Budget Amount</span>
-                        <span class="fw-bold">${{ "%.2f"|format(budget.budget_amount) }}</span>
+                        <span class="fw-bold"> LKR {{ "%.2f"|format(budget.budget_amount) }}</span>
                     </div>
                     
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Spent</span>
-                        <span class="fw-bold text-danger">${{ "%.2f"|format(budget.spent_amount) }}</span>
+                        <span class="fw-bold text-danger"> LKR {{ "%.2f"|format(budget.actual_spent) }}</span>
                     </div>
                     
                     <div class="d-flex justify-content-between mb-3">
                         <span class="text-muted">Remaining</span>
-                        <span class="fw-bold {% if budget.remaining_amount < 0 %}text-danger{% else %}text-success{% endif %}">
-                            ${{ "%.2f"|format(budget.remaining_amount) }}
+                        <span class="fw-bold {% if budget.remaining < 0 %}text-danger{% else %}text-success{% endif %}">
+                             LKR {{ "%.2f"|format(budget.remaining) }}
                         </span>
                     </div>
                     
@@ -113,7 +113,7 @@
                     <div class="mb-3">
                         <label for="budget_amount" class="form-label">Budget Amount *</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">LKR</span>
                             <input type="number" class="form-control" id="budget_amount" name="budget_amount" 
                                    step="0.01" min="0.01" placeholder="0.00" required>
                         </div>

@@ -7,12 +7,12 @@
     <div class="row mb-4">
         <div class="col">
             <h2><i class="bi bi-graph-up"></i> Financial Reports</h2>
-            <p class="text-muted">Analytics and insights from your Oracle database</p>
+            <p class="text-muted">Analytics and insights from your financial data</p>
         </div>
         <div class="col-auto">
             <form method="POST" action="{{ url_for('sync_to_oracle') }}" class="d-inline">
                 <button type="submit" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-repeat"></i> Sync to Oracle
+                    <i class="bi bi-arrow-repeat"></i> Sync Data
                 </button>
             </form>
         </div>
@@ -21,8 +21,7 @@
     <!-- Sync Info Alert -->
     <div class="alert alert-info">
         <i class="bi bi-info-circle"></i> 
-        <strong>Database Architecture:</strong> Local data is stored in SQLite for fast access. 
-        Click "Sync to Oracle" to transfer your data to the centralized Oracle database for advanced analytics and reporting.
+        <strong>Note:</strong> Click "Sync Data" to ensure your reports include the latest information.
     </div>
 
     <!-- Charts Row -->
@@ -50,35 +49,27 @@
         </div>
     </div>
 
-    <!-- Oracle Reports Section -->
+    <!-- Reports Section -->
     <div class="row">
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="bi bi-database"></i> Oracle PL/SQL Reports</h5>
+                    <h5 class="mb-0"><i class="bi bi-file-earmark-bar-graph"></i> Available Reports</h5>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-warning">
-                        <i class="bi bi-exclamation-triangle"></i> 
-                        <strong>Note:</strong> These reports are generated from PL/SQL stored procedures in the Oracle database. 
-                        Ensure you have synced your data before running these reports.
-                    </div>
-
                     <div class="row">
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="card h-100 border-primary">
                                 <div class="card-body text-center">
-                                    <i class="bi bi-calendar-month text-primary"></i>
+                                    <i class="bi bi-calendar-month text-primary" style="font-size: 2rem;"></i>
                                     <h6 class="mt-2">Monthly Expenditure</h6>
                                     <p class="text-muted small">Detailed breakdown of monthly spending patterns</p>
-                                    <button class="btn btn-sm btn-outline-primary" disabled>
-                                        <i class="bi bi-file-earmark-text"></i> View Report
-                                    </button>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
-                                        </small>
-                                    </div>
+                                    <a href="{{ url_for('view_monthly_expenditure') }}" class="btn btn-sm btn-primary mb-2">
+                                        <i class="bi bi-eye"></i> View Report
+                                    </a>
+                                    <a href="{{ url_for('download_monthly_expenditure') }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-download"></i> Download CSV
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -86,17 +77,15 @@
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="card h-100 border-success">
                                 <div class="card-body text-center">
-                                    <i class="bi bi-pie-chart text-success"></i>
+                                    <i class="bi bi-pie-chart text-success" style="font-size: 2rem;"></i>
                                     <h6 class="mt-2">Budget Adherence</h6>
                                     <p class="text-muted small">How well you're sticking to your budgets</p>
-                                    <button class="btn btn-sm btn-outline-success" disabled>
-                                        <i class="bi bi-file-earmark-text"></i> View Report
-                                    </button>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
-                                        </small>
-                                    </div>
+                                    <a href="{{ url_for('view_budget_adherence') }}" class="btn btn-sm btn-success mb-2">
+                                        <i class="bi bi-eye"></i> View Report
+                                    </a>
+                                    <a href="{{ url_for('download_budget_adherence') }}" class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-download"></i> Download CSV
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -104,17 +93,15 @@
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="card h-100 border-info">
                                 <div class="card-body text-center">
-                                    <i class="bi bi-trophy text-info"></i>
+                                    <i class="bi bi-trophy text-info" style="font-size: 2rem;"></i>
                                     <h6 class="mt-2">Savings Progress</h6>
                                     <p class="text-muted small">Track your progress towards financial goals</p>
-                                    <button class="btn btn-sm btn-outline-info" disabled>
-                                        <i class="bi bi-file-earmark-text"></i> View Report
-                                    </button>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
-                                        </small>
-                                    </div>
+                                    <a href="{{ url_for('view_savings_progress') }}" class="btn btn-sm btn-info mb-2">
+                                        <i class="bi bi-eye"></i> View Report
+                                    </a>
+                                    <a href="{{ url_for('download_savings_progress') }}" class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-download"></i> Download CSV
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -122,17 +109,15 @@
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="card h-100 border-warning">
                                 <div class="card-body text-center">
-                                    <i class="bi bi-diagram-3 text-warning"></i>
+                                    <i class="bi bi-diagram-3 text-warning" style="font-size: 2rem;"></i>
                                     <h6 class="mt-2">Category Distribution</h6>
                                     <p class="text-muted small">Where your money is going by category</p>
-                                    <button class="btn btn-sm btn-outline-warning" disabled>
-                                        <i class="bi bi-file-earmark-text"></i> View Report
-                                    </button>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
-                                        </small>
-                                    </div>
+                                    <a href="{{ url_for('view_category_distribution') }}" class="btn btn-sm btn-warning mb-2">
+                                        <i class="bi bi-eye"></i> View Report
+                                    </a>
+                                    <a href="{{ url_for('download_category_distribution') }}" class="btn btn-sm btn-outline-warning">
+                                        <i class="bi bi-download"></i> Download CSV
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -140,52 +125,18 @@
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="card h-100 border-danger">
                                 <div class="card-body text-center">
-                                    <i class="bi bi-graph-up-arrow text-danger"></i>
-                                    <h6 class="mt-2">Expense Forecast</h6>
-                                    <p class="text-muted small">Predicted spending trends for next 3 months</p>
-                                    <button class="btn btn-sm btn-outline-danger" disabled>
-                                        <i class="bi bi-file-earmark-text"></i> View Report
-                                    </button>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="bi bi-info-circle"></i> Run via SQL Developer
-                                        </small>
-                                    </div>
+                                    <i class="bi bi-graph-up-arrow text-danger" style="font-size: 2rem;"></i>
+                                    <h6 class="mt-2">Savings Forecast</h6>
+                                    <p class="text-muted small">Predicted savings trends for next 6 months</p>
+                                    <a href="{{ url_for('view_savings_forecast') }}" class="btn btn-sm btn-danger mb-2">
+                                        <i class="bi bi-eye"></i> View Report
+                                    </a>
+                                    <a href="{{ url_for('download_savings_forecast') }}" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-download"></i> Download CSV
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card h-100 border-secondary">
-                                <div class="card-body text-center">
-                                    <i class="bi bi-download text-secondary"></i>
-                                    <h6 class="mt-2">Export to CSV</h6>
-                                    <p class="text-muted small">Download reports in CSV format</p>
-                                    <button class="btn btn-sm btn-outline-secondary" disabled>
-                                        <i class="bi bi-file-earmark-arrow-down"></i> Export
-                                    </button>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="bi bi-info-circle"></i> Use Oracle procedures
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert alert-secondary mt-3">
-                        <h6><i class="bi bi-terminal"></i> Running Oracle Reports</h6>
-                        <p class="mb-2">To execute PL/SQL reports, use SQL Developer and run:</p>
-                        <code class="d-block bg-dark text-light p-2 rounded">
-                            BEGIN<br>
-                            &nbsp;&nbsp;finance_reports_pkg.display_monthly_expenditure(p_user_id => 1);<br>
-                            END;<br>
-                            /
-                        </code>
-                        <small class="text-muted mt-2 d-block">
-                            Refer to <code>oracle/03_reports_package.sql</code> for all available procedures.
-                        </small>
                     </div>
                 </div>
             </div>
@@ -262,7 +213,7 @@
                                 beginAtZero: true,
                                 ticks: {
                                     callback: function(value) {
-                                        return '$' + value.toFixed(2);
+                                        return 'LKR ' + value.toFixed(2);
                                     }
                                 }
                             }

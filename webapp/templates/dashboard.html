@@ -19,7 +19,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title text-white-50">Income (This Month)</h6>
-                            <h3 class="mb-0">${{ "%.2f"|format(total_income) }}</h3>
+                            <h3 class="mb-0">LKR {{ "%.2f"|format(total_income) }}</h3>
                         </div>
                         <div>
                             <i class="bi bi-cash-coin icon-xl"></i>
@@ -35,7 +35,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title text-white-50">Expenses (This Month)</h6>
-                            <h3 class="mb-0">${{ "%.2f"|format(total_expenses) }}</h3>
+                            <h3 class="mb-0">LKR {{ "%.2f"|format(total_expenses) }}</h3>
                         </div>
                         <div>
                             <i class="bi bi-receipt-cutoff icon-xl"></i>
@@ -51,7 +51,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title text-white-50">Net Savings</h6>
-                            <h3 class="mb-0">${{ "%.2f"|format(net_savings) }}</h3>
+                            <h3 class="mb-0">LKR {{ "%.2f"|format(net_savings) }}</h3>
                             <small class="text-white-50">{{ "%.1f"|format(savings_rate) }}% rate</small>
                         </div>
                         <div>
@@ -107,7 +107,7 @@
                                         <span class="badge bg-secondary">{{ expense.category_name }}</span>
                                     </td>
                                     <td>{{ expense.description[:30] }}...</td>
-                                    <td class="text-end text-danger fw-bold">${{ "%.2f"|format(expense.amount) }}</td>
+                                    <td class="text-end text-danger fw-bold">LKR {{ "%.2f"|format(expense.amount) }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -141,7 +141,7 @@
                         <div class="d-flex justify-content-between mb-1">
                             <span>{{ budget.category_name }}</span>
                             <span>
-                                <strong>${{ "%.2f"|format(budget.spent_amount) }}</strong> / ${{ "%.2f"|format(budget.budget_amount) }}
+                                <strong>LKR {{ "%.2f"|format(budget.actual_spent) }}</strong> / LKR {{ "%.2f"|format(budget.budget_amount) }}
                             </span>
                         </div>
                         <div class="progress progress-height-md">

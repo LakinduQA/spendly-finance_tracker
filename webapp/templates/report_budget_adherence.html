@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Adherence Report{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-pie-chart"></i> Budget Adherence Report</h2>
+            <p class="text-muted">Track how well you're staying within your budgets</p>
+        </div>
+        <div class="col-auto">
+            <a href="{{ url_for('download_budget_adherence') }}" class="btn btn-success">
+                <i class="bi bi-download"></i> Download CSV
+            </a>
+            <a href="{{ url_for('reports') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Reports
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            {% if data.budgets %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th class="text-end">Budget</th>
+                            <th class="text-end">Spent</th>
+                            <th class="text-end">Remaining</th>
+                            <th class="text-end">Used</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for budget in data.budgets %}
+                        <tr>
+                            <td><strong>{{ budget.category_name }}</strong></td>
+                            <td class="text-end"> LKR {{ "%.2f"|format(budget.budget_amount) }}</td>
+                            <td class="text-end"> LKR {{ "%.2f"|format(budget.actual_spent) }}</td>
+                            <td class="text-end"> LKR {{ "%.2f"|format(budget.remaining) }}</td>
+                            <td class="text-end">{{ "%.1f"|format(budget.utilization_percent) }}%</td>
+                            <td style="width: 200px;">
+                                {% set percent = budget.utilization_percent %}
+                                <div class="progress">
+                                    {% if percent >= 100 %}
+                                        <div class="progress-bar bg-danger w-100" role="progressbar" 
+                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="Budget usage">
+                                            {{ "%.0f"|format(percent) }}%
+                                        </div>
+                                    {% elif percent >= 80 %}
+                                        <div class="progress-bar bg-warning" role="progressbar" 
+                                             style="width: {{ percent }}%;" 
+                                             aria-valuenow="{{ "%.0f"|format(percent) }}" aria-valuemin="0" aria-valuemax="100" aria-label="Budget usage">
+                                            {{ "%.0f"|format(percent) }}%
+                                        </div>
+                                    {% else %}
+                                        <div class="progress-bar bg-success" role="progressbar" 
+                                             style="width: {{ percent }}%;" 
+                                             aria-valuenow="{{ "%.0f"|format(percent) }}" aria-valuemin="0" aria-valuemax="100" aria-label="Budget usage">
+                                            {{ "%.0f"|format(percent) }}%
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                {% if budget.budget_status == 'Over Budget' %}
+                                    <span class="badge bg-danger">{{ budget.budget_status }}</span>
+                                {% elif budget.budget_status == 'Near Limit' %}
+                                    <span class="badge bg-warning text-dark">{{ budget.budget_status }}</span>
+                                {% else %}
+                                    <span class="badge bg-success">{{ budget.budget_status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No active budgets found</p>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            <small><i class="bi bi-clock"></i> Generated on {{ data.generated_at }}</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

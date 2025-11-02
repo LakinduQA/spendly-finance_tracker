@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-database"></i> {{ title }}</h2>
+            <p class="text-muted">Generated from Oracle PL/SQL Procedure</p>
+        </div>
+        <div class="col-auto">
+            <a href="{{ request.path.replace('/report/', '/download/') }}{{ '?' + request.query_string.decode() if request.query_string else '' }}" class="btn btn-primary">
+                <i class="bi bi-download"></i> Download
+            </a>
+            <a href="{{ url_for('reports') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Reports
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-code-square"></i> Oracle PL/SQL Output</h5>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> 
+                This report is generated using PL/SQL stored procedures from the Oracle database. 
+                The output below is formatted exactly as produced by the <code>pkg_finance_reports</code> package.
+            </div>
+            
+            <div class="bg-dark text-light p-4 rounded" style="font-family: 'Courier New', monospace; white-space: pre-wrap; overflow-x: auto;">{% if data.output %}{% for line in data.output %}{{ line }}
+{% endfor %}{% else %}No output generated from Oracle procedure.
+Check that:
+1. Data has been synced to Oracle
+2. Oracle database is running
+3. PL/SQL procedures are installed{% endif %}</div>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="row">
+                <div class="col-md-6">
+                    <small><i class="bi bi-clock"></i> Generated on {{ data.generated_at }}</small>
+                </div>
+                <div class="col-md-6 text-end">
+                    <small><i class="bi bi-server"></i> Oracle Database | User ID: {{ data.user_id }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header bg-secondary text-white">
+            <h6 class="mb-0"><i class="bi bi-info-circle"></i> About This Report</h6>
+        </div>
+        <div class="card-body">
+            <h6>PL/SQL Features Used:</h6>
+            <ul>
+                <li><strong>SQL Clauses:</strong> WHERE, GROUP BY, HAVING, ORDER BY</li>
+                <li><strong>Control Structures:</strong> CASE statements, Cursor loops</li>
+                <li><strong>Aggregate Functions:</strong> SUM(), AVG(), COUNT(), MIN(), MAX()</li>
+                <li><strong>Date Functions:</strong> Date calculations and formatting</li>
+                <li><strong>Output Formatting:</strong> DBMS_OUTPUT for formatted results</li>
+            </ul>
+            <p class="mb-0">
+                <small class="text-muted">
+                    View PL/SQL source code: <code>oracle/03_reports_package.sql</code>
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

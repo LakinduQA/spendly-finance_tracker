@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Savings Forecast{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>
+                    <i class="fas fa-chart-line"></i>
+                    Savings Forecast
+                </h2>
+                <div>
+                    <a href="{{ url_for('download_savings_forecast', months=data.forecast_months) }}" class="btn btn-success">
+                        <i class="fas fa-download"></i> Download CSV
+                    </a>
+                    <a href="{{ url_for('reports') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 opacity-75">Average Monthly Income</h6>
+                    <h3 class="card-title mb-0">
+                         LKR {{ "%.2f"|format(data.avg_monthly_income) }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 opacity-75">Average Monthly Expenses</h6>
+                    <h3 class="card-title mb-0">
+                         LKR {{ "%.2f"|format(data.avg_monthly_expense) }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 opacity-75">Average Monthly Savings</h6>
+                    <h3 class="card-title mb-0">
+                         LKR {{ "%.2f"|format(data.avg_monthly_savings) }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forecast Table -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                <i class="fas fa-calendar-alt"></i>
+                {{ data.forecast_months }}-Month Projection
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th class="text-end">Projected Income</th>
+                            <th class="text-end">Projected Expenses</th>
+                            <th class="text-end">Projected Savings</th>
+                            <th class="text-end">Cumulative Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for forecast in data.forecast %}
+                        <tr>
+                            <td>
+                                <strong>{{ forecast.month }}</strong>
+                            </td>
+                            <td class="text-end text-success">
+                                 LKR {{ "%.2f"|format(forecast.projected_income) }}
+                            </td>
+                            <td class="text-end text-danger">
+                                 LKR {{ "%.2f"|format(forecast.projected_expense) }}
+                            </td>
+                            <td class="text-end">
+                                <span class="{% if forecast.projected_savings > 0 %}text-success{% else %}text-danger{% endif %}">
+                                     LKR {{ "%.2f"|format(forecast.projected_savings) }}
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <strong class="{% if forecast.cumulative_savings > 0 %}text-success{% else %}text-danger{% endif %}">
+                                     LKR {{ "%.2f"|format(forecast.cumulative_savings) }}
+                                </strong>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="fas fa-chart-area"></i>
+                Cumulative Savings Projection
+            </h5>
+        </div>
+        <div class="card-body">
+            <canvas id="forecastChart" style="max-height: 400px;"></canvas>
+        </div>
+    </div>
+
+    <!-- Report Metadata -->
+    <div class="alert alert-info mt-4">
+        <small>
+            <strong>Report Details:</strong> Generated on {{ data.generated_at }} for user {{ data.username }}.
+            Projections based on historical data average over past transactions.
+        </small>
+    </div>
+</div>
+
+<script>
+    // Cumulative Savings Chart
+    const ctx = document.getElementById('forecastChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ data.forecast | map(attribute='month') | list | tojson }},
+            datasets: [{
+                label: 'Cumulative Savings',
+                data: {{ data.forecast | map(attribute='cumulative_savings') | list | tojson }},
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'Cumulative: $' + context.parsed.y.toFixed(2);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'LKR ' + value.toFixed(0);
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
