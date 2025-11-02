@@ -1,0 +1,545 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Spendly{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Welcome Message -->
+<div class="mb-4">
+    <p class="text-muted mb-0">It is the best time to manage your finances</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <!-- Total Balance -->
+    <div class="col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-card-header">
+                <span class="stats-card-title">Total balance</span>
+                <div class="stats-card-icon" style="background: var(--primary-200); color: var(--primary-color);">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+            </div>
+            <div class="stats-card-value">LKR {{ "{:,.2f}".format(net_savings) }}</div>
+            <div class="stats-card-change {% if savings_rate > 0 %}positive{% else %}negative{% endif %}">
+                <i class="bi bi-arrow-{% if savings_rate > 0 %}up{% else %}down{% endif %}"></i>
+                {{ "%.1f"|format(savings_rate|abs) }}% <span class="text-muted">vs last month</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Income -->
+    <div class="col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-card-header">
+                <span class="stats-card-title">Income</span>
+                <div class="stats-card-icon" style="background: var(--success-200); color: var(--success-800);">
+                    <i class="bi bi-arrow-down-left-circle"></i>
+                </div>
+            </div>
+            <div class="stats-card-value">LKR {{ "{:,.2f}".format(total_income) }}</div>
+            <div class="stats-card-change positive">
+                <i class="bi bi-arrow-up"></i>
+                6.3% <span class="text-muted">vs last month</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense -->
+    <div class="col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-card-header">
+                <span class="stats-card-title">Expense</span>
+                <div class="stats-card-icon" style="background: var(--danger-200); color: var(--danger-500);">
+                    <i class="bi bi-arrow-up-right-circle"></i>
+                </div>
+            </div>
+            <div class="stats-card-value">LKR {{ "{:,.2f}".format(total_expenses) }}</div>
+            <div class="stats-card-change negative">
+                <i class="bi bi-arrow-up"></i>
+                2.4% <span class="text-muted">vs last month</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Savings -->
+    <div class="col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="stats-card-header">
+                <span class="stats-card-title">Total savings</span>
+                <div class="stats-card-icon" style="background: var(--primary-200); color: var(--primary-color);">
+                    <i class="bi bi-piggy-bank"></i>
+                </div>
+            </div>
+            <div class="stats-card-value">LKR {{ "{:,.2f}".format(net_savings if net_savings > 0 else 0) }}</div>
+            <div class="stats-card-change positive">
+                <i class="bi bi-arrow-up"></i>
+                12.1% <span class="text-muted">vs last month</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Money Flow Chart -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Money flow</h5>
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="incomeCheck" checked>
+                            <label class="form-check-label" for="incomeCheck">
+                                <span class="badge" style="background: var(--success-200); color: var(--success-800);">Income</span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="expenseCheck" checked>
+                            <label class="form-check-label" for="expenseCheck">
+                                <span class="badge" style="background: var(--danger-200); color: var(--danger-500);">Expense</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="moneyFlowChart" height="80"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Donut Chart -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Budget</h5>
+            </div>
+            <div class="card-body text-center">
+                <canvas id="budgetChart" height="200"></canvas>
+                <div class="mt-3">
+                    <h4 class="mb-0">LKR {{ "{:,.2f}".format(total_expenses) }}</h4>
+                    <small class="text-muted">of LKR {{ "{:,.2f}".format(total_income) }}</small>
+                </div>
+                <div class="mt-3 text-start">
+                    {% if budget_performance %}
+                    {% for budget in budget_performance[:5] %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <span class="badge" style="background: var(--gray-200); color: var(--gray-700);">{{ budget.category_name }}</span>
+                        </div>
+                        <span class="text-muted">{{ "%.0f"|format(budget.utilization_percent) }}%</span>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Recent Transactions -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Recent transactions</h5>
+                    <a href="{{ url_for('expenses') }}" class="text-primary text-decoration-none">See all <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_expenses %}
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>AMOUNT</th>
+                                <th>PAYMENT NAME</th>
+                                <th>METHOD</th>
+                                <th>CATEGORY</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in recent_expenses %}
+                            <tr>
+                                <td>{{ expense.expense_date.strftime('%d %b %H:%M') }}</td>
+                                <td class="fw-bold">-LKR {{ "{:,.0f}".format(expense.amount) }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span>{{ expense.description[:20] }}</span>
+                                    </div>
+                                </td>
+                                <td><span class="text-muted">Cash</span></td>
+                                <td>
+                                    <span class="badge bg-primary">{{ expense.category_name }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox" style="font-size: 3rem; opacity: 0.3;"></i>
+                    <p class="text-muted mt-2">No transactions yet</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Saving Goals -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Saving goals</h5>
+                    <a href="{{ url_for('goals') }}" class="text-primary text-decoration-none"><i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if active_goals > 0 %}
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">MacBook Pro</span>
+                        <span class="text-primary fw-bold">LKR 1,650</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-primary" style="width: 60%;"></div>
+                    </div>
+                    <small class="text-muted">60%</small>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">New car</span>
+                        <span class="text-primary fw-bold">LKR 60,000</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-primary" style="width: 40%;"></div>
+                    </div>
+                    <small class="text-muted">40%</small>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">New house</span>
+                        <span class="text-primary fw-bold">LKR 150,000</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-primary" style="width: 8%;"></div>
+                    </div>
+                    <small class="text-muted">8%</small>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="bi bi-bullseye" style="font-size: 3rem; opacity: 0.3;"></i>
+                    <p class="text-muted mt-2 mb-3">No active goals</p>
+                    <a href="{{ url_for('goals') }}" class="btn btn-primary btn-sm">Create Goal</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Money Flow Chart
+    const moneyFlowCtx = document.getElementById('moneyFlowChart');
+    if (moneyFlowCtx) {
+        new Chart(moneyFlowCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Income',
+                    data: [8500, 8200, 9000, 8800, 10000, 9500, {{ total_income }}],
+                    backgroundColor: '#E3FAE6',
+                    borderColor: '#297832',
+                    borderWidth: 2,
+                    borderRadius: 8
+                }, {
+                    label: 'Expense',
+                    data: [6222, 5800, 7200, 6500, 6800, 6500, {{ total_expenses }}],
+                    backgroundColor: '#FFE8E8',
+                    borderColor: '#E83838',
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#EFEFF1'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Budget Donut Chart
+    const budgetCtx = document.getElementById('budgetChart');
+    if (budgetCtx) {
+        new Chart(budgetCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [{% if budget_performance %}{% for budget in budget_performance[:5] %}'{{ budget.category_name }}'{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}],
+                datasets: [{
+                    data: [{% if budget_performance %}{% for budget in budget_performance[:5] %}{{ budget.actual_spent }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}],
+                    backgroundColor: ['#5347A1', '#8470FF', '#A498FF', '#D6D2FF', '#ECEAFF'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-white-50">Income (This Month)</h6>
+                            <h3 class="mb-0">LKR {{ "%.2f"|format(total_income) }}</h3>
+                        </div>
+                        <div>
+                            <i class="bi bi-cash-coin icon-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-danger shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-white-50">Expenses (This Month)</h6>
+                            <h3 class="mb-0">LKR {{ "%.2f"|format(total_expenses) }}</h3>
+                        </div>
+                        <div>
+                            <i class="bi bi-receipt-cutoff icon-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white {% if net_savings >= 0 %}bg-info{% else %}bg-warning{% endif %} shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-white-50">Net Savings</h6>
+                            <h3 class="mb-0">LKR {{ "%.2f"|format(net_savings) }}</h3>
+                            <small class="text-white-50">{{ "%.1f"|format(savings_rate) }}% rate</small>
+                        </div>
+                        <div>
+                            <i class="bi bi-piggy-bank icon-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-white-50">Active Goals</h6>
+                            <h3 class="mb-0">{{ active_goals }}</h3>
+                            <small class="text-white-50">{{ active_budgets }} active budgets</small>
+                        </div>
+                        <div>
+                            <i class="bi bi-trophy icon-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Expenses -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Expenses</h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if recent_expenses %}
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for expense in recent_expenses %}
+                                <tr>
+                                    <td>{{ expense.expense_date }}</td>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ expense.category_name }}</span>
+                                    </td>
+                                    <td>{{ expense.description[:30] }}...</td>
+                                    <td class="text-end text-danger fw-bold">LKR {{ "%.2f"|format(expense.amount) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center p-5 text-muted">
+                        <i class="bi bi-inbox icon-xxl"></i>
+                        <p class="mt-2">No expenses recorded yet</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-white text-end">
+                    <a href="{{ url_for('expenses') }}" class="btn btn-sm btn-primary">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Performance -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-pie-chart-fill"></i> Budget Performance</h5>
+                </div>
+                <div class="card-body">
+                    {% if budget_performance %}
+                    {% for budget in budget_performance %}
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>{{ budget.category_name }}</span>
+                            <span>
+                                <strong>LKR {{ "%.2f"|format(budget.actual_spent) }}</strong> / LKR {{ "%.2f"|format(budget.budget_amount) }}
+                            </span>
+                        </div>
+                        <div class="progress progress-height-md">
+                            {% set percent = budget.utilization_percent %}
+                            {% if percent >= 100 %}
+                                <div class="progress-bar bg-danger w-100" role="progressbar" 
+                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="{{ budget.category_name }} budget progress">
+                                    {{ "%.0f"|format(percent) }}%
+                                </div>
+                            {% elif percent >= 80 %}
+                                <div class="progress-bar bg-warning" role="progressbar" 
+                                     style="width: {{ percent }}%;" aria-valuenow="{{ "%.0f"|format(percent) }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ budget.category_name }} budget progress">
+                                    {{ "%.0f"|format(percent) }}%
+                                </div>
+                            {% else %}
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: {{ percent }}%;" aria-valuenow="{{ "%.0f"|format(percent) }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ budget.category_name }} budget progress">
+                                    {{ "%.0f"|format(percent) }}%
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="text-center p-5 text-muted">
+                        <i class="bi bi-inbox icon-xxl"></i>
+                        <p class="mt-2">No active budgets</p>
+                        <a href="{{ url_for('budgets') }}" class="btn btn-sm btn-primary">Create Budget</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-white text-end">
+                    <a href="{{ url_for('budgets') }}" class="btn btn-sm btn-primary">
+                        Manage Budgets <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-lightning-fill"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-2 mb-3">
+                            <a href="{{ url_for('expenses') }}" class="btn btn-outline-danger btn-lg w-100">
+                                <i class="bi bi-plus-circle d-block icon-lg"></i>
+                                Add Expense
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{{ url_for('income') }}" class="btn btn-outline-success btn-lg w-100">
+                                <i class="bi bi-plus-circle d-block icon-lg"></i>
+                                Add Income
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{{ url_for('budgets') }}" class="btn btn-outline-primary btn-lg w-100">
+                                <i class="bi bi-plus-circle d-block icon-lg"></i>
+                                Create Budget
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{{ url_for('goals') }}" class="btn btn-outline-info btn-lg w-100">
+                                <i class="bi bi-plus-circle d-block icon-lg"></i>
+                                Set Goal
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{{ url_for('reports') }}" class="btn btn-outline-warning btn-lg w-100">
+                                <i class="bi bi-graph-up d-block icon-lg"></i>
+                                View Reports
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <form method="POST" action="{{ url_for('sync_to_oracle') }}" class="w-100">
+                                <button type="submit" class="btn btn-outline-secondary btn-lg w-100">
+                                    <i class="bi bi-arrow-repeat d-block icon-lg"></i>
+                                    Sync to Oracle
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

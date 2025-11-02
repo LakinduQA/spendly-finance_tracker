@@ -1,73 +1,115 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Spendly</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <!-- Auth Card -->
+                <div class="col-lg-5 col-md-7">
+                    <div class="auth-card fade-in">
+                        <!-- Logo -->
+                        <div class="text-center mb-4">
+                            <div class="auth-logo mx-auto mb-3">
+                                <img src="{{ url_for('static', filename='images/Spendly_Logo.png') }}" alt="Spendly Logo" style="height: 70px; width: auto;">
+                            </div>
+                            <h2 class="fw-bold mb-2" style="font-size: 2rem; color: var(--finset-primary);">Welcome to Spendly</h2>
+                            <p class="text-muted" style="font-size: 0.95rem;">Create your account to get started</p>
+                        </div>
 
-{% block title %}Register - Personal Finance Manager{% endblock %}
+                        <!-- Flash Messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} alert-dismissible fade show mb-4" role="alert">
+                                        <i class="bi bi-{% if category == 'danger' %}exclamation-circle{% else %}info-circle{% endif %}-fill"></i>
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
 
-{% block content %}
-<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
-    <div class="col-md-8 col-lg-6">
-        <div class="card shadow-lg border-0">
-            <div class="card-body p-5">
-                <div class="text-center mb-4">
-                    <i class="bi bi-person-plus-fill text-primary" style="font-size: 3rem;"></i>
-                    <h3 class="mt-3">Create Account</h3>
-                    <p class="text-muted">Start managing your finances today</p>
-                </div>
-
-                <form method="POST" action="{{ url_for('register') }}">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="username" class="form-label">Username *</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <!-- Register Form -->
+                        <form method="POST" action="{{ url_for('register') }}">
+                            <!-- Username -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username" 
-                                       placeholder="Choose a username" required>
+                                       placeholder="Choose a username" required autofocus>
                             </div>
-                        </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label for="full_name" class="form-label">Full Name *</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                            <!-- Full Name -->
+                            <div class="mb-3">
+                                <label for="full_name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="full_name" name="full_name" 
-                                       placeholder="Your full name" required>
+                                       placeholder="Enter your full name" required>
                             </div>
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       placeholder="your.email@example.com" required>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" 
+                                       placeholder="Create a secure password" required>
+                            </div>
+
+                            <!-- Terms -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" class="text-primary">Terms & Conditions</a>
+                                </label>
+                            </div>
+
+                            <!-- Sign Up Button -->
+                            <button type="submit" class="btn btn-primary w-100 mb-3">
+                                Create Account
+                            </button>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="auth-footer">
+                            <p class="text-muted mb-0">Already have an account? <a href="{{ url_for('login') }}" class="text-primary text-decoration-none fw-bold">Sign in</a></p>
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email Address *</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" name="email" 
-                                   placeholder="your.email@example.com" required>
-                        </div>
+                </div>
+                
+                <!-- Illustration Placeholder -->
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="text-center text-white">
+                        <img src="{{ url_for('static', filename='images/Spendly_registration_page.png') }}" alt="Registration Illustration" class="img-fluid" style="max-width: 500px;">
                     </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password *</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                            <input type="password" class="form-control" id="password" name="password" 
-                                   placeholder="Choose a secure password" required>
-                        </div>
-                        <small class="text-muted">
-                            <i class="bi bi-info-circle"></i> Note: Password storage is simplified for academic purposes
-                        </small>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 py-2 mt-3">
-                        <i class="bi bi-check-circle"></i> Create Account
-                    </button>
-                </form>
-
-                <div class="text-center mt-4">
-                    <p class="text-muted">Already have an account?</p>
-                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-box-arrow-in-right"></i> Sign In
-                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

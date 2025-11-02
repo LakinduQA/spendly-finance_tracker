@@ -1,8 +1,66 @@
-// Main JavaScript for Personal Finance Manager
+// Main JavaScript for Personal Finance Manager - FinSet Design
 
-// Initialize tooltips
+// ===== FINSET SIDEBAR FUNCTIONALITY =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Bootstrap tooltip initialization
+    // Sidebar toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            // Save state to localStorage
+            const isCollapsed = sidebar.classList.contains('collapsed');
+            localStorage.setItem('sidebarCollapsed', isCollapsed);
+        });
+        
+        // Restore sidebar state on page load
+        const savedState = localStorage.getItem('sidebarCollapsed');
+        if (savedState === 'true') {
+            sidebar.classList.add('collapsed');
+        }
+    }
+    
+    // Mobile sidebar toggle
+    if (window.innerWidth <= 1024) {
+        if (sidebar) {
+            sidebar.classList.add('collapsed');
+            
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
+                });
+            }
+        }
+    }
+    
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            
+            // Update icon
+            const icon = themeToggle.querySelector('i');
+            if (icon) {
+                icon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+            }
+        });
+        
+        // Restore theme preference
+        const savedTheme = localStorage.getItem('darkMode');
+        if (savedTheme === 'true') {
+            document.body.classList.add('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (icon) {
+                icon.className = 'bi bi-sun-fill';
+            }
+        }
+    }
+    
+    // Initialize tooltips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
