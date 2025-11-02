@@ -5,6 +5,23 @@
 
 ---
 
+## 🚀 QUICK START (For the Impatient!)
+
+**Don't want to read? Just want to run it?**
+
+1. **Install Python** (if you don't have it): https://www.python.org/downloads/
+   - ⚠️ **CHECK "Add Python to PATH"** during installation!
+2. **Download this project** (ZIP or clone)
+3. **Double-click `SETUP.bat`** in the project folder
+4. **Choose option 2** (Populate Sample Data)
+5. **Browser opens** → Login as `john_doe` → Explore!
+
+**That's it!** ✨
+
+👉 **Having issues?** Read the [**Complete Setup Guide**](COMPLETE_SETUP_GUIDE.md) (for non-technical users)
+
+---
+
 
 **This is basically the first working version** - got all the core features done according to the coursework requirements (check `cw.md`), but I know it probably needs some polish and optimization. That's where you guys come in! 
 
@@ -90,25 +107,49 @@ All using GROUP BY, HAVING, ORDER BY, CASE statements, and loops:
 
 ## 🚀 How to Run This on Your Machine
 
-### Prerequisites
-You'll need:
-- Python 3.8+ installed
-- Oracle Database (or access to mine: 172.20.10.4:1521/xe)
-- DB Browser for SQLite (optional, to view SQLite database)
-- SQL Developer (optional, to view Oracle database)
+### ⚡ SUPER QUICK (Recommended)
 
-### Step 1: Clone the Repo
+**Just 3 steps:**
+
+1. **Install Python** (if needed): https://www.python.org/downloads/
+   - ⚠️ Check "Add Python to PATH"!
+2. **Download/Clone this project**
+3. **Double-click `SETUP.bat`** → Choose option 2 → Done! ✨
+
+### 📖 Need More Help?
+
+Choose your path:
+
+| I am... | Read this... |
+|---------|-------------|
+| 🆕 Complete beginner | [**COMPLETE_SETUP_GUIDE.md**](COMPLETE_SETUP_GUIDE.md) - Everything from zero |
+| 🤔 Confused about files | [**WHICH_FILE_TO_USE.md**](WHICH_FILE_TO_USE.md) - Quick reference |
+| 🐛 Having issues | [**docs/troubleshooting/**](docs/troubleshooting/) - Common fixes |
+| 🧪 Want to test | [**docs/checklists/FULL_TESTING_CHECKLIST.md**](docs/checklists/FULL_TESTING_CHECKLIST.md) - Testing guide |
+| 📊 Want to see reports | [**docs/guides/REPORT_GENERATION_GUIDE.md**](docs/guides/REPORT_GENERATION_GUIDE.md) - How reports work |
+
+### 🛠️ Manual Setup (If You Prefer)
+
+**Prerequisites:**
+- Python 3.8+ installed
+- Oracle Database (optional - for Oracle features)
+- DB Browser for SQLite (optional - to view database)
+- SQL Developer (optional - to run Oracle reports)
+
+**Step 1: Clone the Repo**
 ```bash
 git clone https://github.com/LakinduQA/DM2_CW.git
 cd DM2_CW
 ```
 
-### Step 2: Install Python Dependencies
+**Step 2: Install Python Dependencies**
 ```bash
-pip install flask cx_Oracle
+pip install -r requirements.txt
+# OR manually:
+pip install Flask cx_Oracle
 ```
 
-### Step 3: Run the Web App
+**Step 3: Run the Web App**
 ```bash
 cd webapp
 python app.py
@@ -136,28 +177,53 @@ Then open your browser to: **http://127.0.0.1:5000**
 ```
 DM2_CW/
 │
-├── cw.md                          ← Original coursework requirements
-├── FINAL_PROJECT_REPORT.md        ← Main deliverable (25 pages)
-├── REQUIREMENTS_COMPLETION_ANALYSIS.md  ← What's done vs required
+├── 🚀 SETUP.bat                   ← DOUBLE-CLICK THIS TO START!
+├── 📖 COMPLETE_SETUP_GUIDE.md     ← Full setup guide for non-technical users
+├── 📄 README.md                   ← This file
+├── 📄 cw.md                       ← Original coursework requirements
+├── 📄 FINAL_PROJECT_REPORT.md     ← Main deliverable (25 pages)
+├── 📦 requirements.txt            ← Python dependencies
 │
-├── database_designs/              ← All design docs
+├── 📂 docs/                       ← ALL DOCUMENTATION (organized!)
+│   ├── checklists/               ← Testing and submission checklists
+│   │   ├── FULL_TESTING_CHECKLIST.md
+│   │   ├── TESTING_CHECKLIST.md
+│   │   └── SUBMISSION_CHECKLIST.md
+│   ├── guides/                   ← Setup and usage guides
+│   │   ├── DEMONSTRATION_GUIDE.md
+│   │   ├── ORACLE_SETUP_GUIDE.md
+│   │   ├── REPORT_GENERATION_GUIDE.md
+│   │   ├── SYNC_INSTALLATION_GUIDE.md
+│   │   └── UI_DESIGN_OVERVIEW.md
+│   ├── analysis/                 ← Requirements and project analysis
+│   │   ├── PROJECT_ANALYSIS.md
+│   │   └── REQUIREMENTS_COMPLETION_ANALYSIS.md
+│   ├── summaries/                ← Status reports and summaries
+│   │   ├── PROJECT_SUMMARY.md
+│   │   ├── STATUS_REPORT.md
+│   │   └── WELCOME_BACK.md
+│   └── troubleshooting/          ← Issues and fixes
+│       ├── FIXES_APPLIED.md
+│       └── ORACLE_CONNECTION_ISSUE.md
+│
+├── 📂 database_designs/          ← Database design documents
 │   ├── requirements.md
 │   ├── logical_design.md
 │   ├── physical_design_sqlite.md
 │   └── physical_design_oracle.md
 │
-├── sqlite/                        ← SQLite database & scripts
-│   ├── finance_local.db          ← THE DATABASE (367 transactions loaded!)
+├── 📂 sqlite/                    ← SQLite database & scripts
+│   ├── finance_local.db          ← THE DATABASE (367 transactions!)
 │   ├── 01_create_database.sql    (500+ lines)
 │   └── 02_crud_operations.sql
 │
-├── oracle/                        ← Oracle scripts
+├── 📂 oracle/                    ← Oracle scripts
 │   ├── 01_create_database.sql
 │   ├── 02_plsql_crud_package.sql  (1,400 lines)
 │   ├── 03_reports_package.sql     (718 lines)
 │   └── 04_fix_fiscal_columns.sql
 │
-├── synchronization/               ← Sync module
+├── 📂 synchronization/           ← Sync module
 │   ├── sync_manager.py           (603 lines)
 │   ├── config.ini                ← Oracle connection config
 │   └── test_sync_extended.py
