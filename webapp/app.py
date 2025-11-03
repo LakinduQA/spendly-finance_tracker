@@ -12,7 +12,7 @@ except ImportError:
     ORACLE_AVAILABLE = False
     print("Warning: cx_Oracle not installed. Oracle features will be disabled.")
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 import configparser
 from functools import wraps
@@ -22,6 +22,17 @@ import io
 app = Flask(__name__)
 app.secret_key = 'finance_management_secret_key_2025'  # Change this in production!
 
+# Timezone configuration (Sri Lanka Time: UTC+5:30)
+LK_TIMEZONE = timezone(timedelta(hours=5, minutes=30))
+
+def get_local_time():
+    """Get current time in Sri Lanka timezone"""
+    return datetime.now(LK_TIMEZONE)
+
+def get_local_time_str():
+    """Get current time as string in SQLite format (local time)"""
+    return get_local_time().strftime('%Y-%m-%d %H:%M:%S')
+
 # Database configuration
 SQLITE_DB_PATH = os.path.join('..', 'sqlite', 'finance_local.db')
 CONFIG_FILE = os.path.join('..', 'synchronization', 'config.ini')
@@ -29,6 +40,37 @@ CONFIG_FILE = os.path.join('..', 'synchronization', 'config.ini')
 # Load Oracle configuration
 config = configparser.ConfigParser()
 config.read(CONFIG_FILE)
+
+# ============================================
+# CONTEXT PROCESSOR - Inject pending sync count
+# ============================================
+
+@app.context_processor
+def inject_pending_sync_count():
+    """Inject pending sync count into all templates"""
+    if 'user_id' in session:
+        db = get_sqlite_db()
+        user_id = session['user_id']
+        
+        # Count unsynced items
+        pending_count = 0
+        
+        # Unsynced expenses
+        pending_count += db.execute('SELECT COUNT(*) as count FROM expense WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        
+        # Unsynced income
+        pending_count += db.execute('SELECT COUNT(*) as count FROM income WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        
+        # Unsynced budgets
+        pending_count += db.execute('SELECT COUNT(*) as count FROM budget WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        
+        # Unsynced goals
+        pending_count += db.execute('SELECT COUNT(*) as count FROM savings_goal WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        
+        db.close()
+        
+        return dict(pending_sync_count=pending_count)
+    return dict(pending_sync_count=0)
 
 # ============================================
 # DATABASE CONNECTION HELPERS
@@ -525,13 +567,15 @@ def register():
             flash('Username already exists!', 'danger')
             return redirect(url_for('register'))
         
-        # Create user account (note: storing password directly for simplicity)
-        # In production, use proper password hashing!
+        # Hash the password
+        password_hash = generate_password_hash(password)
+        
+        # Create user account with hashed password
         try:
             db.execute('''
-                INSERT INTO user (username, email, full_name) 
-                VALUES (?, ?, ?)
-            ''', (username, email, full_name))
+                INSERT INTO user (username, password_hash, email, full_name) 
+                VALUES (?, ?, ?, ?)
+            ''', (username, password_hash, email, full_name))
             db.commit()
             flash('Account created successfully! Please log in.', 'success')
             return redirect(url_for('login'))
@@ -548,19 +592,21 @@ def login():
     """User login"""
     if request.method == 'POST':
         username = request.form.get('username')
+        password = request.form.get('password')
         
         db = get_sqlite_db()
         user = db.execute('SELECT * FROM user WHERE username = ?', (username,)).fetchone()
         db.close()
         
-        if user:
+        if user and check_password_hash(user['password_hash'], password):
             session['user_id'] = user['user_id']
             session['username'] = user['username']
             session['full_name'] = user['full_name']
+            session['email'] = user['email']
             flash(f'Welcome back, {user["full_name"]}!', 'success')
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid username. Please try again.', 'danger')
+            flash('Invalid username or password. Please try again.', 'danger')
     
     return render_template('login.html')
 
@@ -570,6 +616,100 @@ def logout():
     session.clear()
     flash('You have been logged out successfully.', 'info')
     return redirect(url_for('login'))
+
+# ============================================
+# SETTINGS
+# ============================================
+
+@app.route('/settings')
+@login_required
+def settings():
+    """User settings page"""
+    db = get_sqlite_db()
+    user_id = session['user_id']
+    
+    # Get user info
+    user = db.execute('SELECT * FROM user WHERE user_id = ?', (user_id,)).fetchone()
+    
+    db.close()
+    
+    return render_template('settings.html', user=user)
+
+@app.route('/update_profile', methods=['POST'])
+@login_required
+def update_profile():
+    """Update user profile"""
+    db = get_sqlite_db()
+    user_id = session['user_id']
+    
+    full_name = request.form.get('full_name')
+    email = request.form.get('email')
+    
+    try:
+        db.execute('''
+            UPDATE user 
+            SET full_name = ?, email = ?
+            WHERE user_id = ?
+        ''', (full_name, email, user_id))
+        db.commit()
+        
+        # Update session
+        session['full_name'] = full_name
+        
+        flash('Profile updated successfully!', 'success')
+    except Exception as e:
+        flash(f'Error updating profile: {str(e)}', 'danger')
+    finally:
+        db.close()
+    
+    return redirect(url_for('settings'))
+
+@app.route('/change_password', methods=['POST'])
+@login_required
+def change_password():
+    """Change user password"""
+    db = get_sqlite_db()
+    user_id = session['user_id']
+    
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+    
+    try:
+        # Get current user
+        user = db.execute('SELECT * FROM user WHERE user_id = ?', (user_id,)).fetchone()
+        
+        # Verify current password
+        if not check_password_hash(user['password_hash'], current_password):
+            flash('Current password is incorrect!', 'danger')
+            return redirect(url_for('settings'))
+        
+        # Check if new passwords match
+        if new_password != confirm_password:
+            flash('New passwords do not match!', 'danger')
+            return redirect(url_for('settings'))
+        
+        # Check password length
+        if len(new_password) < 6:
+            flash('Password must be at least 6 characters long!', 'danger')
+            return redirect(url_for('settings'))
+        
+        # Hash and update password
+        new_password_hash = generate_password_hash(new_password)
+        db.execute('''
+            UPDATE user 
+            SET password_hash = ?
+            WHERE user_id = ?
+        ''', (new_password_hash, user_id))
+        db.commit()
+        
+        flash('Password changed successfully!', 'success')
+    except Exception as e:
+        flash(f'Error changing password: {str(e)}', 'danger')
+    finally:
+        db.close()
+    
+    return redirect(url_for('settings'))
 
 # ============================================
 # DASHBOARD
@@ -628,6 +768,31 @@ def dashboard():
         LIMIT 5
     ''', (user_id,)).fetchall()
     
+    # Get monthly income and expenses for the last 7 months for Money Flow chart
+    monthly_data = []
+    for i in range(6, -1, -1):  # Last 7 months including current
+        month_date = datetime.now() - timedelta(days=30*i)
+        month_str = month_date.strftime('%Y-%m')
+        month_name = month_date.strftime('%b')
+        
+        month_income = db.execute('''
+            SELECT COALESCE(SUM(amount), 0) as total
+            FROM income
+            WHERE user_id = ? AND strftime('%Y-%m', income_date) = ?
+        ''', (user_id, month_str)).fetchone()['total']
+        
+        month_expense = db.execute('''
+            SELECT COALESCE(SUM(amount), 0) as total
+            FROM expense
+            WHERE user_id = ? AND strftime('%Y-%m', expense_date) = ?
+        ''', (user_id, month_str)).fetchone()['total']
+        
+        monthly_data.append({
+            'month': month_name,
+            'income': float(month_income),
+            'expense': float(month_expense)
+        })
+    
     db.close()
     
     # Calculate net savings
@@ -642,7 +807,8 @@ def dashboard():
                          active_budgets=active_budgets,
                          active_goals=active_goals,
                          recent_expenses=recent_expenses,
-                         budget_performance=budget_performance)
+                         budget_performance=budget_performance,
+                         monthly_data=monthly_data)
 
 # ============================================
 # EXPENSE MANAGEMENT
@@ -959,6 +1125,99 @@ def reports():
     """Financial reports page"""
     return render_template('reports.html')
 
+@app.route('/api/pending_sync_details')
+@login_required
+def pending_sync_details():
+    """Get detailed information about pending sync items"""
+    user_id = session['user_id']
+    conn = get_sqlite_db()
+    
+    try:
+        # Get recent unsynced expenses (limit 3)
+        expenses = conn.execute('''
+            SELECT e.expense_id, e.amount, c.category_name as category, e.description, e.expense_date
+            FROM expense e
+            JOIN category c ON e.category_id = c.category_id
+            WHERE e.user_id = ? AND e.is_synced = 0
+            ORDER BY e.expense_date DESC, e.expense_id DESC
+            LIMIT 3
+        ''', (user_id,)).fetchall()
+        
+        # Count total unsynced expenses
+        total_expenses = conn.execute(
+            'SELECT COUNT(*) as count FROM expense WHERE user_id = ? AND is_synced = 0',
+            (user_id,)
+        ).fetchone()['count']
+        
+        # Get recent unsynced income (limit 3)
+        income = conn.execute('''
+            SELECT income_id, amount, income_source as source, description, income_date
+            FROM income
+            WHERE user_id = ? AND is_synced = 0
+            ORDER BY income_date DESC, income_id DESC
+            LIMIT 3
+        ''', (user_id,)).fetchall()
+        
+        total_income = conn.execute(
+            'SELECT COUNT(*) as count FROM income WHERE user_id = ? AND is_synced = 0',
+            (user_id,)
+        ).fetchone()['count']
+        
+        # Get recent unsynced budgets (limit 3)
+        budgets = conn.execute('''
+            SELECT b.budget_id, c.category_name, b.budget_amount, b.start_date, b.end_date
+            FROM budget b
+            JOIN category c ON b.category_id = c.category_id
+            WHERE b.user_id = ? AND b.is_synced = 0
+            ORDER BY b.created_at DESC, b.budget_id DESC
+            LIMIT 3
+        ''', (user_id,)).fetchall()
+        
+        total_budgets = conn.execute(
+            'SELECT COUNT(*) as count FROM budget WHERE user_id = ? AND is_synced = 0',
+            (user_id,)
+        ).fetchone()['count']
+        
+        # Get recent unsynced goals (limit 3)
+        goals = conn.execute('''
+            SELECT goal_id, goal_name, target_amount, current_amount
+            FROM savings_goal
+            WHERE user_id = ? AND is_synced = 0
+            ORDER BY created_at DESC, goal_id DESC
+            LIMIT 3
+        ''', (user_id,)).fetchall()
+        
+        total_goals = conn.execute(
+            'SELECT COUNT(*) as count FROM savings_goal WHERE user_id = ? AND is_synced = 0',
+            (user_id,)
+        ).fetchone()['count']
+        
+        conn.close()
+        
+        return jsonify({
+            'expenses': {
+                'items': [dict(row) for row in expenses],
+                'total': total_expenses
+            },
+            'income': {
+                'items': [dict(row) for row in income],
+                'total': total_income
+            },
+            'budgets': {
+                'items': [dict(row) for row in budgets],
+                'total': total_budgets
+            },
+            'goals': {
+                'items': [dict(row) for row in goals],
+                'total': total_goals
+            }
+        })
+        
+    except Exception as e:
+        if conn:
+            conn.close()
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/sync_to_oracle', methods=['POST'])
 @login_required
 def sync_to_oracle():
@@ -979,7 +1238,8 @@ def sync_to_oracle():
     except Exception as e:
         flash(f'Sync error: {str(e)}', 'danger')
     
-    return redirect(url_for('reports'))
+    # Redirect back to the page the user came from, or dashboard if no referrer
+    return redirect(request.referrer or url_for('dashboard'))
 
 # ============================================
 # REPORT GENERATION AND DOWNLOAD ROUTES

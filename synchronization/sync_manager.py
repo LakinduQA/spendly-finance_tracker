@@ -118,7 +118,7 @@ class DatabaseSync:
             
             # Get all users from SQLite
             sqlite_cursor.execute("""
-                SELECT user_id, username, email, full_name, created_at
+                SELECT user_id, username, password_hash, email, full_name, created_at
                 FROM user
             """)
             
@@ -137,11 +137,12 @@ class DatabaseSync:
                     if not exists:
                         # Insert new user
                         oracle_cursor.execute("""
-                            INSERT INTO finance_user (user_id, username, email, full_name, created_at)
-                            VALUES (:1, :2, :3, :4, TO_TIMESTAMP(:5, 'YYYY-MM-DD HH24:MI:SS'))
+                            INSERT INTO finance_user (user_id, username, password_hash, email, full_name, created_at)
+                            VALUES (:1, :2, :3, :4, :5, TO_TIMESTAMP(:6, 'YYYY-MM-DD HH24:MI:SS'))
                         """, [
                             user['user_id'],
                             user['username'],
+                            user['password_hash'],
                             user['email'],
                             user['full_name'],
                             user['created_at']

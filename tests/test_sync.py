@@ -3,7 +3,10 @@ Quick Sync Test Script
 Runs synchronization for all users without prompts
 """
 import sys
-sys.path.append('d:/DM2_CW/synchronization')
+import os
+
+# Add parent directory to path for imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'synchronization'))
 
 from sync_manager import DatabaseSync
 
@@ -12,7 +15,8 @@ print("AUTOMATED SYNCHRONIZATION TEST")
 print("=" * 60 + "\n")
 
 print("Initializing synchronization...")
-sync = DatabaseSync('d:/DM2_CW/synchronization/config.ini')
+config_path = os.path.join(os.path.dirname(__file__), '..', 'synchronization', 'config.ini')
+sync = DatabaseSync(config_path)
 
 # Get all users from SQLite
 if sync.connect_sqlite():

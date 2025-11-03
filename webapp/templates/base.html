@@ -64,7 +64,7 @@
                     <i class="bi bi-bar-chart-line"></i>
                     <span>Analytics</span>
                 </a>
-                <a href="#" class="sidebar-link">
+                <a href="{{ url_for('settings') }}" class="sidebar-link {% if request.endpoint == 'settings' %}active{% endif %}">
                     <i class="bi bi-gear"></i>
                     <span>Settings</span>
                 </a>
@@ -72,7 +72,7 @@
 
             <!-- Bottom Navigation -->
             <div class="sidebar-bottom">
-                <a href="#" class="sidebar-link">
+                <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#helpModal">
                     <i class="bi bi-question-circle"></i>
                     <span>Help</span>
                 </a>
@@ -99,18 +99,56 @@
                     <h1 class="page-title">{% block page_title %}Dashboard{% endblock %}</h1>
                 </div>
                 <div class="header-right">
-                    <button class="header-icon-btn">
-                        <i class="bi bi-search"></i>
-                    </button>
-                    <button class="header-icon-btn">
-                        <i class="bi bi-bell"></i>
-                        <span class="notification-badge">3</span>
-                    </button>
+                    <!-- Notification Bell -->
+                    <div class="dropdown d-inline">
+                        <button class="header-icon-btn position-relative" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="View Notifications">
+                            <i class="bi bi-bell"></i>
+                            {% if pending_sync_count > 0 %}
+                            <span class="notification-badge">{{ pending_sync_count }}</span>
+                            {% endif %}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown" style="min-width: 400px; max-width: 450px;">
+                            <div class="dropdown-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">Pending Sync Items</h6>
+                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="dropdown" aria-label="Close"></button>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div id="notificationContent" style="max-height: 400px; overflow-y: auto;">
+                                <div class="text-center py-4">
+                                    <div class="spinner-border text-primary spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="text-muted mt-2 mb-0 small">Loading notifications...</p>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-footer p-3">
+                                <form method="POST" action="{{ url_for('sync_to_oracle') }}" id="syncFormFromNotification">
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-primary btn-sm" id="syncAllBtn">
+                                            <i class="bi bi-cloud-arrow-up"></i> Sync All Now
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sync Button -->
+                    <form method="POST" action="{{ url_for('sync_to_oracle') }}" class="d-inline" id="syncForm">
+                        <button type="submit" class="header-icon-btn position-relative" title="Sync to Oracle" id="syncBtn">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            {% if pending_sync_count > 0 %}
+                            <span class="sync-badge">{{ pending_sync_count }}</span>
+                            {% endif %}
+                        </button>
+                    </form>
+                    
                     <div class="user-profile">
                         <img src="https://ui-avatars.com/api/?name={{ session.full_name }}&background=5347A1&color=fff" alt="User">
                         <div class="user-info">
                             <span class="user-name">{{ session.full_name }}</span>
-                            <span class="user-email">user@spendly.com</span>
+                            <span class="user-email">{{ session.email }}</span>
                         </div>
                     </div>
                 </div>
@@ -141,6 +179,417 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Sync Button Loading State -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const syncForm = document.getElementById('syncForm');
+            const syncBtn = document.getElementById('syncBtn');
+            const syncFormNotif = document.getElementById('syncFormFromNotification');
+            const syncAllBtn = document.getElementById('syncAllBtn');
+            
+            // Handle main sync button
+            if (syncForm && syncBtn) {
+                syncForm.addEventListener('submit', function(e) {
+                    // Disable button
+                    syncBtn.disabled = true;
+                    syncBtn.style.opacity = '0.6';
+                    
+                    // Change icon to spinner
+                    syncBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+                });
+            }
+            
+            // Handle sync from notification dropdown
+            if (syncFormNotif && syncAllBtn) {
+                syncFormNotif.addEventListener('submit', function(e) {
+                    syncAllBtn.disabled = true;
+                    syncAllBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Syncing...';
+                });
+            }
+        });
+    </script>
+    
+    <!-- Notification Dropdown Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const notificationBtn = document.getElementById('notificationDropdown');
+            const notificationContent = document.getElementById('notificationContent');
+            const syncFooter = document.querySelector('.dropdown-footer');
+            let notificationsLoaded = false;
+            
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', function() {
+                    // Only load once per page load
+                    if (!notificationsLoaded) {
+                        loadNotifications();
+                        notificationsLoaded = true;
+                    }
+                });
+            }
+            
+            function loadNotifications() {
+                fetch('/api/pending_sync_details')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        renderNotifications(data);
+                    })
+                    .catch(error => {
+                        console.error('Error loading notifications:', error);
+                        notificationContent.innerHTML = `
+                            <div class="text-center py-4">
+                                <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2rem;"></i>
+                                <p class="text-danger fw-bold mt-2 mb-1">Failed to load notifications</p>
+                                <p class="text-muted small mb-0">Please try again later</p>
+                            </div>
+                        `;
+                        // Hide sync button on error
+                        if (syncFooter) {
+                            syncFooter.style.display = 'none';
+                        }
+                    });
+            }
+            
+            function renderNotifications(data) {
+                let html = '';
+                let totalCount = data.expenses.total + data.income.total + data.budgets.total + data.goals.total;
+                
+                if (totalCount === 0) {
+                    html = `
+                        <div class="text-center py-5">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                            <p class="fw-bold mt-3 mb-1" style="font-size: 1.1rem;">You're all synced!</p>
+                            <p class="text-muted small mb-0">No pending items to sync</p>
+                        </div>
+                    `;
+                    // Hide sync button when no items
+                    if (syncFooter) {
+                        syncFooter.style.display = 'none';
+                    }
+                } else {
+                    // Show sync button when there are items
+                    if (syncFooter) {
+                        syncFooter.style.display = 'block';
+                    }
+                    
+                    // Expenses
+                    if (data.expenses.total > 0) {
+                        html += '<div class="notification-section">';
+                        html += '<div class="notification-section-header">';
+                        html += '<i class="bi bi-wallet2 text-danger"></i>';
+                        html += '<strong>Expenses</strong>';
+                        html += '<span class="badge bg-danger rounded-pill">' + data.expenses.total + '</span>';
+                        html += '</div>';
+                        data.expenses.items.forEach(item => {
+                            html += '<div class="notification-item">';
+                            html += '<div class="notification-item-content">';
+                            html += '<div class="notification-item-title">' + item.category + '</div>';
+                            html += '<div class="notification-item-desc">' + (item.description || 'No description') + '</div>';
+                            html += '</div>';
+                            html += '<div class="notification-item-amount">LKR ' + parseFloat(item.amount).toFixed(2) + '</div>';
+                            html += '</div>';
+                        });
+                        if (data.expenses.total > 3) {
+                            html += '<div class="notification-more">and ' + (data.expenses.total - 3) + ' more...</div>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    // Income
+                    if (data.income.total > 0) {
+                        html += '<div class="notification-section">';
+                        html += '<div class="notification-section-header">';
+                        html += '<i class="bi bi-cash-coin text-success"></i>';
+                        html += '<strong>Income</strong>';
+                        html += '<span class="badge bg-success rounded-pill">' + data.income.total + '</span>';
+                        html += '</div>';
+                        data.income.items.forEach(item => {
+                            html += '<div class="notification-item">';
+                            html += '<div class="notification-item-content">';
+                            html += '<div class="notification-item-title">' + item.source + '</div>';
+                            html += '<div class="notification-item-desc">' + (item.description || 'No description') + '</div>';
+                            html += '</div>';
+                            html += '<div class="notification-item-amount text-success">+LKR ' + parseFloat(item.amount).toFixed(2) + '</div>';
+                            html += '</div>';
+                        });
+                        if (data.income.total > 3) {
+                            html += '<div class="notification-more">and ' + (data.income.total - 3) + ' more...</div>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    // Budgets
+                    if (data.budgets.total > 0) {
+                        html += '<div class="notification-section">';
+                        html += '<div class="notification-section-header">';
+                        html += '<i class="bi bi-pie-chart text-primary"></i>';
+                        html += '<strong>Budgets</strong>';
+                        html += '<span class="badge bg-primary rounded-pill">' + data.budgets.total + '</span>';
+                        html += '</div>';
+                        data.budgets.items.forEach(item => {
+                            html += '<div class="notification-item">';
+                            html += '<div class="notification-item-content">';
+                            html += '<div class="notification-item-title">' + item.category_name + '</div>';
+                            html += '<div class="notification-item-desc">' + item.start_date + ' to ' + item.end_date + '</div>';
+                            html += '</div>';
+                            html += '<div class="notification-item-amount">LKR ' + parseFloat(item.budget_amount).toFixed(2) + '</div>';
+                            html += '</div>';
+                        });
+                        if (data.budgets.total > 3) {
+                            html += '<div class="notification-more">and ' + (data.budgets.total - 3) + ' more...</div>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    // Goals
+                    if (data.goals.total > 0) {
+                        html += '<div class="notification-section">';
+                        html += '<div class="notification-section-header">';
+                        html += '<i class="bi bi-trophy text-warning"></i>';
+                        html += '<strong>Savings Goals</strong>';
+                        html += '<span class="badge bg-warning rounded-pill">' + data.goals.total + '</span>';
+                        html += '</div>';
+                        data.goals.items.forEach(item => {
+                            html += '<div class="notification-item">';
+                            html += '<div class="notification-item-content">';
+                            html += '<div class="notification-item-title">' + item.goal_name + '</div>';
+                            html += '<div class="notification-item-desc">Target: LKR ' + parseFloat(item.target_amount).toFixed(2) + '</div>';
+                            html += '</div>';
+                            html += '<div class="notification-item-amount">LKR ' + parseFloat(item.current_amount).toFixed(2) + '</div>';
+                            html += '</div>';
+                        });
+                        if (data.goals.total > 3) {
+                            html += '<div class="notification-more">and ' + (data.goals.total - 3) + ' more...</div>';
+                        }
+                        html += '</div>';
+                    }
+                }
+                
+                notificationContent.innerHTML = html;
+            }
+        });
+    </script>
+    
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #5347A1; color: white;">
+                    <h5 class="modal-title" id="helpModalLabel">
+                        <i class="bi bi-question-circle me-2"></i>Help & Support
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs mb-4" id="helpTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="quickstart-tab" data-bs-toggle="tab" data-bs-target="#quickstart" type="button" role="tab">
+                                <i class="bi bi-rocket-takeoff me-1"></i> Quick Start
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab">
+                                <i class="bi bi-grid me-1"></i> Features
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="support-tab" data-bs-toggle="tab" data-bs-target="#support" type="button" role="tab">
+                                <i class="bi bi-chat-dots me-1"></i> Support
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab">
+                                <i class="bi bi-info-circle me-1"></i> About
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="helpTabsContent">
+                        <!-- Quick Start Tab -->
+                        <div class="tab-pane fade show active" id="quickstart" role="tabpanel">
+                            <h6 class="fw-bold mb-3" style="color: #5347A1;">Getting Started with Spendly</h6>
+                            <div class="d-flex flex-column gap-3">
+                                <div class="d-flex align-items-start">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                         style="width: 40px; height: 40px; background-color: #F3F0FF; color: #5347A1; font-weight: bold; flex-shrink: 0;">
+                                        1
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Add Your First Expense</h6>
+                                        <p class="mb-0 text-muted">Navigate to the <strong>Expenses</strong> page and click "Add New Expense" to track your spending.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                         style="width: 40px; height: 40px; background-color: #F3F0FF; color: #5347A1; font-weight: bold; flex-shrink: 0;">
+                                        2
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Create a Budget</h6>
+                                        <p class="mb-0 text-muted">Set spending limits by category in the <strong>Budget</strong> section to stay on track.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                         style="width: 40px; height: 40px; background-color: #F3F0FF; color: #5347A1; font-weight: bold; flex-shrink: 0;">
+                                        3
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Set Savings Goals</h6>
+                                        <p class="mb-0 text-muted">Define financial targets in the <strong>Goals</strong> page and track your progress over time.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                         style="width: 40px; height: 40px; background-color: #F3F0FF; color: #5347A1; font-weight: bold; flex-shrink: 0;">
+                                        4
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Sync to Oracle Database</h6>
+                                        <p class="mb-0 text-muted">Click the <strong>Sync</strong> button in the top bar to backup your data to the Oracle database.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Features Tab -->
+                        <div class="tab-pane fade" id="features" role="tabpanel">
+                            <h6 class="fw-bold mb-3" style="color: #5347A1;">Feature Overview</h6>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead style="background-color: #F3F0FF;">
+                                        <tr>
+                                            <th style="color: #5347A1;">Page</th>
+                                            <th style="color: #5347A1;">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Dashboard</strong></td>
+                                            <td>Get a quick overview of your finances, including recent transactions and budget status.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Expenses</strong></td>
+                                            <td>Track and manage all your daily expenses by category and payment method.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Wallet (Income)</strong></td>
+                                            <td>Record income from various sources to maintain accurate financial records.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Goals</strong></td>
+                                            <td>Set savings goals and monitor your progress towards achieving them.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Budget</strong></td>
+                                            <td>Create spending limits by category and track your adherence to budgets.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Analytics</strong></td>
+                                            <td>Visualize spending patterns with interactive charts and detailed reports.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Settings</strong></td>
+                                            <td>Customize your profile and manage application preferences.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Support Tab -->
+                        <div class="tab-pane fade" id="support" role="tabpanel">
+                            <h6 class="fw-bold mb-3" style="color: #5347A1;">Contact & Support</h6>
+                            <div class="card border-0" style="background-color: #F8F9FA;">
+                                <div class="card-body">
+                                    <p class="mb-3">Need help? We're here to assist you!</p>
+                                    
+                                    <div class="mb-3">
+                                        <h6 class="fw-bold mb-2">
+                                            <i class="bi bi-envelope me-2" style="color: #5347A1;"></i>Email Support
+                                        </h6>
+                                        <p class="mb-0 ms-4">
+                                            <a href="mailto:support@spendly.com" style="color: #5347A1; text-decoration: none;">
+                                                support@spendly.com
+                                            </a>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <h6 class="fw-bold mb-2">
+                                            <i class="bi bi-github me-2" style="color: #5347A1;"></i>GitHub Issues
+                                        </h6>
+                                        <p class="mb-0 ms-4">
+                                            <a href="#" style="color: #5347A1; text-decoration: none;">
+                                                Report bugs or request features
+                                            </a>
+                                        </p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h6 class="fw-bold mb-2">
+                                            <i class="bi bi-book me-2" style="color: #5347A1;"></i>Documentation
+                                        </h6>
+                                        <p class="mb-0 ms-4">
+                                            <a href="#" style="color: #5347A1; text-decoration: none;">
+                                                View user guide and FAQs
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- About Tab -->
+                        <div class="tab-pane fade" id="about" role="tabpanel">
+                            <h6 class="fw-bold mb-3" style="color: #5347A1;">System Information</h6>
+                            <div class="card border-0" style="background-color: #F8F9FA;">
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-5 fw-bold">Application Name:</div>
+                                        <div class="col-7">Spendly Finance Manager</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-5 fw-bold">Version:</div>
+                                        <div class="col-7">1.0.0</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-5 fw-bold">Database:</div>
+                                        <div class="col-7">SQLite (Local) + Oracle (Sync)</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-5 fw-bold">Framework:</div>
+                                        <div class="col-7">Flask 3.0.0 + Python 3.13</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5 fw-bold">Last Sync:</div>
+                                        <div class="col-7" id="lastSyncInfo">
+                                            <span class="text-muted">No sync data available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3 mb-0">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <strong>Note:</strong> This application is part of an academic coursework project (DM2).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

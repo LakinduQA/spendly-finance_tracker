@@ -1,0 +1,1 @@
+﻿INSERT INTO user (username, password_hash, email, full_name, created_at) VALUES ('kavinda.silva', 'scrypt:32768:8:1$fnRkqrO4WUU5IIUd$d139483fa55471bdb38829017f53e18edb5c81bbf2cb0486fba45f4730847bb40189252e7e0c4eb466d71e0ec7063d72d9d8896561284d82242e23f9ac764093', 'kavinda.silva@example.com', 'Kavinda Silva', datetime('now', 'localtime', '-90 days'));

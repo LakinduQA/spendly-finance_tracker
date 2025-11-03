@@ -147,7 +147,7 @@
                 <h5 class="mb-0 fw-bold">Budget</h5>
             </div>
             <div class="card-body p-4 text-center" style="overflow: visible;">
-                <div style="position: relative; height: 220px; width: 220px; margin: 0 auto; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
+                <div style="position: relative; height: 220px; width: 220px; margin: 0 auto;">
                     <canvas id="budgetChart" style="display: block !important; visibility: visible !important;"></canvas>
                 </div>
                 <div class="mt-4">
@@ -165,36 +165,13 @@
                     </div>
                     {% endfor %}
                     {% else %}
-                    <!-- Sample categories when no budget data -->
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-pill px-3 py-2" style="background: #E8E5FF; color: #5347A1;">Shopping</span>
-                        </div>
-                        <span class="text-muted fw-semibold">34%</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-pill px-3 py-2" style="background: #E8E5FF; color: #5347A1;">Food</span>
-                        </div>
-                        <span class="text-muted fw-semibold">23%</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-pill px-3 py-2" style="background: #E8E5FF; color: #5347A1;">Transport</span>
-                        </div>
-                        <span class="text-muted fw-semibold">14%</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-pill px-3 py-2" style="background: #E8E5FF; color: #5347A1;">Bills</span>
-                        </div>
-                        <span class="text-muted fw-semibold">17%</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-pill px-3 py-2" style="background: #E8E5FF; color: #5347A1;">Others</span>
-                        </div>
-                        <span class="text-muted fw-semibold">12%</span>
+                    <!-- No budget data message -->
+                    <div class="text-center py-5">
+                        <i class="bi bi-pie-chart" style="font-size: 3rem; color: #C4B5FD;"></i>
+                        <p class="text-muted mt-3 mb-2">No budget data available</p>
+                        <a href="{{ url_for('budgets') }}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus-circle"></i> Create Budget
+                        </a>
                     </div>
                     {% endif %}
                 </div>
@@ -312,52 +289,67 @@
 <!-- Charts Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Money Flow Chart
+    // Money Flow Chart with REAL data
     const moneyFlowCtx = document.getElementById('moneyFlowChart');
     if (moneyFlowCtx) {
-        new Chart(moneyFlowCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Income',
-                    data: [8500, 8200, 9000, 8800, 10000, 9500, {{ total_income }}],
-                    backgroundColor: '#E8E5FF',
-                    borderColor: '#5347A1',
-                    borderWidth: 2,
-                    borderRadius: 8
-                }, {
-                    label: 'Expense',
-                    data: [6222, 5800, 7200, 6500, 6800, 6500, {{ total_expenses }}],
-                    backgroundColor: '#F5E8FF',
-                    borderColor: '#8B5CF6',
-                    borderWidth: 2,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+        {% if monthly_data and monthly_data|length > 0 %}
+        const monthlyData = {{ monthly_data|tojson }};
+        
+        // Check if there's any actual data
+        const hasData = monthlyData.some(m => m.income > 0 || m.expense > 0);
+        
+        if (hasData) {
+            new Chart(moneyFlowCtx, {
+                type: 'bar',
+                data: {
+                    labels: monthlyData.map(m => m.month),
+                    datasets: [{
+                        label: 'Income',
+                        data: monthlyData.map(m => m.income),
+                        backgroundColor: '#E8E5FF',
+                        borderColor: '#5347A1',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }, {
+                        label: 'Expense',
+                        data: monthlyData.map(m => m.expense),
+                        backgroundColor: '#F5E8FF',
+                        borderColor: '#8B5CF6',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#EFEFF1'
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
                         }
                     },
-                    x: {
-                        grid: {
-                            display: false
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#EFEFF1'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            // Show "No data available" message
+            moneyFlowCtx.parentElement.innerHTML = '<div class="text-center py-5"><i class="bi bi-inbox" style="font-size: 3rem; opacity: 0.3;"></i><p class="text-muted mt-2">No transaction data available</p><a href="{{ url_for("expenses") }}" class="btn btn-primary btn-sm me-2">Add Expense</a><a href="{{ url_for("income") }}" class="btn btn-success btn-sm">Add Income</a></div>';
+        }
+        {% else %}
+        // No monthly data provided
+        moneyFlowCtx.parentElement.innerHTML = '<div class="text-center py-5"><i class="bi bi-inbox" style="font-size: 3rem; opacity: 0.3;"></i><p class="text-muted mt-2">No transaction data available</p><a href="{{ url_for("expenses") }}" class="btn btn-primary btn-sm me-2">Add Expense</a><a href="{{ url_for("income") }}" class="btn btn-success btn-sm">Add Income</a></div>';
+        {% endif %}
     }
 
     // Budget Donut Chart
@@ -380,16 +372,18 @@ document.addEventListener('DOMContentLoaded', function() {
             chartLabels = [{% if budget_performance %}{% for budget in budget_performance[:5] %}'{{ budget.category_name }}'{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}];
             chartData = [{% if budget_performance %}{% for budget in budget_performance[:5] %}{{ budget.actual_spent }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}];
         } else {
-            // Sample data when no budget exists
-            chartLabels = ['Shopping', 'Food', 'Transport', 'Bills', 'Others'];
-            chartData = [1200, 800, 500, 600, 400];
+            // No data - empty arrays
+            chartLabels = [];
+            chartData = [];
         }
         
         console.log('Chart Labels:', chartLabels);
         console.log('Chart Data:', chartData);
         
-        try {
-            const budgetChart = new Chart(budgetCtx, {
+        // Only create chart if there's data
+        if (chartLabels.length > 0 && chartData.length > 0) {
+            try {
+                const budgetChart = new Chart(budgetCtx, {
                 type: 'doughnut',
                 data: {
                     labels: chartLabels,
@@ -446,6 +440,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
         } catch(error) {
             console.error('Error creating budget chart:', error);
+        }
+        } else {
+            console.log('No budget data available - chart not created');
         }
         
     } else {

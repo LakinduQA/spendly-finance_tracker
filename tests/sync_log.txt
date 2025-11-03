@@ -1,0 +1,26 @@
+2025-11-04 01:47:00,612 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-04 01:47:00,618 - INFO - ============================================================
+2025-11-04 01:47:00,618 - INFO - Starting synchronization process...
+2025-11-04 01:47:00,618 - INFO - ============================================================
+2025-11-04 01:47:00,619 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-04 01:47:00,619 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-04 01:47:00,810 - INFO - Oracle connection successful
+2025-11-04 01:47:00,811 - INFO - Step 1: Syncing users...
+2025-11-04 01:47:00,815 - INFO - Users synced: 0
+2025-11-04 01:47:00,817 - INFO - Created sync log: 165
+2025-11-04 01:47:00,817 - INFO - Step 2: Syncing expenses...
+2025-11-04 01:47:00,817 - INFO - Expenses synced: 0
+2025-11-04 01:47:00,817 - INFO - Step 3: Syncing income...
+2025-11-04 01:47:00,818 - INFO - Income records synced: 0
+2025-11-04 01:47:00,818 - INFO - Step 4: Syncing budgets...
+2025-11-04 01:47:00,818 - INFO - Budgets synced: 0
+2025-11-04 01:47:00,818 - INFO - Step 5: Syncing savings goals...
+2025-11-04 01:47:00,818 - INFO - Savings goals synced: 0
+2025-11-04 01:47:00,819 - INFO - Completed sync log: Success, Records: 0
+2025-11-04 01:47:00,819 - INFO - ============================================================
+2025-11-04 01:47:00,820 - INFO - Synchronization completed successfully!
+2025-11-04 01:47:00,820 - INFO - Total records synced: 0
+2025-11-04 01:47:00,820 - INFO - Duration: 0.20 seconds
+2025-11-04 01:47:00,820 - INFO - ============================================================
+2025-11-04 01:47:00,820 - INFO - SQLite connection closed
+2025-11-04 01:47:00,823 - INFO - Oracle connection closed

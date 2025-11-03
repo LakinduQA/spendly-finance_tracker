@@ -4,8 +4,8 @@ Sync Test with Extended Timeout
 import sys
 import os
 
-# Add synchronization folder to path
-sys.path.insert(0, 'D:/DM2_CW/synchronization')
+# Add synchronization folder to path using relative path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'synchronization'))
 
 # Set Oracle connection timeout
 os.environ['TNS_ADMIN'] = ''
@@ -18,7 +18,8 @@ try:
     from sync_manager import DatabaseSync
     
     print("📦 Initializing sync manager...")
-    sync = DatabaseSync('D:/DM2_CW/synchronization/config.ini')
+    config_path = os.path.join(os.path.dirname(__file__), '..', 'synchronization', 'config.ini')
+    sync = DatabaseSync(config_path)
     
     print("🔗 Connecting to SQLite...")
     if not sync.connect_sqlite():

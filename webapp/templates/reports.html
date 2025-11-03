@@ -31,7 +31,7 @@
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-0">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-pie-chart-fill text-primary"></i> Expenses by Category</h5>
+                    <h5 class="mb-0 fw-bold">Expenses by Category</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="categoryChart"></canvas>
@@ -42,7 +42,7 @@
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-0">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-graph-up-arrow text-success"></i> Monthly Expense Trend</h5>
+                    <h5 class="mb-0 fw-bold">Monthly Expense Trend</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="trendChart"></canvas>
@@ -54,24 +54,21 @@
     <!-- Reports Section -->
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white border-0">
-            <h5 class="mb-0 fw-bold"><i class="bi bi-file-earmark-bar-graph text-primary"></i> Available Reports</h5>
+            <h5 class="mb-0 fw-bold">Available Reports</h5>
         </div>
         <div class="card-body p-4">
             <div class="row g-4">
                 <!-- Monthly Expenditure -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <div class="card-body text-center text-white p-4">
-                            <div class="mb-3">
-                                <i class="bi bi-calendar-month" style="font-size: 3rem; opacity: 0.9;"></i>
-                            </div>
-                            <h5 class="fw-bold mb-2">Monthly Expenditure</h5>
-                            <p class="mb-4" style="opacity: 0.9;">Detailed breakdown of monthly spending patterns</p>
+                    <div class="card h-100 shadow-sm" style="border: 1px solid #E5E7EB;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-2 text-center">Monthly Expenditure</h5>
+                            <p class="text-muted mb-4 text-center" style="font-size: 0.9rem;">Detailed breakdown of monthly spending patterns</p>
                             <div class="d-grid gap-2">
-                                <a href="{{ url_for('view_monthly_expenditure') }}" class="btn btn-light">
+                                <a href="{{ url_for('view_monthly_expenditure') }}" class="btn btn-primary">
                                     <i class="bi bi-eye"></i> View Report
                                 </a>
-                                <a href="{{ url_for('download_monthly_expenditure') }}" class="btn btn-outline-light">
+                                <a href="{{ url_for('download_monthly_expenditure') }}" class="btn btn-outline-primary">
                                     <i class="bi bi-download"></i> Download CSV
                                 </a>
                             </div>
@@ -81,18 +78,15 @@
 
                 <!-- Budget Adherence -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <div class="card-body text-center text-white p-4">
-                            <div class="mb-3">
-                                <i class="bi bi-pie-chart" style="font-size: 3rem; opacity: 0.9;"></i>
-                            </div>
-                            <h5 class="fw-bold mb-2">Budget Adherence</h5>
-                            <p class="mb-4" style="opacity: 0.9;">How well you're sticking to your budgets</p>
+                    <div class="card h-100 shadow-sm" style="border: 1px solid #E5E7EB;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-2 text-center">Budget Adherence</h5>
+                            <p class="text-muted mb-4 text-center" style="font-size: 0.9rem;">How well you're sticking to your budgets</p>
                             <div class="d-grid gap-2">
-                                <a href="{{ url_for('view_budget_adherence') }}" class="btn btn-light">
+                                <a href="{{ url_for('view_budget_adherence') }}" class="btn btn-primary">
                                     <i class="bi bi-eye"></i> View Report
                                 </a>
-                                <a href="{{ url_for('download_budget_adherence') }}" class="btn btn-outline-light">
+                                <a href="{{ url_for('download_budget_adherence') }}" class="btn btn-outline-primary">
                                     <i class="bi bi-download"></i> Download CSV
                                 </a>
                             </div>
@@ -102,17 +96,15 @@
 
                 <!-- Savings Progress -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 h-100" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                        <div class="card-body text-center text-white p-4">
-                            <div class="mb-3">
-                                <i class="bi bi-trophy" style="font-size: 3rem; opacity: 0.9;"></i>
-                            </div>
-                            <h5 class="fw-bold mb-2">Savings Progress</h5>
-                            <p class="mb-4" style="opacity: 0.9;">Track your progress towards financial goals</p>
+                    <div class="card h-100 shadow-sm" style="border: 1px solid #E5E7EB;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-2 text-center">Savings Progress</h5>
+                            <p class="text-muted mb-4 text-center" style="font-size: 0.9rem;">Track your progress towards financial goals</p>
                             <div class="d-grid gap-2">
-                                <a href="{{ url_for('view_savings_progress') }}" class="btn btn-light">
+                                <a href="{{ url_for('view_savings_progress') }}" class="btn btn-primary">
                                     <i class="bi bi-eye"></i> View Report
-                                <a href="{{ url_for('download_savings_progress') }}" class="btn btn-outline-light">
+                                </a>
+                                <a href="{{ url_for('download_savings_progress') }}" class="btn btn-outline-primary">
                                     <i class="bi bi-download"></i> Download CSV
                                 </a>
                             </div>
@@ -122,18 +114,15 @@
 
                 <!-- Category Distribution -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 h-100" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        <div class="card-body text-center text-white p-4">
-                            <div class="mb-3">
-                                <i class="bi bi-diagram-3" style="font-size: 3rem; opacity: 0.9;"></i>
-                            </div>
-                            <h5 class="fw-bold mb-2">Category Distribution</h5>
-                            <p class="mb-4" style="opacity: 0.9;">Where your money is going by category</p>
+                    <div class="card h-100 shadow-sm" style="border: 1px solid #E5E7EB;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-2 text-center">Category Distribution</h5>
+                            <p class="text-muted mb-4 text-center" style="font-size: 0.9rem;">Where your money is going by category</p>
                             <div class="d-grid gap-2">
-                                <a href="{{ url_for('view_category_distribution') }}" class="btn btn-light">
+                                <a href="{{ url_for('view_category_distribution') }}" class="btn btn-primary">
                                     <i class="bi bi-eye"></i> View Report
                                 </a>
-                                <a href="{{ url_for('download_category_distribution') }}" class="btn btn-outline-light">
+                                <a href="{{ url_for('download_category_distribution') }}" class="btn btn-outline-primary">
                                     <i class="bi bi-download"></i> Download CSV
                                 </a>
                             </div>
@@ -143,18 +132,15 @@
 
                 <!-- Savings Forecast -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 h-100" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                        <div class="card-body text-center text-white p-4">
-                            <div class="mb-3">
-                                <i class="bi bi-graph-up-arrow" style="font-size: 3rem; opacity: 0.9;"></i>
-                            </div>
-                            <h5 class="fw-bold mb-2">Savings Forecast</h5>
-                            <p class="mb-4" style="opacity: 0.9;">Predicted savings trends for next 6 months</p>
+                    <div class="card h-100 shadow-sm" style="border: 1px solid #E5E7EB;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-2 text-center">Savings Forecast</h5>
+                            <p class="text-muted mb-4 text-center" style="font-size: 0.9rem;">Predicted savings trends for next 6 months</p>
                             <div class="d-grid gap-2">
-                                <a href="{{ url_for('view_savings_forecast') }}" class="btn btn-light">
+                                <a href="{{ url_for('view_savings_forecast') }}" class="btn btn-primary">
                                     <i class="bi bi-eye"></i> View Report
                                 </a>
-                                <a href="{{ url_for('download_savings_forecast') }}" class="btn btn-outline-light">
+                                <a href="{{ url_for('download_savings_forecast') }}" class="btn btn-outline-primary">
                                     <i class="bi bi-download"></i> Download CSV
                                 </a>
                             </div>

@@ -177,70 +177,71 @@ Then open your browser to: **http://127.0.0.1:5000**
 ```
 DM2_CW/
 │
-├── 🚀 SETUP.bat                   ← DOUBLE-CLICK THIS TO START!
-├── 📖 COMPLETE_SETUP_GUIDE.md     ← Full setup guide for non-technical users
-├── 📄 README.md                   ← This file
-├── 📄 cw.md                       ← Original coursework requirements
-├── 📄 FINAL_PROJECT_REPORT.md     ← Main deliverable (25 pages)
-├── 📦 requirements.txt            ← Python dependencies
+├── 🚀 start_app.bat               ← DOUBLE-CLICK THIS TO START!
+├── 📖 README.md                   ← This file
+├──  requirements.txt            ← Python dependencies
 │
-├── 📂 docs/                       ← ALL DOCUMENTATION (organized!)
-│   ├── checklists/               ← Testing and submission checklists
-│   │   ├── FULL_TESTING_CHECKLIST.md
-│   │   ├── TESTING_CHECKLIST.md
-│   │   └── SUBMISSION_CHECKLIST.md
-│   ├── guides/                   ← Setup and usage guides
-│   │   ├── DEMONSTRATION_GUIDE.md
-│   │   ├── ORACLE_SETUP_GUIDE.md
-│   │   ├── REPORT_GENERATION_GUIDE.md
-│   │   ├── SYNC_INSTALLATION_GUIDE.md
-│   │   └── UI_DESIGN_OVERVIEW.md
-│   ├── analysis/                 ← Requirements and project analysis
-│   │   ├── PROJECT_ANALYSIS.md
-│   │   └── REQUIREMENTS_COMPLETION_ANALYSIS.md
-│   ├── summaries/                ← Status reports and summaries
-│   │   ├── PROJECT_SUMMARY.md
-│   │   ├── STATUS_REPORT.md
-│   │   └── WELCOME_BACK.md
-│   └── troubleshooting/          ← Issues and fixes
-│       ├── FIXES_APPLIED.md
-│       └── ORACLE_CONNECTION_ISSUE.md
+├── 📂 webapp/                     ← Flask web application
+│   ├── app.py                    (Main application)
+│   ├── templates/                (HTML files)
+│   ├── static/                   (CSS, JS, images)
+│   └── requirements.txt
 │
-├── 📂 database_designs/          ← Database design documents
-│   ├── requirements.md
-│   ├── logical_design.md
-│   ├── physical_design_sqlite.md
-│   └── physical_design_oracle.md
-│
-├── 📂 sqlite/                    ← SQLite database & scripts
-│   ├── finance_local.db          ← THE DATABASE (367 transactions!)
-│   ├── 01_create_database.sql    (500+ lines)
+├── 📂 sqlite/                    ← SQLite database
+│   ├── finance_local.db          ← THE DATABASE
+│   ├── 01_create_database.sql
 │   └── 02_crud_operations.sql
 │
-├── 📂 oracle/                    ← Oracle scripts
+├── 📂 oracle/                    ← Oracle SQL scripts
 │   ├── 01_create_database.sql
 │   ├── 02_plsql_crud_package.sql  (1,400 lines)
 │   ├── 03_reports_package.sql     (718 lines)
-│   └── 04_fix_fiscal_columns.sql
+│   └── ...
 │
 ├── 📂 synchronization/           ← Sync module
-│   ├── sync_manager.py           (603 lines)
-│   ├── config.ini                ← Oracle connection config
-│   └── test_sync_extended.py
+│   ├── sync_manager.py
+│   ├── config.ini
+│   └── requirements.txt
 │
-├── webapp/                        ← Flask web app
-│   ├── app.py                    (617 lines)
-│   ├── templates/                (8 HTML files)
-│   ├── static/
-│   │   ├── css/style.css         (300+ lines)
-│   │   └── js/main.js            (200+ lines)
-│   ├── start.bat                 ← Quick start script!
-│   └── populate_sample_data.py
+├── 📂 scripts/                   ← Utility scripts
+│   ├── populate_sample_data.py   (Database population)
+│   └── README.md
 │
-└── documentation/                 ← Extra docs
-    ├── security_privacy.md       (32K chars)
-    ├── backup_recovery.md        (40K chars)
-    └── [10+ other guides]
+├── 📂 tests/                     ← Test scripts
+│   ├── test_sync.py
+│   ├── test_sync_extended.py
+│   ├── verify_database.py
+│   └── README.md
+│
+├── 📂 logs/                      ← Log files
+│   └── sync_log.txt
+│
+├── 📂 archived/                  ← Old/deprecated files
+│   └── (historical reference only)
+│
+├── 📂 docs/                      ← Documentation
+│   ├── setup/                   ← Setup guides
+│   │   └── COMPLETE_SETUP_GUIDE.md
+│   ├── user-guide/              ← User documentation
+│   │   └── QUICKSTART.md
+│   ├── development/             ← Developer docs
+│   │   ├── WHICH_FILE_TO_USE.md
+│   │   └── cw.md
+│   ├── checklists/              ← Testing checklists
+│   ├── guides/                  ← Detailed guides
+│   ├── analysis/                ← Requirements analysis
+│   ├── summaries/               ← Status reports
+│   └── troubleshooting/         ← Issue fixes
+│
+├── 📂 database_designs/         ← Database design docs
+│   ├── requirements.md
+│   ├── logical_design.md
+│   └── ...
+│
+├── 📂 backups/                  ← Database backups
+├── 📂 reports/                  ← Generated reports
+│
+└── 📄 *.bat files               ← Quick launch scripts
 ```
 
 ---

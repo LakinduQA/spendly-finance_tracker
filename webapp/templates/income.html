@@ -12,7 +12,7 @@
             <h2 class="fw-bold mb-1">Wallet</h2>
             <p class="text-muted mb-0">Track and manage all your income sources</p>
         </div>
-        <button class="btn btn-success d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
+        <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
             <i class="bi bi-plus-circle"></i>
             <span>Add Income</span>
         </button>
@@ -81,7 +81,7 @@
         <div class="modal-content border-0 shadow">
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold">
-                    <i class="bi bi-plus-circle text-success"></i> Add New Income
+                    <i class="bi bi-plus-circle text-primary"></i> Add New Income
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -92,13 +92,13 @@
                             <label for="income_source" class="form-label fw-medium">Income Source *</label>
                             <select class="form-select" id="income_source" name="income_source" required>
                                 <option value="">Select source...</option>
-                                <option value="Salary">💼 Salary</option>
-                                <option value="Freelance">💻 Freelance Work</option>
-                                <option value="Investment">📈 Investment Returns</option>
-                                <option value="Business">🏢 Business Income</option>
-                                <option value="Rental">🏠 Rental Income</option>
-                                <option value="Gift">🎁 Gift</option>
-                                <option value="Other">📋 Other</option>
+                                <option value="Salary">Salary</option>
+                                <option value="Freelance">Freelance Work</option>
+                                <option value="Investment">Investment Returns</option>
+                                <option value="Business">Business Income</option>
+                                <option value="Rental">Rental Income</option>
+                                <option value="Gift">Gift</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
 
@@ -125,7 +125,7 @@
                 </div>
                 <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                         <i class="bi bi-check-circle"></i> Add Income
                     </button>
                 </div>

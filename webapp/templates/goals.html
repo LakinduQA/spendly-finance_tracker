@@ -80,7 +80,7 @@
                     
                     <!-- Actions -->
                     <div class="d-flex gap-2">
-                        <button class="btn btn-success flex-grow-1" data-bs-toggle="modal" 
+                        <button class="btn btn-primary flex-grow-1" data-bs-toggle="modal" 
                                 data-bs-target="#contributeModal{{ goal.goal_id }}">
                             <i class="bi bi-plus-circle"></i> Contribute
                         </button>
@@ -100,7 +100,7 @@
                 <div class="modal-content border-0 shadow">
                     <div class="modal-header border-0 pb-0">
                         <h5 class="modal-title fw-bold">
-                            <i class="bi bi-wallet2 text-success"></i> Contribute to {{ goal.goal_name }}
+                            <i class="bi bi-wallet2 text-primary"></i> Contribute to {{ goal.goal_name }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="modal-footer border-0 pt-0">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-check-circle"></i> Add Contribution
                             </button>
                         </div>
@@ -193,9 +193,9 @@
                         <div class="col-md-6">
                             <label for="priority" class="form-label fw-medium">Priority *</label>
                             <select class="form-select" id="priority" name="priority" required>
-                                <option value="High">🔴 High - Critical goal</option>
-                                <option value="Medium" selected>🟡 Medium - Important goal</option>
-                                <option value="Low">🟢 Low - Nice to have</option>
+                                <option value="High">High - Critical goal</option>
+                                <option value="Medium" selected>Medium - Important goal</option>
+                                <option value="Low">Low - Nice to have</option>
                             </select>
                         </div>
 

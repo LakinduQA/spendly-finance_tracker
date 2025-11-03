@@ -59,9 +59,10 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     full_name TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     last_sync TEXT,
     CONSTRAINT chk_email CHECK (email LIKE '%@%')
 );
@@ -84,8 +85,8 @@ CREATE TABLE expense (
     expense_date TEXT NOT NULL,
     description TEXT,
     payment_method TEXT NOT NULL CHECK (payment_method IN ('Cash', 'Credit Card', 'Debit Card', 'Online', 'Bank Transfer')),
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    modified_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    modified_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     is_synced INTEGER NOT NULL DEFAULT 0 CHECK (is_synced IN (0, 1)),
     sync_timestamp TEXT,
     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
@@ -100,8 +101,8 @@ CREATE TABLE income (
     amount REAL NOT NULL CHECK (amount > 0),
     income_date TEXT NOT NULL,
     description TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    modified_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    modified_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     is_synced INTEGER NOT NULL DEFAULT 0 CHECK (is_synced IN (0, 1)),
     sync_timestamp TEXT,
     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
@@ -115,8 +116,8 @@ CREATE TABLE budget (
     budget_amount REAL NOT NULL CHECK (budget_amount > 0),
     start_date TEXT NOT NULL,
     end_date TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    modified_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    modified_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
     is_synced INTEGER NOT NULL DEFAULT 0 CHECK (is_synced IN (0, 1)),
     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
@@ -135,8 +136,8 @@ CREATE TABLE savings_goal (
     deadline TEXT NOT NULL,
     priority TEXT NOT NULL CHECK (priority IN ('High', 'Medium', 'Low')),
     status TEXT NOT NULL DEFAULT 'Active' CHECK (status IN ('Active', 'Completed', 'Cancelled')),
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    modified_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    modified_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     is_synced INTEGER NOT NULL DEFAULT 0 CHECK (is_synced IN (0, 1)),
     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
     CONSTRAINT chk_goal_amount CHECK (current_amount <= target_amount)
@@ -149,7 +150,7 @@ CREATE TABLE savings_contribution (
     contribution_amount REAL NOT NULL CHECK (contribution_amount > 0),
     contribution_date TEXT NOT NULL,
     description TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     FOREIGN KEY (goal_id) REFERENCES savings_goal(goal_id) ON DELETE CASCADE
 );
 
@@ -221,7 +222,7 @@ AFTER UPDATE ON expense
 FOR EACH ROW
 WHEN NEW.modified_at = OLD.modified_at
 BEGIN
-    UPDATE expense SET modified_at = datetime('now')
+    UPDATE expense SET modified_at = datetime('now', 'localtime')
     WHERE expense_id = NEW.expense_id;
 END;
 
@@ -231,7 +232,7 @@ AFTER UPDATE ON income
 FOR EACH ROW
 WHEN NEW.modified_at = OLD.modified_at
 BEGIN
-    UPDATE income SET modified_at = datetime('now')
+    UPDATE income SET modified_at = datetime('now', 'localtime')
     WHERE income_id = NEW.income_id;
 END;
 
@@ -241,7 +242,7 @@ AFTER UPDATE ON budget
 FOR EACH ROW
 WHEN NEW.modified_at = OLD.modified_at
 BEGIN
-    UPDATE budget SET modified_at = datetime('now')
+    UPDATE budget SET modified_at = datetime('now', 'localtime')
     WHERE budget_id = NEW.budget_id;
 END;
 
@@ -251,7 +252,7 @@ AFTER UPDATE ON savings_goal
 FOR EACH ROW
 WHEN NEW.modified_at = OLD.modified_at
 BEGIN
-    UPDATE savings_goal SET modified_at = datetime('now')
+    UPDATE savings_goal SET modified_at = datetime('now', 'localtime')
     WHERE goal_id = NEW.goal_id;
 END;
 
@@ -263,7 +264,7 @@ BEGIN
     -- Update current amount
     UPDATE savings_goal 
     SET current_amount = current_amount + NEW.contribution_amount,
-        modified_at = datetime('now')
+        modified_at = datetime('now', 'localtime')
     WHERE goal_id = NEW.goal_id;
     
     -- Auto-complete goal if target reached

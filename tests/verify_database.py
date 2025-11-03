@@ -3,12 +3,14 @@ Database Verification Script
 Checks SQLite database has all required data
 """
 import sqlite3
+import os
 
 print("="*60)
 print("DATABASE VERIFICATION REPORT")
 print("="*60)
 
-conn = sqlite3.connect('D:/DM2_CW/sqlite/finance_local.db')
+db_path = os.path.join(os.path.dirname(__file__), '..', 'sqlite', 'finance_local.db')
+conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # Check tables exist
