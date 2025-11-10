@@ -26,13 +26,12 @@
                     </div>
                 </div>
                 <h3 class="fw-bold mb-2" style="font-size: 1.75rem; color: var(--finset-gray-900);">LKR {{ "{:,.2f}".format(net_savings) }}</h3>
-                <div class="d-flex align-items-center">
-                    <span class="badge {% if savings_rate > 0 %}bg-success{% else %}bg-danger{% endif %} bg-opacity-10 {% if savings_rate > 0 %}text-success{% else %}text-danger{% endif %} px-2 py-1 rounded-pill">
-                        <i class="bi bi-arrow-{% if savings_rate > 0 %}up{% else %}down{% endif %}" style="font-size: 0.75rem;"></i>
+                <p class="text-muted mb-0" style="font-size: 0.875rem;">
+                    Savings Rate: 
+                    <span class="{% if savings_rate > 0 %}text-success{% else %}text-danger{% endif %} fw-semibold">
                         {{ "%.1f"|format(savings_rate|abs) }}%
                     </span>
-                    <span class="text-muted ms-2" style="font-size: 0.875rem;">vs last month</span>
-                </div>
+                </p>
             </div>
         </div>
     </div>
@@ -50,13 +49,7 @@
                     </div>
                 </div>
                 <h3 class="fw-bold mb-2" style="font-size: 1.75rem; color: var(--finset-gray-900);">LKR {{ "{:,.2f}".format(total_income) }}</h3>
-                <div class="d-flex align-items-center">
-                    <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 rounded-pill">
-                        <i class="bi bi-arrow-up" style="font-size: 0.75rem;"></i>
-                        6.3%
-                    </span>
-                    <span class="text-muted ms-2" style="font-size: 0.875rem;">vs last month</span>
-                </div>
+                <p class="text-muted mb-0" style="font-size: 0.875rem;">This Month</p>
             </div>
         </div>
     </div>
@@ -74,13 +67,7 @@
                     </div>
                 </div>
                 <h3 class="fw-bold mb-2" style="font-size: 1.75rem; color: var(--finset-gray-900);">LKR {{ "{:,.2f}".format(total_expenses) }}</h3>
-                <div class="d-flex align-items-center">
-                    <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1 rounded-pill">
-                        <i class="bi bi-arrow-up" style="font-size: 0.75rem;"></i>
-                        2.4%
-                    </span>
-                    <span class="text-muted ms-2" style="font-size: 0.875rem;">vs last month</span>
-                </div>
+                <p class="text-muted mb-0" style="font-size: 0.875rem;">This Month</p>
             </div>
         </div>
     </div>
@@ -98,13 +85,7 @@
                     </div>
                 </div>
                 <h3 class="fw-bold mb-2" style="font-size: 1.75rem; color: var(--finset-gray-900);">LKR {{ "{:,.2f}".format(net_savings if net_savings > 0 else 0) }}</h3>
-                <div class="d-flex align-items-center">
-                    <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 rounded-pill">
-                        <i class="bi bi-arrow-up" style="font-size: 0.75rem;"></i>
-                        12.1%
-                    </span>
-                    <span class="text-muted ms-2" style="font-size: 0.875rem;">vs last month</span>
-                </div>
+                <p class="text-muted mb-0" style="font-size: 0.875rem;">This Month</p>
             </div>
         </div>
     </div>

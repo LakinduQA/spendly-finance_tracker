@@ -610,3 +610,498 @@
 2025-11-04 10:22:42,559 - INFO - 127.0.0.1 - - [04/Nov/2025 10:22:42] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2025-11-04 10:22:42,568 - INFO - 127.0.0.1 - - [04/Nov/2025 10:22:42] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
 2025-11-04 10:22:42,569 - INFO - 127.0.0.1 - - [04/Nov/2025 10:22:42] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:37:34,912 - INFO - ============================================================
+2025-11-10 22:37:34,913 - INFO - Starting synchronization process...
+2025-11-10 22:37:34,913 - INFO - ============================================================
+2025-11-10 22:37:34,913 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 22:37:34,913 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 22:37:36,231 - INFO - Oracle connection successful
+2025-11-10 22:37:36,232 - INFO - Step 1: Syncing users...
+2025-11-10 22:37:36,261 - INFO - Synced user: kavithi
+2025-11-10 22:37:36,262 - INFO - Users synced: 1
+2025-11-10 22:37:36,459 - INFO - Created sync log: 301
+2025-11-10 22:37:36,459 - INFO - Step 2: Syncing expenses...
+2025-11-10 22:37:36,460 - INFO - Expenses synced: 0
+2025-11-10 22:37:36,460 - INFO - Step 3: Syncing income...
+2025-11-10 22:37:36,461 - INFO - Income records synced: 0
+2025-11-10 22:37:36,461 - INFO - Step 4: Syncing budgets...
+2025-11-10 22:37:36,461 - INFO - Budgets synced: 0
+2025-11-10 22:37:36,461 - INFO - Step 5: Syncing savings goals...
+2025-11-10 22:37:36,462 - INFO - Savings goals synced: 0
+2025-11-10 22:37:36,466 - INFO - Completed sync log: Success, Records: 1
+2025-11-10 22:37:36,467 - INFO - ============================================================
+2025-11-10 22:37:36,467 - INFO - Synchronization completed successfully!
+2025-11-10 22:37:36,467 - INFO - Total records synced: 1
+2025-11-10 22:37:36,467 - INFO - Duration: 1.55 seconds
+2025-11-10 22:37:36,467 - INFO - ============================================================
+2025-11-10 22:37:36,468 - INFO - SQLite connection closed
+2025-11-10 22:37:36,472 - INFO - Oracle connection closed
+2025-11-10 22:37:36,474 - INFO - 127.0.0.1 - - [10/Nov/2025 22:37:36] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 22:37:36,482 - INFO - 127.0.0.1 - - [10/Nov/2025 22:37:36] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:37:36,501 - INFO - 127.0.0.1 - - [10/Nov/2025 22:37:36] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:37:36,505 - INFO - 127.0.0.1 - - [10/Nov/2025 22:37:36] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:37:36,506 - INFO - 127.0.0.1 - - [10/Nov/2025 22:37:36] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:38:03,111 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:03] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:38:03,127 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:38:03,131 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:03] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:38:03,132 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:03] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:38:05,399 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:05] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:38:05,413 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:38:05,421 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:05] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:38:05,422 - INFO - 127.0.0.1 - - [10/Nov/2025 22:38:05] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:39:31,869 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:31] "[32mPOST /add_income HTTP/1.1[0m" 302 -
+2025-11-10 22:39:31,884 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:31] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:39:31,905 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:39:31,906 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:31] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:39:31,907 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:31] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:39:35,342 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:35] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:39:35,357 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:39:35,363 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:35] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:39:35,364 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:35] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:39:39,046 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:39] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:39:39,063 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:39] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:39:39,066 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:39] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:39:39,067 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:39] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:39:42,323 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:42] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:39:42,340 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:42] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:39:42,344 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:42] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:39:42,347 - INFO - 127.0.0.1 - - [10/Nov/2025 22:39:42] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:41:15,594 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:15] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:41:15,614 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:41:15,616 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:15] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:41:15,617 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:41:16,857 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:16] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:41:16,876 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:41:16,880 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:16] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:41:16,881 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:16] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:41:58,497 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:58] "[32mPOST /add_budget HTTP/1.1[0m" 302 -
+2025-11-10 22:41:58,514 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:58] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:41:58,532 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:58] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:41:58,535 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:58] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:41:58,537 - INFO - 127.0.0.1 - - [10/Nov/2025 22:41:58] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:42:02,472 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:02] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:42:02,490 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:42:02,497 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:02] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:42:02,498 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:02] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:42:28,483 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:28] "[32mPOST /add_goal HTTP/1.1[0m" 302 -
+2025-11-10 22:42:28,500 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:28] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:42:28,523 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:28] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:42:28,526 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:28] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:42:28,527 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:28] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:42:32,576 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:32] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:42:32,592 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:42:32,601 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:32] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:42:32,602 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:32] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:42:54,933 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:54] "[32mPOST /add_expense HTTP/1.1[0m" 302 -
+2025-11-10 22:42:54,952 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:54] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:42:54,973 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:42:54,974 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:54] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:42:54,975 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:54] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:42:56,810 - INFO - 127.0.0.1 - - [10/Nov/2025 22:42:56] "GET /api/pending_sync_details HTTP/1.1" 200 -
+2025-11-10 22:43:01,595 - INFO - 127.0.0.1 - - [10/Nov/2025 22:43:01] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:43:01,610 - INFO - 127.0.0.1 - - [10/Nov/2025 22:43:01] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:43:01,619 - INFO - 127.0.0.1 - - [10/Nov/2025 22:43:01] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:43:01,620 - INFO - 127.0.0.1 - - [10/Nov/2025 22:43:01] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:49:42,236 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:42] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:49:42,255 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:42] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:49:42,263 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:42] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:49:42,264 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:42] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:49:43,592 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:43] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:49:43,608 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:43] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:49:43,610 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:43] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:49:43,612 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:43] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:49:47,521 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:47] "[32mGET /delete_expense/911 HTTP/1.1[0m" 302 -
+2025-11-10 22:49:47,537 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:47] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:49:47,554 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:49:47,556 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:47] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:49:47,558 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:47] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:49:49,519 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:49] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:49:49,535 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:49:49,543 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:49] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:49:49,544 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:49:54,740 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:54] "[32mGET /delete_income/27 HTTP/1.1[0m" 302 -
+2025-11-10 22:49:54,758 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:54] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:49:54,775 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:49:54,778 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:54] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:49:54,779 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:54] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:49:56,426 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:56] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:49:56,443 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:56] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:49:56,449 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:56] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:49:56,450 - INFO - 127.0.0.1 - - [10/Nov/2025 22:49:56] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:00,505 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:00] "[32mGET /delete_goal/21 HTTP/1.1[0m" 302 -
+2025-11-10 22:50:00,520 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:00] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:50:00,539 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:00,540 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:00] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:00,541 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:00] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:01,918 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:01] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:01,933 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:01] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:01,939 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:01] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:01,939 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:01] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:06,405 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:06] "[32mGET /delete_budget/53 HTTP/1.1[0m" 302 -
+2025-11-10 22:50:06,423 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:06] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:06,440 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:06,443 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:06] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:06,444 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:06] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:13,150 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:13] "[32mGET /delete_budget/53 HTTP/1.1[0m" 302 -
+2025-11-10 22:50:13,180 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:13] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:13,205 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:13] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:13,211 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:13] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:13,212 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:13] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:18,052 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:18] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:18,065 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:18,068 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:18] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:18,069 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:18] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:19,941 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:19] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:50:19,956 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:19,964 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:19] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:19,965 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:19] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:21,334 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:21] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:50:21,348 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:21,353 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:21] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:21,354 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:21] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:22,478 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:22] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:50:22,497 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:22,502 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:22] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:22,503 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:22] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:24,111 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:24] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:50:24,126 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:24] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:24,133 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:24] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:24,134 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:24] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:25,157 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:25] "GET /settings HTTP/1.1" 200 -
+2025-11-10 22:50:25,174 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:25,180 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:25] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:25,181 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:26,449 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:26] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:26,465 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:26,469 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:26] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:26,469 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:26] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:27,783 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:27] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:50:27,798 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:27,804 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:27] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:27,805 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:27] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:29,285 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:29] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:50:29,300 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:29,305 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:29] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:29,306 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:29] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:32,767 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:32] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:50:32,782 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:32,785 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:32] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:32,785 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:32] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:35,483 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:35] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:35,499 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:35,504 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:35] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:35,505 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:35] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:36,797 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:36] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:50:36,812 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:36] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:36,819 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:36] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:36,820 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:36] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:39,608 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:39] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:50:39,623 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:39] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:39,631 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:39] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:39,632 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:39] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:40,452 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:40] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:50:40,469 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:40] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:40,475 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:40] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:40,475 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:40] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:41,532 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:41] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:50:41,548 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:41,554 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:41] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:41,554 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:41] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:50:42,436 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:42] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:50:42,451 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:42] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:50:42,456 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:42] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:50:42,457 - INFO - 127.0.0.1 - - [10/Nov/2025 22:50:42] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:51:39,396 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:39] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:51:39,412 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:39] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:51:39,422 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:39] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:51:39,422 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:39] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:51:41,211 - INFO - ============================================================
+2025-11-10 22:51:41,211 - INFO - Starting synchronization process...
+2025-11-10 22:51:41,212 - INFO - ============================================================
+2025-11-10 22:51:41,212 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 22:51:41,212 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 22:51:41,305 - INFO - Oracle connection successful
+2025-11-10 22:51:41,306 - INFO - Step 1: Syncing users...
+2025-11-10 22:51:41,308 - INFO - Users synced: 0
+2025-11-10 22:51:41,310 - INFO - Created sync log: 302
+2025-11-10 22:51:41,311 - INFO - Step 2: Syncing expenses...
+2025-11-10 22:51:41,325 - WARNING - Failed to sync expense 911: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:51:41,326 - INFO - Expenses synced: 0
+2025-11-10 22:51:41,326 - INFO - Step 3: Syncing income...
+2025-11-10 22:51:41,329 - WARNING - Failed to sync income 27: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:51:41,330 - INFO - Income records synced: 0
+2025-11-10 22:51:41,330 - INFO - Step 4: Syncing budgets...
+2025-11-10 22:51:41,332 - WARNING - Failed to sync budget 53: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:51:41,332 - INFO - Budgets synced: 0
+2025-11-10 22:51:41,333 - INFO - Step 5: Syncing savings goals...
+2025-11-10 22:51:41,335 - WARNING - Failed to sync goal 21: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:51:41,336 - INFO - Savings goals synced: 0
+2025-11-10 22:51:41,337 - INFO - Completed sync log: Success, Records: 0
+2025-11-10 22:51:41,337 - INFO - ============================================================
+2025-11-10 22:51:41,337 - INFO - Synchronization completed successfully!
+2025-11-10 22:51:41,337 - INFO - Total records synced: 0
+2025-11-10 22:51:41,337 - INFO - Duration: 0.13 seconds
+2025-11-10 22:51:41,337 - INFO - ============================================================
+2025-11-10 22:51:41,338 - INFO - SQLite connection closed
+2025-11-10 22:51:41,339 - INFO - Oracle connection closed
+2025-11-10 22:51:41,340 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:41] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 22:51:41,348 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:41] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:51:41,368 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:51:41,373 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:41] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:51:41,374 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:41] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:51:43,888 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:43] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:51:43,903 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:43] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:51:43,911 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:43] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:51:43,912 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:43] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:51:45,295 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:45] "GET /reports HTTP/1.1" 200 -
+2025-11-10 22:51:45,310 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:51:45,316 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:45] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:51:45,317 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:45] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:51:45,348 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:45] "GET /api/monthly_trend HTTP/1.1" 200 -
+2025-11-10 22:51:45,348 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:45] "GET /api/expense_by_category HTTP/1.1" 200 -
+2025-11-10 22:51:46,545 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:46] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 22:51:46,560 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:46] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:51:46,566 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:46] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:51:46,566 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:46] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:51:47,555 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:47] "GET /goals HTTP/1.1" 200 -
+2025-11-10 22:51:47,571 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:51:47,574 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:47] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:51:47,575 - INFO - 127.0.0.1 - - [10/Nov/2025 22:51:47] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:54:02,381 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:02] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 22:54:02,397 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:54:02,407 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:02] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:54:02,409 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:02] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:54:12,096 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:12] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:54:12,112 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:54:12,119 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:12] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:54:12,120 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:12] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:54:26,421 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:26] "[32mPOST /add_income HTTP/1.1[0m" 302 -
+2025-11-10 22:54:26,442 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:26] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:54:26,464 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:54:26,470 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:26] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:54:26,470 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:26] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:54:44,444 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:44] "GET /api/pending_sync_details HTTP/1.1" 200 -
+2025-11-10 22:54:45,820 - INFO - ============================================================
+2025-11-10 22:54:45,820 - INFO - Starting synchronization process...
+2025-11-10 22:54:45,820 - INFO - ============================================================
+2025-11-10 22:54:45,821 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 22:54:45,821 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 22:54:45,851 - INFO - Oracle connection successful
+2025-11-10 22:54:45,851 - INFO - Step 1: Syncing users...
+2025-11-10 22:54:45,853 - INFO - Users synced: 0
+2025-11-10 22:54:45,854 - INFO - Created sync log: 303
+2025-11-10 22:54:45,854 - INFO - Step 2: Syncing expenses...
+2025-11-10 22:54:45,855 - WARNING - Failed to sync expense 911: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:54:45,855 - INFO - Expenses synced: 0
+2025-11-10 22:54:45,856 - INFO - Step 3: Syncing income...
+2025-11-10 22:54:45,856 - WARNING - Failed to sync income 27: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:54:45,857 - WARNING - Failed to sync income 28: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:54:45,857 - INFO - Income records synced: 0
+2025-11-10 22:54:45,857 - INFO - Step 4: Syncing budgets...
+2025-11-10 22:54:45,858 - WARNING - Failed to sync budget 53: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:54:45,858 - INFO - Budgets synced: 0
+2025-11-10 22:54:45,858 - INFO - Step 5: Syncing savings goals...
+2025-11-10 22:54:45,859 - WARNING - Failed to sync goal 21: 'sqlite3.Row' object has no attribute 'get'
+2025-11-10 22:54:45,860 - INFO - Savings goals synced: 0
+2025-11-10 22:54:45,862 - INFO - Completed sync log: Success, Records: 0
+2025-11-10 22:54:45,862 - INFO - ============================================================
+2025-11-10 22:54:45,862 - INFO - Synchronization completed successfully!
+2025-11-10 22:54:45,862 - INFO - Total records synced: 0
+2025-11-10 22:54:45,863 - INFO - Duration: 0.04 seconds
+2025-11-10 22:54:45,863 - INFO - ============================================================
+2025-11-10 22:54:45,863 - INFO - SQLite connection closed
+2025-11-10 22:54:45,866 - INFO - Oracle connection closed
+2025-11-10 22:54:45,867 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:45] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 22:54:45,874 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:45] "GET /income HTTP/1.1" 200 -
+2025-11-10 22:54:45,894 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:54:45,896 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:45] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:54:45,897 - INFO - 127.0.0.1 - - [10/Nov/2025 22:54:45] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 22:59:27,773 - INFO - ============================================================
+2025-11-10 22:59:27,773 - INFO - Starting synchronization process...
+2025-11-10 22:59:27,773 - INFO - ============================================================
+2025-11-10 22:59:27,773 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 22:59:27,774 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 22:59:27,902 - INFO - Oracle connection successful
+2025-11-10 22:59:27,902 - INFO - Step 1: Syncing users...
+2025-11-10 22:59:27,905 - INFO - Users synced: 0
+2025-11-10 22:59:27,906 - INFO - Created sync log: 304
+2025-11-10 22:59:27,906 - INFO - Step 2: Syncing expenses...
+2025-11-10 22:59:27,933 - INFO - Expenses synced: 1
+2025-11-10 22:59:27,933 - INFO - Step 3: Syncing income...
+2025-11-10 22:59:27,941 - INFO - Income records synced: 2
+2025-11-10 22:59:27,941 - INFO - Step 4: Syncing budgets...
+2025-11-10 22:59:27,946 - INFO - Budgets synced: 1
+2025-11-10 22:59:27,946 - INFO - Step 5: Syncing savings goals...
+2025-11-10 22:59:27,951 - INFO - Savings goals synced: 1
+2025-11-10 22:59:27,952 - INFO - Completed sync log: Success, Records: 5
+2025-11-10 22:59:27,952 - INFO - ============================================================
+2025-11-10 22:59:27,952 - INFO - Synchronization completed successfully!
+2025-11-10 22:59:27,953 - INFO - Total records synced: 5
+2025-11-10 22:59:27,953 - INFO - Duration: 0.18 seconds
+2025-11-10 22:59:27,953 - INFO - ============================================================
+2025-11-10 22:59:27,953 - INFO - SQLite connection closed
+2025-11-10 22:59:27,955 - INFO - Oracle connection closed
+2025-11-10 22:59:27,956 - INFO - 127.0.0.1 - - [10/Nov/2025 22:59:27] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 22:59:27,973 - INFO - 127.0.0.1 - - [10/Nov/2025 22:59:27] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 22:59:27,989 - INFO - 127.0.0.1 - - [10/Nov/2025 22:59:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 22:59:27,994 - INFO - 127.0.0.1 - - [10/Nov/2025 22:59:27] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 22:59:27,995 - INFO - 127.0.0.1 - - [10/Nov/2025 22:59:27] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:00:07,229 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:07] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 23:00:07,246 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:00:07,250 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:07] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:00:07,251 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:00:09,157 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:09] "GET /income HTTP/1.1" 200 -
+2025-11-10 23:00:09,176 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:09] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:00:09,181 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:09] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:00:09,182 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:09] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:00:24,748 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:24] "[32mGET /delete_income/28 HTTP/1.1[0m" 302 -
+2025-11-10 23:00:24,769 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:24] "GET /income HTTP/1.1" 200 -
+2025-11-10 23:00:24,791 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:24] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:00:24,796 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:24] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:00:24,796 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:24] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:00:34,486 - INFO - ============================================================
+2025-11-10 23:00:34,486 - INFO - Starting synchronization process...
+2025-11-10 23:00:34,486 - INFO - ============================================================
+2025-11-10 23:00:34,487 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 23:00:34,487 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 23:00:34,518 - INFO - Oracle connection successful
+2025-11-10 23:00:34,518 - INFO - Step 1: Syncing users...
+2025-11-10 23:00:34,521 - INFO - Users synced: 0
+2025-11-10 23:00:34,522 - INFO - Created sync log: 305
+2025-11-10 23:00:34,522 - INFO - Step 2: Syncing expenses...
+2025-11-10 23:00:34,523 - INFO - Expenses synced: 0
+2025-11-10 23:00:34,523 - INFO - Step 3: Syncing income...
+2025-11-10 23:00:34,528 - INFO - Income records synced: 1
+2025-11-10 23:00:34,528 - INFO - Step 4: Syncing budgets...
+2025-11-10 23:00:34,528 - INFO - Budgets synced: 0
+2025-11-10 23:00:34,529 - INFO - Step 5: Syncing savings goals...
+2025-11-10 23:00:34,530 - INFO - Savings goals synced: 0
+2025-11-10 23:00:34,531 - INFO - Completed sync log: Success, Records: 1
+2025-11-10 23:00:34,531 - INFO - ============================================================
+2025-11-10 23:00:34,532 - INFO - Synchronization completed successfully!
+2025-11-10 23:00:34,532 - INFO - Total records synced: 1
+2025-11-10 23:00:34,532 - INFO - Duration: 0.05 seconds
+2025-11-10 23:00:34,532 - INFO - ============================================================
+2025-11-10 23:00:34,533 - INFO - SQLite connection closed
+2025-11-10 23:00:34,534 - INFO - Oracle connection closed
+2025-11-10 23:00:34,535 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:34] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 23:00:34,552 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:34] "GET /income HTTP/1.1" 200 -
+2025-11-10 23:00:34,569 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:34] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:00:34,575 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:34] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:00:34,576 - INFO - 127.0.0.1 - - [10/Nov/2025 23:00:34] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:01:02,983 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:02] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 23:01:03,001 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:01:03,004 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:03] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:01:03,005 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:03] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:01:04,445 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:04] "GET /goals HTTP/1.1" 200 -
+2025-11-10 23:01:04,464 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:01:04,470 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:04] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:01:04,470 - INFO - 127.0.0.1 - - [10/Nov/2025 23:01:04] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:02:00,947 - INFO -  * Detected change in 'D:\\DM2_CW\\synchronization\\sync_manager.py', reloading
+2025-11-10 23:04:25,286 - INFO - ============================================================
+2025-11-10 23:04:25,286 - INFO - Starting synchronization process...
+2025-11-10 23:04:25,286 - INFO - ============================================================
+2025-11-10 23:04:25,287 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 23:04:25,287 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 23:04:25,427 - INFO - Oracle connection successful
+2025-11-10 23:04:25,427 - INFO - Step 1: Syncing users...
+2025-11-10 23:04:25,429 - INFO - Users synced: 0
+2025-11-10 23:04:25,430 - INFO - Created sync log: 306
+2025-11-10 23:04:25,431 - INFO - Step 2: Syncing expenses...
+2025-11-10 23:04:25,431 - INFO - Expenses synced: 0
+2025-11-10 23:04:25,431 - INFO - Step 3: Syncing income...
+2025-11-10 23:04:25,431 - INFO - Income records synced: 0
+2025-11-10 23:04:25,432 - INFO - Step 4: Syncing budgets...
+2025-11-10 23:04:25,432 - INFO - Budgets synced: 0
+2025-11-10 23:04:25,432 - INFO - Step 5: Syncing savings goals...
+2025-11-10 23:04:25,436 - INFO - Savings goals synced: 1
+2025-11-10 23:04:25,437 - INFO - Completed sync log: Success, Records: 1
+2025-11-10 23:04:25,438 - INFO - ============================================================
+2025-11-10 23:04:25,438 - INFO - Synchronization completed successfully!
+2025-11-10 23:04:25,438 - INFO - Total records synced: 1
+2025-11-10 23:04:25,438 - INFO - Duration: 0.15 seconds
+2025-11-10 23:04:25,438 - INFO - ============================================================
+2025-11-10 23:04:25,439 - INFO - SQLite connection closed
+2025-11-10 23:04:25,440 - INFO - Oracle connection closed
+2025-11-10 23:04:25,440 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:25] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 23:04:25,456 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:25] "GET /goals HTTP/1.1" 200 -
+2025-11-10 23:04:25,474 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:04:25,480 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:25] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:04:25,481 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:04:29,147 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:29] "[32mGET /delete_goal/22 HTTP/1.1[0m" 302 -
+2025-11-10 23:04:29,163 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:29] "GET /goals HTTP/1.1" 200 -
+2025-11-10 23:04:29,181 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:04:29,185 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:29] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:04:29,186 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:29] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:04:31,625 - INFO - ============================================================
+2025-11-10 23:04:31,626 - INFO - Starting synchronization process...
+2025-11-10 23:04:31,626 - INFO - ============================================================
+2025-11-10 23:04:31,626 - INFO - Connected to SQLite database: D:/DM2_CW/sqlite/finance_local.db
+2025-11-10 23:04:31,626 - INFO - Connecting to Oracle database: 172.20.10.4:1521/xe
+2025-11-10 23:04:31,657 - INFO - Oracle connection successful
+2025-11-10 23:04:31,657 - INFO - Step 1: Syncing users...
+2025-11-10 23:04:31,659 - INFO - Users synced: 0
+2025-11-10 23:04:31,660 - INFO - Created sync log: 307
+2025-11-10 23:04:31,660 - INFO - Step 2: Syncing expenses...
+2025-11-10 23:04:31,661 - INFO - Expenses synced: 0
+2025-11-10 23:04:31,661 - INFO - Step 3: Syncing income...
+2025-11-10 23:04:31,661 - INFO - Income records synced: 0
+2025-11-10 23:04:31,661 - INFO - Step 4: Syncing budgets...
+2025-11-10 23:04:31,662 - INFO - Budgets synced: 0
+2025-11-10 23:04:31,662 - INFO - Step 5: Syncing savings goals...
+2025-11-10 23:04:31,667 - INFO - Savings goals synced: 1
+2025-11-10 23:04:31,668 - INFO - Completed sync log: Success, Records: 1
+2025-11-10 23:04:31,668 - INFO - ============================================================
+2025-11-10 23:04:31,668 - INFO - Synchronization completed successfully!
+2025-11-10 23:04:31,669 - INFO - Total records synced: 1
+2025-11-10 23:04:31,669 - INFO - Duration: 0.04 seconds
+2025-11-10 23:04:31,669 - INFO - ============================================================
+2025-11-10 23:04:31,670 - INFO - SQLite connection closed
+2025-11-10 23:04:31,671 - INFO - Oracle connection closed
+2025-11-10 23:04:31,672 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:31] "[32mPOST /sync_to_oracle HTTP/1.1[0m" 302 -
+2025-11-10 23:04:31,690 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:31] "GET /goals HTTP/1.1" 200 -
+2025-11-10 23:04:31,709 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:04:31,715 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:31] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:04:31,716 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:31] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:04:49,086 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:49] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 23:04:49,104 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:04:49,106 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:49] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:04:49,107 - INFO - 127.0.0.1 - - [10/Nov/2025 23:04:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:05:07,068 - INFO - 127.0.0.1 - - [10/Nov/2025 23:05:07] "GET /api/pending_sync_details HTTP/1.1" 200 -
+2025-11-10 23:05:23,682 - INFO - 127.0.0.1 - - [10/Nov/2025 23:05:23] "GET /goals HTTP/1.1" 200 -
+2025-11-10 23:05:23,696 - INFO - 127.0.0.1 - - [10/Nov/2025 23:05:23] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:05:23,702 - INFO - 127.0.0.1 - - [10/Nov/2025 23:05:23] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:05:23,703 - INFO - 127.0.0.1 - - [10/Nov/2025 23:05:23] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:47,001 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:47] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 23:11:47,016 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:47,025 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:47] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:47,026 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:47] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:50,221 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:50] "GET /goals HTTP/1.1" 200 -
+2025-11-10 23:11:50,238 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:50] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:50,249 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:50] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:50,249 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:50] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:51,380 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:51] "GET /income HTTP/1.1" 200 -
+2025-11-10 23:11:51,413 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:51,461 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:51] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:51,465 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:51] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:52,247 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:52] "GET /expenses HTTP/1.1" 200 -
+2025-11-10 23:11:52,261 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:52,267 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:52] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:52,268 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:52] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:53,403 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:53] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 23:11:53,418 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:53] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:53,427 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:53] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:53,428 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:53] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:55,393 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:55] "GET /budgets HTTP/1.1" 200 -
+2025-11-10 23:11:55,408 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:55] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:55,416 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:55] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:55,417 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:55] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:11:56,786 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:56] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 23:11:56,800 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:56] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:11:56,808 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:56] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:11:56,809 - INFO - 127.0.0.1 - - [10/Nov/2025 23:11:56] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:12:10,173 - INFO - 127.0.0.1 - - [10/Nov/2025 23:12:10] "GET /dashboard HTTP/1.1" 200 -
+2025-11-10 23:12:10,186 - INFO - 127.0.0.1 - - [10/Nov/2025 23:12:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-10 23:12:10,192 - INFO - 127.0.0.1 - - [10/Nov/2025 23:12:10] "[36mGET /static/images/Spendly_Logo.png HTTP/1.1[0m" 304 -
+2025-11-10 23:12:10,193 - INFO - 127.0.0.1 - - [10/Nov/2025 23:12:10] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-10 23:13:00,970 - INFO -  * Detected change in 'D:\\DM2_CW\\webapp\\app.py', reloading

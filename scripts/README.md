@@ -2,6 +2,11 @@
 
 This folder contains utility scripts for database population and maintenance.
 
+## Subfolders
+
+### utilities/
+Contains one-time migration scripts and diagnostic utilities. See `utilities/README.md` for details.
+
 ## Files
 
 ### populate_sample_data.py

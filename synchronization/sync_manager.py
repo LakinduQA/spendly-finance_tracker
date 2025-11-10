@@ -173,7 +173,7 @@ class DatabaseSync:
             # Get unsynced expenses from SQLite
             sqlite_cursor.execute("""
                 SELECT expense_id, user_id, category_id, amount, expense_date,
-                       description, payment_method, created_at, modified_at
+                       description, payment_method, created_at, modified_at, is_deleted
                 FROM expense
                 WHERE is_synced = 0
             """)
@@ -181,8 +181,11 @@ class DatabaseSync:
             expenses = sqlite_cursor.fetchall()
             synced_count = 0
             
-            for expense in expenses:
+            for expense_row in expenses:
                 try:
+                    # Convert Row to dict for easier access
+                    expense = dict(expense_row)
+                    
                     # Check if expense already exists in Oracle
                     oracle_cursor.execute("""
                         SELECT expense_id FROM finance_expense WHERE expense_id = :1
@@ -195,15 +198,16 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             UPDATE finance_expense
                             SET amount = :1, category_id = :2, expense_date = TO_DATE(:3, 'YYYY-MM-DD'),
-                                description = :4, payment_method = :5, modified_at = SYSTIMESTAMP,
-                                sync_timestamp = SYSTIMESTAMP
-                            WHERE expense_id = :6
+                                description = :4, payment_method = :5, is_deleted = :6, 
+                                modified_at = SYSTIMESTAMP, sync_timestamp = SYSTIMESTAMP
+                            WHERE expense_id = :7
                         """, [
                             expense['amount'],
                             expense['category_id'],
                             expense['expense_date'],
                             expense['description'],
                             expense['payment_method'],
+                            expense.get('is_deleted', 0),
                             expense['expense_id']
                         ])
                     else:
@@ -211,10 +215,10 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             INSERT INTO finance_expense 
                             (expense_id, user_id, category_id, amount, expense_date, 
-                             description, payment_method, created_at, modified_at, sync_timestamp)
+                             description, payment_method, is_deleted, created_at, modified_at, sync_timestamp)
                             VALUES (:1, :2, :3, :4, TO_DATE(:5, 'YYYY-MM-DD'), 
-                                    :6, :7, TO_TIMESTAMP(:8, 'YYYY-MM-DD HH24:MI:SS'), 
-                                    TO_TIMESTAMP(:9, 'YYYY-MM-DD HH24:MI:SS'), SYSTIMESTAMP)
+                                    :6, :7, :8, TO_TIMESTAMP(:9, 'YYYY-MM-DD HH24:MI:SS'), 
+                                    TO_TIMESTAMP(:10, 'YYYY-MM-DD HH24:MI:SS'), SYSTIMESTAMP)
                         """, [
                             expense['expense_id'],
                             expense['user_id'],
@@ -223,6 +227,7 @@ class DatabaseSync:
                             expense['expense_date'],
                             expense['description'],
                             expense['payment_method'],
+                            expense.get('is_deleted', 0),
                             expense['created_at'],
                             expense['modified_at']
                         ])
@@ -261,7 +266,7 @@ class DatabaseSync:
             # Get unsynced income from SQLite
             sqlite_cursor.execute("""
                 SELECT income_id, user_id, income_source, amount, income_date,
-                       description, created_at, modified_at
+                       description, created_at, modified_at, is_deleted
                 FROM income
                 WHERE is_synced = 0
             """)
@@ -269,8 +274,11 @@ class DatabaseSync:
             incomes = sqlite_cursor.fetchall()
             synced_count = 0
             
-            for income in incomes:
+            for income_row in incomes:
                 try:
+                    # Convert Row to dict for easier access
+                    income = dict(income_row)
+                    
                     # Check if income exists in Oracle
                     oracle_cursor.execute("""
                         SELECT income_id FROM finance_income WHERE income_id = :1
@@ -283,13 +291,15 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             UPDATE finance_income
                             SET amount = :1, income_source = :2, income_date = TO_DATE(:3, 'YYYY-MM-DD'),
-                                description = :4, modified_at = SYSTIMESTAMP, sync_timestamp = SYSTIMESTAMP
-                            WHERE income_id = :5
+                                description = :4, is_deleted = :5, modified_at = SYSTIMESTAMP, 
+                                sync_timestamp = SYSTIMESTAMP
+                            WHERE income_id = :6
                         """, [
                             income['amount'],
                             income['income_source'],
                             income['income_date'],
                             income['description'],
+                            income.get('is_deleted', 0),
                             income['income_id']
                         ])
                     else:
@@ -297,10 +307,10 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             INSERT INTO finance_income 
                             (income_id, user_id, income_source, amount, income_date, 
-                             description, created_at, modified_at, sync_timestamp)
+                             description, is_deleted, created_at, modified_at, sync_timestamp)
                             VALUES (:1, :2, :3, :4, TO_DATE(:5, 'YYYY-MM-DD'), 
-                                    :6, TO_TIMESTAMP(:7, 'YYYY-MM-DD HH24:MI:SS'), 
-                                    TO_TIMESTAMP(:8, 'YYYY-MM-DD HH24:MI:SS'), SYSTIMESTAMP)
+                                    :6, :7, TO_TIMESTAMP(:8, 'YYYY-MM-DD HH24:MI:SS'), 
+                                    TO_TIMESTAMP(:9, 'YYYY-MM-DD HH24:MI:SS'), SYSTIMESTAMP)
                         """, [
                             income['income_id'],
                             income['user_id'],
@@ -308,6 +318,7 @@ class DatabaseSync:
                             income['amount'],
                             income['income_date'],
                             income['description'],
+                            income.get('is_deleted', 0),
                             income['created_at'],
                             income['modified_at']
                         ])
@@ -346,7 +357,7 @@ class DatabaseSync:
             # Get unsynced budgets from SQLite
             sqlite_cursor.execute("""
                 SELECT budget_id, user_id, category_id, budget_amount, 
-                       start_date, end_date, is_active, created_at, modified_at
+                       start_date, end_date, is_active, created_at, modified_at, is_deleted
                 FROM budget
                 WHERE is_synced = 0
             """)
@@ -354,8 +365,11 @@ class DatabaseSync:
             budgets = sqlite_cursor.fetchall()
             synced_count = 0
             
-            for budget in budgets:
+            for budget_row in budgets:
                 try:
+                    # Convert Row to dict for easier access
+                    budget = dict(budget_row)
+                    
                     # Check if budget exists in Oracle
                     oracle_cursor.execute("""
                         SELECT budget_id FROM finance_budget WHERE budget_id = :1
@@ -368,14 +382,15 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             UPDATE finance_budget
                             SET budget_amount = :1, start_date = TO_DATE(:2, 'YYYY-MM-DD'),
-                                end_date = TO_DATE(:3, 'YYYY-MM-DD'), is_active = :4,
+                                end_date = TO_DATE(:3, 'YYYY-MM-DD'), is_active = :4, is_deleted = :5,
                                 modified_at = SYSTIMESTAMP
-                            WHERE budget_id = :5
+                            WHERE budget_id = :6
                         """, [
                             budget['budget_amount'],
                             budget['start_date'],
                             budget['end_date'],
                             budget['is_active'],
+                            budget.get('is_deleted', 0),
                             budget['budget_id']
                         ])
                     else:
@@ -383,10 +398,10 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             INSERT INTO finance_budget 
                             (budget_id, user_id, category_id, budget_amount, start_date, end_date,
-                             is_active, created_at, modified_at)
+                             is_active, is_deleted, created_at, modified_at)
                             VALUES (:1, :2, :3, :4, TO_DATE(:5, 'YYYY-MM-DD'), TO_DATE(:6, 'YYYY-MM-DD'),
-                                    :7, TO_TIMESTAMP(:8, 'YYYY-MM-DD HH24:MI:SS'), 
-                                    TO_TIMESTAMP(:9, 'YYYY-MM-DD HH24:MI:SS'))
+                                    :7, :8, TO_TIMESTAMP(:9, 'YYYY-MM-DD HH24:MI:SS'), 
+                                    TO_TIMESTAMP(:10, 'YYYY-MM-DD HH24:MI:SS'))
                         """, [
                             budget['budget_id'],
                             budget['user_id'],
@@ -395,6 +410,7 @@ class DatabaseSync:
                             budget['start_date'],
                             budget['end_date'],
                             budget['is_active'],
+                            budget.get('is_deleted', 0),
                             budget['created_at'],
                             budget['modified_at']
                         ])
@@ -433,7 +449,7 @@ class DatabaseSync:
             # Get unsynced goals from SQLite
             sqlite_cursor.execute("""
                 SELECT goal_id, user_id, goal_name, target_amount, current_amount,
-                       start_date, deadline, priority, status, created_at, modified_at
+                       start_date, deadline, priority, status, created_at, modified_at, is_deleted
                 FROM savings_goal
                 WHERE is_synced = 0
             """)
@@ -441,8 +457,11 @@ class DatabaseSync:
             goals = sqlite_cursor.fetchall()
             synced_count = 0
             
-            for goal in goals:
+            for goal_row in goals:
                 try:
+                    # Convert Row to dict for easier access
+                    goal = dict(goal_row)
+                    
                     # Check if goal exists in Oracle
                     oracle_cursor.execute("""
                         SELECT goal_id FROM finance_savings_goal WHERE goal_id = :1
@@ -456,8 +475,8 @@ class DatabaseSync:
                             UPDATE finance_savings_goal
                             SET goal_name = :1, target_amount = :2, current_amount = :3,
                                 deadline = TO_DATE(:4, 'YYYY-MM-DD'), priority = :5, status = :6,
-                                modified_at = SYSTIMESTAMP
-                            WHERE goal_id = :7
+                                is_deleted = :7, modified_at = SYSTIMESTAMP
+                            WHERE goal_id = :8
                         """, [
                             goal['goal_name'],
                             goal['target_amount'],
@@ -465,6 +484,7 @@ class DatabaseSync:
                             goal['deadline'],
                             goal['priority'],
                             goal['status'],
+                            goal.get('is_deleted', 0),
                             goal['goal_id']
                         ])
                     else:
@@ -472,11 +492,11 @@ class DatabaseSync:
                         oracle_cursor.execute("""
                             INSERT INTO finance_savings_goal 
                             (goal_id, user_id, goal_name, target_amount, current_amount,
-                             start_date, deadline, priority, status, created_at, modified_at)
+                             start_date, deadline, priority, status, is_deleted, created_at, modified_at)
                             VALUES (:1, :2, :3, :4, :5, TO_DATE(:6, 'YYYY-MM-DD'), 
-                                    TO_DATE(:7, 'YYYY-MM-DD'), :8, :9,
-                                    TO_TIMESTAMP(:10, 'YYYY-MM-DD HH24:MI:SS'), 
-                                    TO_TIMESTAMP(:11, 'YYYY-MM-DD HH24:MI:SS'))
+                                    TO_DATE(:7, 'YYYY-MM-DD'), :8, :9, :10,
+                                    TO_TIMESTAMP(:11, 'YYYY-MM-DD HH24:MI:SS'), 
+                                    TO_TIMESTAMP(:12, 'YYYY-MM-DD HH24:MI:SS'))
                         """, [
                             goal['goal_id'],
                             goal['user_id'],
@@ -487,6 +507,7 @@ class DatabaseSync:
                             goal['deadline'],
                             goal['priority'],
                             goal['status'],
+                            goal.get('is_deleted', 0),
                             goal['created_at'],
                             goal['modified_at']
                         ])

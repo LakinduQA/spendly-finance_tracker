@@ -1,22 +1,60 @@
-# Viva Questions and Answers
+# Viva Questions and Answers - COMPLETE GUIDE
 
 **Personal Finance Management System**  
 **Data Management 2 Coursework**
 
 ---
 
-## Table of Contents
+## 📚 TABLE OF CONTENTS
 
-- [Database Design & Architecture](#database-design--architecture)
-- [Synchronization & Conflict Resolution](#synchronization--conflict-resolution)
-- [Security & Authentication](#security--authentication)
-- [PL/SQL & Oracle Implementation](#plsql--oracle-implementation)
-- [Performance & Optimization](#performance--optimization)
-- [Testing & Quality Assurance](#testing--quality-assurance)
-- [Backup & Recovery](#backup--recovery)
-- [Technical Challenges](#technical-challenges)
-- [Web Application & UI](#web-application--ui)
-- [Future Enhancements](#future-enhancements)
+### PART A: SYSTEM OVERVIEW
+1. [System Architecture & Design](#1-system-architecture--design)
+2. [Database Design & Schema](#2-database-design--schema)
+
+### PART B: SQLITE IMPLEMENTATION
+3. [SQLite Database](#3-sqlite-database)
+4. [SQLite Triggers & Views](#4-sqlite-triggers--views)
+
+### PART C: ORACLE & PL/SQL (⭐ MOST IMPORTANT)
+5. [Oracle Database Setup](#5-oracle-database-setup)
+6. [PL/SQL CRUD Package](#6-plsql-crud-package)
+7. [PL/SQL Reports Package](#7-plsql-reports-package)
+8. [PL/SQL Advanced Features](#8-plsql-advanced-features)
+
+### PART D: SYNCHRONIZATION
+9. [Synchronization Mechanism](#9-synchronization-mechanism)
+10. [Conflict Resolution](#10-conflict-resolution)
+
+### PART E: APPLICATION LAYER
+11. [Flask Web Application](#11-flask-web-application)
+12. [Security Implementation](#12-security-implementation)
+
+### PART F: SPECIAL FEATURES
+13. [Soft Delete Mechanism](#13-soft-delete-mechanism-new)
+14. [Performance Optimization](#14-performance-optimization)
+15. [Testing & Quality](#15-testing--quality)
+
+### PART G: PROJECT MANAGEMENT
+16. [Challenges & Solutions](#16-challenges--solutions)
+17. [Future Enhancements](#17-future-enhancements)
+
+---
+
+## 🎯 QUICK REFERENCE NUMBERS (Memorize These!)
+
+- **Total Code**: 10,000+ lines
+- **Test Data**: 1,350+ transactions across 5 users
+- **Tables**: 9 (same in SQLite and Oracle)
+- **PL/SQL CRUD Package**: 818 lines, 31 procedures/functions
+- **PL/SQL Reports Package**: 720 lines, 5 reports
+- **SQLite Triggers**: 10 automated triggers
+- **Indexes**: 28 strategic indexes
+- **Performance Gain**: 25× faster (145ms → 6ms)
+- **Sync Speed**: 0.20 seconds for 1,350+ records
+- **Security**: PBKDF2-SHA256, 600,000 iterations
+- **Test Coverage**: 85.3% (65 tests passing)
+
+---
 
 ---
 

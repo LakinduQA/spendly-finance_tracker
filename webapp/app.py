@@ -56,16 +56,16 @@ def inject_pending_sync_count():
         pending_count = 0
         
         # Unsynced expenses
-        pending_count += db.execute('SELECT COUNT(*) as count FROM expense WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        pending_count += db.execute('SELECT COUNT(*) as count FROM expense WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)', (user_id,)).fetchone()['count']
         
         # Unsynced income
-        pending_count += db.execute('SELECT COUNT(*) as count FROM income WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        pending_count += db.execute('SELECT COUNT(*) as count FROM income WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)', (user_id,)).fetchone()['count']
         
         # Unsynced budgets
-        pending_count += db.execute('SELECT COUNT(*) as count FROM budget WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        pending_count += db.execute('SELECT COUNT(*) as count FROM budget WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)', (user_id,)).fetchone()['count']
         
         # Unsynced goals
-        pending_count += db.execute('SELECT COUNT(*) as count FROM savings_goal WHERE user_id = ? AND is_synced = 0', (user_id,)).fetchone()['count']
+        pending_count += db.execute('SELECT COUNT(*) as count FROM savings_goal WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)', (user_id,)).fetchone()['count']
         
         db.close()
         
@@ -730,6 +730,7 @@ def dashboard():
         SELECT COALESCE(SUM(amount), 0) as total
         FROM expense
         WHERE user_id = ? AND strftime('%Y-%m', expense_date) = ?
+          AND (is_deleted = 0 OR is_deleted IS NULL)
     ''', (user_id, current_month)).fetchone()['total']
     
     # Total income this month
@@ -737,18 +738,21 @@ def dashboard():
         SELECT COALESCE(SUM(amount), 0) as total
         FROM income
         WHERE user_id = ? AND strftime('%Y-%m', income_date) = ?
+          AND (is_deleted = 0 OR is_deleted IS NULL)
     ''', (user_id, current_month)).fetchone()['total']
     
     # Active budgets
     active_budgets = db.execute('''
         SELECT COUNT(*) as count FROM budget
         WHERE user_id = ? AND is_active = 1
+          AND (is_deleted = 0 OR is_deleted IS NULL)
     ''', (user_id,)).fetchone()['count']
     
     # Active savings goals
     active_goals = db.execute('''
         SELECT COUNT(*) as count FROM savings_goal
         WHERE user_id = ? AND status = 'Active'
+          AND (is_deleted = 0 OR is_deleted IS NULL)
     ''', (user_id,)).fetchone()['count']
     
     # Recent expenses (last 5)
@@ -757,6 +761,7 @@ def dashboard():
         FROM expense e
         JOIN category c ON e.category_id = c.category_id
         WHERE e.user_id = ?
+          AND (e.is_deleted = 0 OR e.is_deleted IS NULL)
         ORDER BY e.expense_date DESC, e.created_at DESC
         LIMIT 5
     ''', (user_id,)).fetchall()
@@ -779,12 +784,14 @@ def dashboard():
             SELECT COALESCE(SUM(amount), 0) as total
             FROM income
             WHERE user_id = ? AND strftime('%Y-%m', income_date) = ?
+              AND (is_deleted = 0 OR is_deleted IS NULL)
         ''', (user_id, month_str)).fetchone()['total']
         
         month_expense = db.execute('''
             SELECT COALESCE(SUM(amount), 0) as total
             FROM expense
             WHERE user_id = ? AND strftime('%Y-%m', expense_date) = ?
+              AND (is_deleted = 0 OR is_deleted IS NULL)
         ''', (user_id, month_str)).fetchone()['total']
         
         monthly_data.append({
@@ -821,12 +828,12 @@ def expenses():
     db = get_sqlite_db()
     user_id = session['user_id']
     
-    # Get all expenses
+    # Get all expenses (excluding deleted ones)
     expenses_list = db.execute('''
         SELECT e.*, c.category_name
         FROM expense e
         JOIN category c ON e.category_id = c.category_id
-        WHERE e.user_id = ?
+        WHERE e.user_id = ? AND (e.is_deleted = 0 OR e.is_deleted IS NULL)
         ORDER BY e.expense_date DESC, e.created_at DESC
     ''', (user_id,)).fetchall()
     
@@ -873,11 +880,17 @@ def add_expense():
 @app.route('/delete_expense/<int:expense_id>')
 @login_required
 def delete_expense(expense_id):
-    """Delete expense"""
+    """Soft delete expense"""
     db = get_sqlite_db()
     try:
-        db.execute('DELETE FROM expense WHERE expense_id = ? AND user_id = ?', 
-                  (expense_id, session['user_id']))
+        # SOFT DELETE: Mark as deleted instead of permanent delete
+        db.execute('''
+            UPDATE expense 
+            SET is_deleted = 1, 
+                modified_at = datetime('now', 'localtime'),
+                is_synced = 0
+            WHERE expense_id = ? AND user_id = ?
+        ''', (expense_id, session['user_id']))
         db.commit()
         flash('Expense deleted successfully!', 'success')
     except Exception as e:
@@ -898,10 +911,10 @@ def income():
     db = get_sqlite_db()
     user_id = session['user_id']
     
-    # Get all income records
+    # Get all income records (excluding deleted ones)
     income_list = db.execute('''
         SELECT * FROM income
-        WHERE user_id = ?
+        WHERE user_id = ? AND (is_deleted = 0 OR is_deleted IS NULL)
         ORDER BY income_date DESC
     ''', (user_id,)).fetchall()
     
@@ -937,11 +950,17 @@ def add_income():
 @app.route('/delete_income/<int:income_id>')
 @login_required
 def delete_income(income_id):
-    """Delete income record"""
+    """Soft delete income record"""
     db = get_sqlite_db()
     try:
-        db.execute('DELETE FROM income WHERE income_id = ? AND user_id = ?', 
-                  (income_id, session['user_id']))
+        # SOFT DELETE: Mark as deleted instead of permanent delete
+        db.execute('''
+            UPDATE income 
+            SET is_deleted = 1, 
+                modified_at = datetime('now', 'localtime'),
+                is_synced = 0
+            WHERE income_id = ? AND user_id = ?
+        ''', (income_id, session['user_id']))
         db.commit()
         flash('Income deleted successfully!', 'success')
     except Exception as e:
@@ -1010,11 +1029,17 @@ def add_budget():
 @app.route('/delete_budget/<int:budget_id>')
 @login_required
 def delete_budget(budget_id):
-    """Delete budget"""
+    """Soft delete budget"""
     db = get_sqlite_db()
     try:
-        db.execute('DELETE FROM budget WHERE budget_id = ? AND user_id = ?', 
-                  (budget_id, session['user_id']))
+        # SOFT DELETE: Mark as deleted instead of permanent delete
+        db.execute('''
+            UPDATE budget 
+            SET is_deleted = 1, 
+                modified_at = datetime('now', 'localtime'),
+                is_synced = 0
+            WHERE budget_id = ? AND user_id = ?
+        ''', (budget_id, session['user_id']))
         db.commit()
         flash('Budget deleted successfully!', 'success')
     except Exception as e:
@@ -1101,11 +1126,17 @@ def contribute_goal(goal_id):
 @app.route('/delete_goal/<int:goal_id>')
 @login_required
 def delete_goal(goal_id):
-    """Delete savings goal"""
+    """Soft delete savings goal"""
     db = get_sqlite_db()
     try:
-        db.execute('DELETE FROM savings_goal WHERE goal_id = ? AND user_id = ?', 
-                  (goal_id, session['user_id']))
+        # SOFT DELETE: Mark as deleted instead of permanent delete
+        db.execute('''
+            UPDATE savings_goal 
+            SET is_deleted = 1, 
+                modified_at = datetime('now', 'localtime'),
+                is_synced = 0
+            WHERE goal_id = ? AND user_id = ?
+        ''', (goal_id, session['user_id']))
         db.commit()
         flash('Savings goal deleted successfully!', 'success')
     except Exception as e:
@@ -1139,13 +1170,14 @@ def pending_sync_details():
             FROM expense e
             JOIN category c ON e.category_id = c.category_id
             WHERE e.user_id = ? AND e.is_synced = 0
+              AND (e.is_deleted = 0 OR e.is_deleted IS NULL)
             ORDER BY e.expense_date DESC, e.expense_id DESC
             LIMIT 3
         ''', (user_id,)).fetchall()
         
         # Count total unsynced expenses
         total_expenses = conn.execute(
-            'SELECT COUNT(*) as count FROM expense WHERE user_id = ? AND is_synced = 0',
+            'SELECT COUNT(*) as count FROM expense WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)',
             (user_id,)
         ).fetchone()['count']
         
@@ -1154,12 +1186,13 @@ def pending_sync_details():
             SELECT income_id, amount, income_source as source, description, income_date
             FROM income
             WHERE user_id = ? AND is_synced = 0
+              AND (is_deleted = 0 OR is_deleted IS NULL)
             ORDER BY income_date DESC, income_id DESC
             LIMIT 3
         ''', (user_id,)).fetchall()
         
         total_income = conn.execute(
-            'SELECT COUNT(*) as count FROM income WHERE user_id = ? AND is_synced = 0',
+            'SELECT COUNT(*) as count FROM income WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)',
             (user_id,)
         ).fetchone()['count']
         
@@ -1169,12 +1202,13 @@ def pending_sync_details():
             FROM budget b
             JOIN category c ON b.category_id = c.category_id
             WHERE b.user_id = ? AND b.is_synced = 0
+              AND (b.is_deleted = 0 OR b.is_deleted IS NULL)
             ORDER BY b.created_at DESC, b.budget_id DESC
             LIMIT 3
         ''', (user_id,)).fetchall()
         
         total_budgets = conn.execute(
-            'SELECT COUNT(*) as count FROM budget WHERE user_id = ? AND is_synced = 0',
+            'SELECT COUNT(*) as count FROM budget WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)',
             (user_id,)
         ).fetchone()['count']
         
@@ -1183,12 +1217,13 @@ def pending_sync_details():
             SELECT goal_id, goal_name, target_amount, current_amount
             FROM savings_goal
             WHERE user_id = ? AND is_synced = 0
+              AND (is_deleted = 0 OR is_deleted IS NULL)
             ORDER BY created_at DESC, goal_id DESC
             LIMIT 3
         ''', (user_id,)).fetchall()
         
         total_goals = conn.execute(
-            'SELECT COUNT(*) as count FROM savings_goal WHERE user_id = ? AND is_synced = 0',
+            'SELECT COUNT(*) as count FROM savings_goal WHERE user_id = ? AND is_synced = 0 AND (is_deleted = 0 OR is_deleted IS NULL)',
             (user_id,)
         ).fetchone()['count']
         
@@ -1514,7 +1549,9 @@ def api_expense_by_category():
     data = db.execute('''
         SELECT c.category_name, COALESCE(SUM(e.amount), 0) as total
         FROM category c
-        LEFT JOIN expense e ON c.category_id = e.category_id AND e.user_id = ?
+        LEFT JOIN expense e ON c.category_id = e.category_id 
+          AND e.user_id = ?
+          AND (e.is_deleted = 0 OR e.is_deleted IS NULL)
         WHERE c.category_type = 'EXPENSE'
         GROUP BY c.category_name
         HAVING total > 0
@@ -1540,6 +1577,7 @@ def api_monthly_trend():
                SUM(amount) as total
         FROM expense
         WHERE user_id = ?
+          AND (is_deleted = 0 OR is_deleted IS NULL)
         GROUP BY month
         ORDER BY month DESC
         LIMIT 6

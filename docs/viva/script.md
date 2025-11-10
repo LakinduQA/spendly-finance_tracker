@@ -5,20 +5,46 @@
 
 ---
 
-## 📋 Table of Contents
+## 📋 QUICK NAVIGATION
 
-1. [Introduction](#1-introduction)
-2. [System Overview](#2-system-overview)
-3. [Database Design](#3-database-design)
-4. [SQLite Implementation](#4-sqlite-implementation)
-5. [Oracle Implementation](#5-oracle-implementation)
-6. [Synchronization Mechanism](#6-synchronization-mechanism)
-7. [Web Application](#7-web-application)
-8. [Security & Authentication](#8-security--authentication)
-9. [Live Demonstration](#9-live-demonstration)
-10. [Technical Challenges](#10-technical-challenges)
-11. [Future Enhancements](#11-future-enhancements)
-12. [Conclusion](#12-conclusion)
+**Part 1**: [Introduction](#1-introduction) (2 min)  
+**Part 2**: [System Overview](#2-system-overview) (3 min)  
+**Part 3**: [Database Design](#3-database-design) (4 min)  
+**Part 4**: [SQLite Implementation](#4-sqlite-implementation) (3 min)  
+**Part 5**: [Oracle & PL/SQL](#5-oracle--plsql-implementation) (5 min) ⭐ **MOST IMPORTANT**  
+**Part 6**: [Soft Delete Mechanism](#6-soft-delete-mechanism) (3 min) 🆕 **NEW FEATURE**  
+**Part 7**: [Synchronization](#7-synchronization-mechanism) (4 min)  
+**Part 8**: [Web Application](#8-web-application) (3 min)  
+**Part 9**: [Security](#9-security--authentication) (2 min)  
+**Part 10**: [Live Demo](#10-live-demonstration) (10 min)  
+**Part 11**: [Challenges & Future](#11-technical-challenges--future) (2 min)  
+**Part 12**: [Conclusion](#12-conclusion) (1 min)
+
+**Total Duration**: ~40 minutes (flexible)
+
+---
+
+## 🎯 KEY NUMBERS TO MEMORIZE
+
+```
+PROJECT SCALE:
+├── Total Code: 10,000+ lines
+├── PL/SQL CRUD: 818 lines (31 procedures)
+├── PL/SQL Reports: 720 lines (5 reports)
+├── Flask App: 2,220 lines
+└── Test Data: 1,350+ transactions
+
+DATABASE:
+├── Tables: 9
+├── Indexes: 28
+├── Triggers: 10
+├── Views: 5
+└── Foreign Keys: 8
+
+PERFORMANCE:
+├── Query Speed: 6ms (was 145ms) = 25× faster
+├── Sync Time: 0.20 seconds
+└── Test Coverage: 85.3% (65 tests)
 
 ---
 
