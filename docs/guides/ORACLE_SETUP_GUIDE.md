@@ -1,38 +1,39 @@
 # Oracle Database Setup Guide
-**Personal Finance Management System**
 
-## 📋 Quick Answer to Your Questions
+**Optional feature for centralized analytics and reporting**
 
-### Q1: What queries should I run to create the tables?
-**Answer**: Run the complete script: `d:\DM2_CW\oracle\01_create_database.sql`
+## Quick Start
 
-### Q2: Should Oracle tables be the same as SQLite tables?
-**Answer**: YES! They MUST match for synchronization to work. The script already ensures this.
+1. **Locate the Oracle SQL script**: `oracle/01_create_database.sql`
+2. **Connect to Oracle** with admin privileges
+3. **Run the complete creation script** - it creates tables, sequences, triggers, and views
+4. **Update configuration** in `synchronization/config.ini`
+5. **Sync data** from SQLite whenever needed
 
 ---
 
-## 🚀 Step-by-Step Oracle Setup
+## 🚀 Step-by-Step Setup
 
 ### Step 1: Connect to Oracle Database
 
 ```sql
--- Using SQL*Plus
+-- Using SQL*Plus or SQL Developer
 sqlplus sys as sysdba
--- Or use your admin credentials
+-- Enter your Oracle admin credentials
 ```
 
-### Step 2: Run the Complete Creation Script
+### Step 2: Run the Creation Script
 
 ```sql
--- This creates EVERYTHING:
-@d:\DM2_CW\oracle\01_create_database.sql
+-- Navigate to your project directory and run:
+@oracle/01_create_database.sql
 ```
 
 ### Step 3: Verify the Setup
 
 ```sql
--- Connect as the application user
-CONN finance_admin/FinanceSecure2025
+-- Connect with credentials from the script output
+CONN [username]/[password]
 
 -- Check tables created
 SELECT table_name FROM user_tables ORDER BY table_name;
@@ -220,25 +221,30 @@ pip install cx_Oracle
 ```
 
 ### 2. Update Configuration File
-Edit `d:\DM2_CW\synchronization\config.ini`:
+
+Edit `synchronization/config.ini` with your Oracle credentials:
 
 ```ini
 [oracle]
-username = finance_admin
-password = FinanceSecure2025
-dsn = localhost:1521/XEPDB1
+username = your_oracle_username
+password = your_oracle_password
+host = your_oracle_host
+port = 1521
+service_name = your_service_name
 ```
 
 ### 3. Test Oracle Connection
+
 ```bash
-cd d:\DM2_CW\synchronization
-python -c "import cx_Oracle; conn = cx_Oracle.connect('finance_admin', 'FinanceSecure2025', 'localhost:1521/XEPDB1'); print('Connected!'); conn.close()"
+cd synchronization
+python -c "import cx_Oracle; conn = cx_Oracle.connect('username', 'password', 'host:1521/service'); print('Connected!'); conn.close()"
 ```
 
 ### 4. Test Synchronization
+
 ```bash
-cd d:\DM2_CW\synchronization
-python sync_manager.py
+cd tests
+python test_sync.py
 ```
 
 ---
@@ -249,15 +255,15 @@ After the database is created, you can install:
 
 ### 1. PL/SQL CRUD Package
 ```sql
-@d:\DM2_CW\oracle\02_plsql_crud_package.sql
+@oracle/02_plsql_crud_package.sql
 ```
-This provides procedures/functions for all CRUD operations.
+Provides procedures/functions for all CRUD operations.
 
 ### 2. Reports Package
 ```sql
-@d:\DM2_CW\oracle\03_reports_package.sql
+@oracle/03_reports_package.sql
 ```
-This provides 5 financial reports with CSV export.
+Provides 5 financial reports.
 
 ---
 
@@ -275,18 +281,13 @@ Your Oracle database is ready when:
 
 ---
 
-## 🎉 Summary
+## Summary
 
-**YES - Oracle tables MUST match SQLite tables!**
-
-The script `01_create_database.sql` already ensures this by:
+The `01_create_database.sql` script ensures Oracle tables match SQLite structure by:
 1. Using the same table structure
 2. Using the same column names
 3. Using the same data types (converted to Oracle syntax)
 4. Using the same constraints
 5. Using the same default values
 
-**Just run the one script and everything will be set up correctly for synchronization!**
-
----
-*Created: November 1, 2025*
+**Just run this one script and everything will be set up correctly for synchronization!**

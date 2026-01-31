@@ -78,6 +78,17 @@ Then login with:
 - Username: `dilini.fernando`
 - Password: `Password123!`
 
+### Optional: Set Up Oracle (Advanced)
+
+For enterprise-grade analytics and bidirectional sync:
+
+1. **Create Oracle database** - See [Oracle Setup Guide](docs/guides/ORACLE_SETUP_GUIDE.md)
+2. **Configure credentials** - Update `synchronization/config.ini`
+3. **Run synchronization** - Sync data from SQLite to Oracle
+4. **Generate reports** - Use 5 PL/SQL financial reports
+
+Oracle sync is optional - the app works fully with SQLite alone.
+
 ## 📸 Screenshots
 
 ### Dashboard
@@ -162,22 +173,20 @@ spendly-finance_tracker/
 
 ##  Configuration
 
-### Oracle Connection (Optional)
+### SQLite (Works Out of the Box)
 
-1. Copy the example config:
-   ```bash
-   cp synchronization/config.example.ini synchronization/config.ini
-   ```
+No configuration needed - the database is created automatically on first run.
 
-2. Edit `config.ini` with your Oracle credentials:
-   ```ini
-   [oracle]
-   username = your_username
-   password = your_password
-   host = localhost
-   port = 1521
-   sid = xe
-   ```
+### Oracle (Optional for Advanced Features)
+
+For Oracle setup, including database creation and synchronization configuration, see:
+📖 **[Oracle Setup Guide](docs/guides/ORACLE_SETUP_GUIDE.md)**
+
+This includes:
+- Creating Oracle tables to match SQLite schema
+- Configuring PL/SQL packages
+- Setting up bidirectional synchronization
+- Generating financial reports
 
 ##  Testing
 
