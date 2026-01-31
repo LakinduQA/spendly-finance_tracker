@@ -45,10 +45,17 @@ env/
 # ========================
 # Database Files
 # ========================
-sqlite/*.db
+# Ignore database files but keep SQL schema
 *.db
 *.sqlite
 *.sqlite3
+*.db-shm
+*.db-wal
+
+# Note: SQL schema files (.sql) are kept in git
+# Users will create their own database using:
+#   cd sqlite
+#   sqlite3 finance_local.db < 01_create_database.sql
 
 # ========================
 # Logs

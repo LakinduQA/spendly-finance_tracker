@@ -1,4 +1,4 @@
-# 💰 Spendly - Personal Finance Tracker
+#  Spendly - Personal Finance Tracker
 
 A modern, full-stack personal finance management system with dual-database architecture, real-time synchronization, and comprehensive financial reporting.
 
@@ -8,7 +8,7 @@ A modern, full-stack personal finance management system with dual-database archi
 ![Oracle](https://img.shields.io/badge/Oracle-Database-red.svg)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple.svg)
 
-## ✨ Features
+##  Features
 
 ### Core Functionality
 - **Expense Tracking** - Categorize and track daily expenses with multiple payment methods
@@ -24,7 +24,7 @@ A modern, full-stack personal finance management system with dual-database archi
 - **Secure Authentication** - PBKDF2-SHA256 password hashing (600k iterations)
 - **Responsive UI** - Modern Bootstrap 5 design with Chart.js visualizations
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -43,19 +43,40 @@ A modern, full-stack personal finance management system with dual-database archi
    pip install -r requirements.txt
    ```
 
-3. **Run the application**
+3. **Create the SQLite database**
+   ```bash
+   cd sqlite
+   sqlite3 finance_local.db < 01_create_database.sql
+   cd ..
+   ```
+   
+   Or on Windows, the database is created automatically on first run.
+
+4. **Run the application**
    ```bash
    cd webapp
    python app.py
    ```
 
-4. **Open your browser**
+5. **Open your browser**
    ```
    http://127.0.0.1:5000
    ```
 
 ### Windows Users
 Double-click `scripts/batch/setup.bat` for a guided setup wizard.
+
+### Optional: Add Sample Data
+
+To populate the database with test data (5 users, 90 days of transactions):
+```bash
+cd scripts
+python populate_sample_data.py
+```
+
+Then login with:
+- Username: `dilini.fernando`
+- Password: `Password123!`
 
 ## 📸 Screenshots
 
@@ -71,7 +92,7 @@ Double-click `scripts/batch/setup.bat` for a guided setup wizard.
 - Set monthly budgets with visual progress bars
 - Create savings goals with contribution tracking
 
-## 🗄️ Database Architecture
+##  Database Architecture
 
 ```
 ┌─────────────┐         ┌──────────────┐         ┌──────────────┐
@@ -93,7 +114,7 @@ Double-click `scripts/batch/setup.bat` for a guided setup wizard.
 - 5 comprehensive financial reports
 - Advanced SQL queries
 
-## 📊 Financial Reports
+##  Financial Reports
 
 The system generates 5 detailed financial reports:
 
@@ -103,7 +124,7 @@ The system generates 5 detailed financial reports:
 4. **Category Distribution** - Expense breakdown by category
 5. **Forecasted Savings** - Future savings predictions based on trends
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |-------|------------|
@@ -114,7 +135,7 @@ The system generates 5 detailed financial reports:
 | **Sync Module** | cx_Oracle, Custom Python |
 | **Security** | Werkzeug (PBKDF2-SHA256) |
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 spendly-finance_tracker/
@@ -131,7 +152,7 @@ spendly-finance_tracker/
 └── docs/                  # User & setup guides
 ```
 
-## 🔒 Security Features
+##  Security Features
 
 - **Password Hashing** - PBKDF2-SHA256 with 600,000 iterations
 - **SQL Injection Prevention** - Parameterized queries throughout
@@ -139,7 +160,7 @@ spendly-finance_tracker/
 - **Input Validation** - Server-side validation for all inputs
 - **Soft Delete** - Data preservation with `is_deleted` flags
 
-## ⚙️ Configuration
+##  Configuration
 
 ### Oracle Connection (Optional)
 
@@ -158,7 +179,7 @@ spendly-finance_tracker/
    sid = xe
    ```
 
-## 🧪 Testing
+##  Testing
 
 Run the test suite:
 ```bash
@@ -167,7 +188,7 @@ python test_sync.py
 python verify_database.py
 ```
 
-## 📝 Sample Data
+##  Sample Data
 
 Populate the database with sample data:
 ```bash
@@ -184,7 +205,7 @@ This creates:
 - Username: `dilini.fernando`
 - Password: `Password123!`
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -194,15 +215,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+##  License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 👤 Author
+##  Author
 
 **Lakindu De Silva**
 - GitHub: [@LakinduQA](https://github.com/LakinduQA)
 
 ---
 
-⭐ If you find this project useful, please consider giving it a star!
+ If you find this project useful, please consider giving it a star!
