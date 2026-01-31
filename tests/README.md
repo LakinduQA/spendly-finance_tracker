@@ -1,56 +1,43 @@
 # Test Scripts
 
-This folder contains all test and verification scripts for the Personal Finance Manager.
+This folder contains test and verification scripts for Spendly.
 
 ## Files
 
 ### test_sync.py
-Quick synchronization test for all users.
+Quick synchronization test.
 
 **Usage:**
 ```bash
-cd D:\DM2_CW\tests
+cd tests
 python test_sync.py
 ```
 
-**Purpose:**
-- Tests SQLite to Oracle synchronization
-- Syncs first user automatically
-- Verifies sync functionality
+Tests SQLite to Oracle synchronization for the first user.
 
 ### test_sync_extended.py
 Extended synchronization test with longer timeout.
 
 **Usage:**
 ```bash
-cd D:\DM2_CW\tests
+cd tests
 python test_sync_extended.py
 ```
 
-**Purpose:**
-- Tests sync with extended Oracle connection timeout
-- Useful for slower network connections
-- More detailed logging
+For slower network connections with detailed logging.
 
 ### verify_database.py
-Database verification and reporting script.
+Database verification and reporting.
 
 **Usage:**
 ```bash
-cd D:\DM2_CW\tests
+cd tests
 python verify_database.py
 ```
 
-**Purpose:**
-- Checks all tables exist
-- Verifies data counts
-- Lists all users
-- Reports database statistics
+Checks tables, verifies data counts, and reports statistics.
 
 ## Requirements
-- All scripts use relative paths
-- Python 3.x required
+- Python 3.x
 - Dependencies from parent requirements.txt
-
-## Notes
-All test scripts now use relative paths and can be run from any location.
+- All scripts use relative paths

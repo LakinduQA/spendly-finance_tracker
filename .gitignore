@@ -1,0 +1,116 @@
+# ========================
+# Spendly Finance Tracker
+# .gitignore
+# ========================
+
+# ========================
+# Sensitive Configuration
+# ========================
+synchronization/config.ini
+*.ini
+!config.example.ini
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv/
+.env
+
+# ========================
+# Database Files
+# ========================
+sqlite/*.db
+*.db
+*.sqlite
+*.sqlite3
+
+# ========================
+# Logs
+# ========================
+logs/
+*.log
+*.txt
+!README.txt
+!requirements.txt
+
+# ========================
+# IDE / Editor
+# ========================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ========================
+# OS Generated
+# ========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ========================
+# Backups
+# ========================
+backups/
+*.bak
+*.backup
+
+# ========================
+# Reports (Generated)
+# ========================
+reports/*.pdf
+reports/*.html
+reports/*.csv
+
+# ========================
+# Test Output
+# ========================
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# ========================
+# Archived (Old files)
+# ========================
+archived/

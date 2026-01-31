@@ -29,6 +29,9 @@ echo Upgrading pip...
 python -m pip install --upgrade pip --quiet
 echo.
 
+REM Navigate to project root
+cd /d "%~dp0..\.."
+
 REM Install from requirements.txt
 if exist requirements.txt (
     echo Installing packages from requirements.txt...
@@ -37,6 +40,7 @@ if exist requirements.txt (
     echo Installing packages manually...
     pip install Flask
     pip install cx_Oracle
+    pip install werkzeug
 )
 
 echo.
@@ -45,7 +49,7 @@ echo   Installation Complete!
 echo ========================================
 echo.
 echo Next steps:
-echo   1. Run SETUP.bat to configure and launch
-echo   2. Or run: cd webapp && python app.py
+echo   1. Run setup.bat to configure and launch
+echo   2. Or run: cd webapp ^&^& python app.py
 echo.
 pause
