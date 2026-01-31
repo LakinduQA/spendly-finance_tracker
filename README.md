@@ -1,4 +1,4 @@
-#  Spendly - Personal Finance Tracker
+# Spendly - Personal Finance Tracker
 
 A modern, full-stack personal finance management system with dual-database architecture, real-time synchronization, and comprehensive financial reporting.
 
@@ -8,9 +8,10 @@ A modern, full-stack personal finance management system with dual-database archi
 ![Oracle](https://img.shields.io/badge/Oracle-Database-red.svg)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple.svg)
 
-##  Features
+## Features
 
 ### Core Functionality
+
 - **Expense Tracking** - Categorize and track daily expenses with multiple payment methods
 - **Income Management** - Record income from various sources
 - **Budget Planning** - Set monthly budgets with visual progress tracking
@@ -18,41 +19,47 @@ A modern, full-stack personal finance management system with dual-database archi
 - **Financial Reports** - Generate comprehensive reports with charts and analytics
 
 ### Technical Highlights
+
 - **Dual Database Architecture** - SQLite for fast local operations, Oracle for enterprise analytics
 - **Bidirectional Sync** - Seamless synchronization between local and cloud databases
 - **PL/SQL Reports** - 5 comprehensive financial reports using advanced Oracle features
 - **Secure Authentication** - PBKDF2-SHA256 password hashing (600k iterations)
 - **Responsive UI** - Modern Bootstrap 5 design with Chart.js visualizations
 
-##  Quick Start
+## Quick Start
 
 ### Prerequisites
+
 - Python 3.8 or higher
 - Oracle Database (optional - for sync features)
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/LakinduQA/spendly-finance_tracker.git
    cd spendly-finance_tracker
    ```
 
 2. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 3. **Create the SQLite database**
+
    ```bash
    cd sqlite
    sqlite3 finance_local.db < 01_create_database.sql
    cd ..
    ```
-   
+
    Or on Windows, the database is created automatically on first run.
 
 4. **Run the application**
+
    ```bash
    cd webapp
    python app.py
@@ -64,17 +71,20 @@ A modern, full-stack personal finance management system with dual-database archi
    ```
 
 ### Windows Users
+
 Double-click `scripts/batch/setup.bat` for a guided setup wizard.
 
 ### Optional: Add Sample Data
 
 To populate the database with test data (5 users, 90 days of transactions):
+
 ```bash
 cd scripts
 python populate_sample_data.py
 ```
 
 Then login with:
+
 - Username: `dilini.fernando`
 - Password: `Password123!`
 
@@ -89,21 +99,23 @@ For enterprise-grade analytics and bidirectional sync:
 
 Oracle sync is optional - the app works fully with SQLite alone.
 
-## 📸 Screenshots
+##  Screenshots
 
 ### Dashboard
+
 - Financial overview with income, expenses, and savings summary
 - Interactive charts showing expense distribution
 - Budget progress indicators
 - Recent transactions view
 
 ### Features
+
 - Add/edit/delete expenses with category and payment method
 - Track multiple income sources
 - Set monthly budgets with visual progress bars
 - Create savings goals with contribution tracking
 
-##  Database Architecture
+## Database Architecture
 
 ```
 ┌─────────────┐         ┌──────────────┐         ┌──────────────┐
@@ -114,18 +126,20 @@ Oracle sync is optional - the app works fully with SQLite alone.
 ```
 
 ### SQLite (Local)
+
 - Primary database for web application
 - Fast, serverless operations
 - Offline capability
 - 9 tables with triggers and views
 
 ### Oracle (Central)
+
 - Enterprise-grade analytics
 - PL/SQL stored procedures
 - 5 comprehensive financial reports
 - Advanced SQL queries
 
-##  Financial Reports
+## Financial Reports
 
 The system generates 5 detailed financial reports:
 
@@ -135,18 +149,18 @@ The system generates 5 detailed financial reports:
 4. **Category Distribution** - Expense breakdown by category
 5. **Forecasted Savings** - Future savings predictions based on trends
 
-##  Tech Stack
+## Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| **Backend** | Python 3.x, Flask 3.0 |
-| **Frontend** | HTML5, Bootstrap 5.3, Chart.js |
-| **Local Database** | SQLite 3 |
-| **Cloud Database** | Oracle Database |
-| **Sync Module** | cx_Oracle, Custom Python |
-| **Security** | Werkzeug (PBKDF2-SHA256) |
+| Layer              | Technology                     |
+| ------------------ | ------------------------------ |
+| **Backend**        | Python 3.x, Flask 3.0          |
+| **Frontend**       | HTML5, Bootstrap 5.3, Chart.js |
+| **Local Database** | SQLite 3                       |
+| **Cloud Database** | Oracle Database                |
+| **Sync Module**    | cx_Oracle, Custom Python       |
+| **Security**       | Werkzeug (PBKDF2-SHA256)       |
 
-##  Project Structure
+## Project Structure
 
 ```
 spendly-finance_tracker/
@@ -163,7 +177,7 @@ spendly-finance_tracker/
 └── docs/                  # User & setup guides
 ```
 
-##  Security Features
+## Security Features
 
 - **Password Hashing** - PBKDF2-SHA256 with 600,000 iterations
 - **SQL Injection Prevention** - Parameterized queries throughout
@@ -171,7 +185,7 @@ spendly-finance_tracker/
 - **Input Validation** - Server-side validation for all inputs
 - **Soft Delete** - Data preservation with `is_deleted` flags
 
-##  Configuration
+## Configuration
 
 ### SQLite (Works Out of the Box)
 
@@ -183,38 +197,43 @@ For Oracle setup, including database creation and synchronization configuration,
 📖 **[Oracle Setup Guide](docs/guides/ORACLE_SETUP_GUIDE.md)**
 
 This includes:
+
 - Creating Oracle tables to match SQLite schema
 - Configuring PL/SQL packages
 - Setting up bidirectional synchronization
 - Generating financial reports
 
-##  Testing
+## Testing
 
 Run the test suite:
+
 ```bash
 cd tests
 python test_sync.py
 python verify_database.py
 ```
 
-##  Sample Data
+## Sample Data
 
 Populate the database with sample data:
+
 ```bash
 cd scripts
 python populate_sample_data.py
 ```
 
 This creates:
+
 - 5 sample users with Sri Lankan names
 - 90 days of expense transactions
 - Income records, budgets, and savings goals
 
 **Demo Login:**
+
 - Username: `dilini.fernando`
 - Password: `Password123!`
 
-##  Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -224,15 +243,16 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-##  License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-##  Author
+## Author
 
 **Lakindu De Silva**
+
 - GitHub: [@LakinduQA](https://github.com/LakinduQA)
 
 ---
 
- If you find this project useful, please consider giving it a star!
+If you find this project useful, please consider giving it a star!

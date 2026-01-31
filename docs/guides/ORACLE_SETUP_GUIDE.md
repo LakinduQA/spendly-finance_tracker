@@ -56,6 +56,7 @@ SELECT category_id, category_name, category_type FROM finance_category;
 ## 📊 What the Script Creates
 
 ### **9 Sequences** (for auto-increment IDs):
+
 ```sql
 seq_user_id
 seq_category_id
@@ -69,6 +70,7 @@ seq_audit_id
 ```
 
 ### **9 Tables** (matching SQLite exactly):
+
 ```sql
 finance_user              -- User accounts
 finance_category          -- Income/Expense categories
@@ -82,12 +84,14 @@ finance_audit_log         -- Audit trail
 ```
 
 ### **20+ Triggers** (for automation):
+
 - Auto-increment ID triggers (using sequences)
 - Timestamp update triggers
 - Fiscal year/month calculation triggers
 - Constraint validation triggers
 
 ### **30+ Indexes** (for performance):
+
 - Primary key indexes
 - Foreign key indexes
 - Date range indexes
@@ -95,6 +99,7 @@ finance_audit_log         -- Audit trail
 - Category indexes
 
 ### **5 Views** (for reporting):
+
 ```sql
 vw_monthly_expenses       -- Monthly expense summary
 vw_budget_utilization     -- Budget vs actual spending
@@ -108,25 +113,27 @@ vw_user_summary           -- User financial summary
 ## 🔄 SQLite vs Oracle: Mapping
 
 ### Table Names
-| SQLite | Oracle | Notes |
-|--------|--------|-------|
-| `user` | `finance_user` | Oracle prefix for clarity |
-| `category` | `finance_category` | Same structure |
-| `expense` | `finance_expense` | Same columns |
-| `income` | `finance_income` | Same columns |
-| `budget` | `finance_budget` | Same columns |
-| `savings_goal` | `finance_savings_goal` | Same columns |
-| `savings_contribution` | `finance_savings_contribution` | Same columns |
-| `sync_log` | `finance_sync_log` | Same columns |
+
+| SQLite                 | Oracle                         | Notes                     |
+| ---------------------- | ------------------------------ | ------------------------- |
+| `user`                 | `finance_user`                 | Oracle prefix for clarity |
+| `category`             | `finance_category`             | Same structure            |
+| `expense`              | `finance_expense`              | Same columns              |
+| `income`               | `finance_income`               | Same columns              |
+| `budget`               | `finance_budget`               | Same columns              |
+| `savings_goal`         | `finance_savings_goal`         | Same columns              |
+| `savings_contribution` | `finance_savings_contribution` | Same columns              |
+| `sync_log`             | `finance_sync_log`             | Same columns              |
 
 ### Column Types
-| SQLite | Oracle | Example |
-|--------|--------|---------|
-| `INTEGER PRIMARY KEY AUTOINCREMENT` | `NUMBER(10) + Sequence + Trigger` | user_id |
-| `DATETIME DEFAULT CURRENT_TIMESTAMP` | `TIMESTAMP DEFAULT SYSTIMESTAMP` | created_at |
-| `REAL` | `NUMBER(10,2)` | amount |
-| `VARCHAR(50)` | `VARCHAR2(50)` | username |
-| `INTEGER` (boolean) | `NUMBER(1) CHECK (0,1)` | is_active |
+
+| SQLite                               | Oracle                            | Example    |
+| ------------------------------------ | --------------------------------- | ---------- |
+| `INTEGER PRIMARY KEY AUTOINCREMENT`  | `NUMBER(10) + Sequence + Trigger` | user_id    |
+| `DATETIME DEFAULT CURRENT_TIMESTAMP` | `TIMESTAMP DEFAULT SYSTIMESTAMP`  | created_at |
+| `REAL`                               | `NUMBER(10,2)`                    | amount     |
+| `VARCHAR(50)`                        | `VARCHAR2(50)`                    | username   |
+| `INTEGER` (boolean)                  | `NUMBER(1) CHECK (0,1)`           | is_active  |
 
 ---
 
@@ -135,6 +142,7 @@ vw_user_summary           -- User financial summary
 The script automatically populates **13 default categories**:
 
 ### Expense Categories:
+
 1. Groceries
 2. Rent
 3. Utilities
@@ -147,6 +155,7 @@ The script automatically populates **13 default categories**:
 10. Other Expenses
 
 ### Income Categories:
+
 1. Salary
 2. Freelance
 3. Other Income
@@ -188,6 +197,7 @@ SELECT * FROM vw_user_summary;
 ## 🔧 Troubleshooting
 
 ### If you get "insufficient privileges":
+
 ```sql
 -- Grant additional permissions
 GRANT CREATE TABLE TO finance_admin;
@@ -197,6 +207,7 @@ GRANT CREATE VIEW TO finance_admin;
 ```
 
 ### If tablespace doesn't exist:
+
 ```sql
 -- Run as SYS/SYSTEM
 CREATE TABLESPACE finance_data
@@ -205,6 +216,7 @@ AUTOEXTEND ON NEXT 10M MAXSIZE 500M;
 ```
 
 ### If user doesn't exist:
+
 ```sql
 -- The script creates the user automatically
 -- Username: finance_admin
@@ -216,6 +228,7 @@ AUTOEXTEND ON NEXT 10M MAXSIZE 500M;
 ## 🎯 Next Steps After Oracle Setup
 
 ### 1. Install cx_Oracle Python Package
+
 ```bash
 pip install cx_Oracle
 ```
@@ -254,15 +267,19 @@ python test_sync.py
 After the database is created, you can install:
 
 ### 1. PL/SQL CRUD Package
+
 ```sql
 @oracle/02_plsql_crud_package.sql
 ```
+
 Provides procedures/functions for all CRUD operations.
 
 ### 2. Reports Package
+
 ```sql
 @oracle/03_reports_package.sql
 ```
+
 Provides 5 financial reports.
 
 ---
@@ -270,6 +287,7 @@ Provides 5 financial reports.
 ## ✅ Success Criteria
 
 Your Oracle database is ready when:
+
 - ✅ All 9 tables exist
 - ✅ All 9 sequences exist
 - ✅ All triggers are enabled
@@ -284,6 +302,7 @@ Your Oracle database is ready when:
 ## Summary
 
 The `01_create_database.sql` script ensures Oracle tables match SQLite structure by:
+
 1. Using the same table structure
 2. Using the same column names
 3. Using the same data types (converted to Oracle syntax)
