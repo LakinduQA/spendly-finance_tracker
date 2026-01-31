@@ -7,6 +7,7 @@ This folder contains utility scripts and automation tools for Spendly.
 ### batch/
 
 Windows batch scripts for application management:
+
 - `setup.bat` - Complete setup wizard
 - `start.bat` - Start the application
 - `stop.bat` - Stop the application

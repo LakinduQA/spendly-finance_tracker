@@ -4,13 +4,13 @@ Windows batch scripts for managing the Spendly application.
 
 ## Scripts
 
-| Script | Description |
-|--------|-------------|
-| `setup.bat` | Complete setup wizard - installs dependencies, configures the app, and launches it |
-| `start.bat` | Starts the Flask web application |
-| `stop.bat` | Stops all running Python processes |
-| `restart.bat` | Restarts the application (stop + start) |
-| `install.bat` | Quick install - only installs Python dependencies |
+| Script        | Description                                                                        |
+| ------------- | ---------------------------------------------------------------------------------- |
+| `setup.bat`   | Complete setup wizard - installs dependencies, configures the app, and launches it |
+| `start.bat`   | Starts the Flask web application                                                   |
+| `stop.bat`    | Stops all running Python processes                                                 |
+| `restart.bat` | Restarts the application (stop + start)                                            |
+| `install.bat` | Quick install - only installs Python dependencies                                  |
 
 ## Usage
 
@@ -22,6 +22,7 @@ setup.bat
 ```
 
 This will:
+
 1. Check Python installation
 2. Install all dependencies
 3. Verify project structure
